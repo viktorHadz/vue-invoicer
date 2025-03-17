@@ -1,3 +1,5 @@
+import '@fontsource/manrope'
+import '@fontsource/manrope/700.css'
 import './assets/main.css'
 
 import { createApp } from 'vue'

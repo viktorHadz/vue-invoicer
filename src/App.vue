@@ -3,10 +3,7 @@ import { RouterView } from 'vue-router'
 import TheNavigation from './views/TheNavigation.vue'
 import SelectClientMenu from './components/SelectClient.vue'
 import ItemsEditor from './components/ItemsEditor.vue'
-import ModalGlob from './components/ModalGlob.vue'
-
-import { ref } from 'vue'
-const isOpen = ref(false)
+import ModalCenter from './components/ModalCenter.vue'
 </script>
 
 <template>
@@ -17,9 +14,10 @@ const isOpen = ref(false)
   </header>
   <main>
     <RouterView class="main-view" />
-    <SelectClientMenu id="main-client-select"> </SelectClientMenu>
+
+    <SelectClientMenu> </SelectClientMenu>
     <ItemsEditor> </ItemsEditor>
-    <ModalGlob @open-modal="isOpen = true" />
+    <ModalCenter btnTxt="Modal Global" title="Modal Title Baby" closeTxt="ok" />
   </main>
 </template>
 

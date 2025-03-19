@@ -1,5 +1,7 @@
-<script setup></script>
+<script setup>
+import ClientsTable from '@/components/clients/ClientsTable.vue'
+</script>
 
 <template>
-  <div>Clients here</div>
+  <ClientsTable></ClientsTable>
 </template>

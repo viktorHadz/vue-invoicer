@@ -1,3 +1,22 @@
+@import 'tailwindcss';
+@import './base.css';
+@theme {
+  --color-primary: #10b981; /* Emerald 500 */
+}
+[data-theme='dark'] {
+  --color-primary: #10b981; /* Emerald 500 */
+}
+
 #app {
   font-family: 'Manrope', sans-serif;
+}
+.container {
+  max-width: clamp(16rem, 50%, 64rem);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+.flex {
+  display: inline-flex;
 }

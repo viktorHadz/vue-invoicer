@@ -1,8 +1,8 @@
-import { ref } from 'vue'
 import { defineStore } from 'pinia'
+import { reactive, ref, watch } from 'vue'
 
 export const useClientStore = defineStore('clients', () => {
-  const clients = ref([
+  const clients = reactive([
     {
       id: 1,
       name: 'Viktor',
@@ -28,6 +28,24 @@ export const useClientStore = defineStore('clients', () => {
 
   // Selected client reference
   const selectedClient = ref(null)
-
-  return { clients, selectedClient }
+  // Sets localstorage on CHANGE of selected does NOT initially set
+  watch(
+    selectedClient,
+    (newValue) => {
+      if (newValue) {
+        localStorage.setItem('selectedClient', JSON.stringify(selectedClient.value))
+      }
+    },
+    { deep: true },
+  )
+  // This DOES
+  /**
+   * Sets selectedClient. Needs an onMounted() hook.
+   *  On mounted in - SelectClient.vue
+   */
+  const setClient = (client) => {
+    selectedClient.value = JSON.parse(client)
+    console.log('Client set to: ', selectedClient.value)
+  }
+  return { clients, selectedClient, setClient }
 })

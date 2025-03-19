@@ -1,8 +1,9 @@
 <script setup>
 import { useClientStore } from '@/stores/clients'
 import { reactive } from 'vue'
-import LeBtn from '../UI/LeBtn.vue'
-
+import LeTable from '@/components/UI/LeTable.vue'
+import LeInput from '../UI/LeInput.vue'
+LeInput
 const clientStore = useClientStore()
 const { clients } = clientStore
 const newClient = reactive({
@@ -14,23 +15,36 @@ const newClient = reactive({
 </script>
 <template>
   <div class="container">
-    <div class="table">
-      <div class="row header">
-        <div class="cell">Name</div>
-        <div class="cell">Company</div>
-        <div class="cell">Email</div>
-        <div class="cell">Address</div>
-      </div>
-      <div class="row" v-for="client in clients" :key="client.id">
-        <div class="cell">{{ client.name }}</div>
-        <div class="cell">{{ client.company }}</div>
-        <div class="cell">{{ client.email }}</div>
-        <div class="cell">{{ client.address }}</div>
-      </div>
-      <div></div>
+    <LeTable
+      :title="'Clients'"
+      :description="'A list of all the clients including their name, company, email, and address.'"
+      :buttonLabel="'Add Client'"
+      :columns="[
+        { label: 'Name', key: 'name' },
+        { label: 'Company', key: 'company' },
+        { label: 'Email', key: 'email' },
+        { label: 'Address', key: 'address' },
+      ]"
+      :data="clients"
+      :inputData="newClient"
+      @add="
+        () => {
+          /* handle add client */
+        }
+      "
+      @edit="
+        (client) => {
+          /* handle edit client */
+        }
+      "
+    >
+    </LeTable>
+    <div>
+      <LeInput labelName="Client name" :value="newClient.name"></LeInput>
+      <LeInput labelName="Company" :value="newClient.company"></LeInput>
+      <LeInput labelName="Email" :value="newClient.email"></LeInput>
+      <LeInput labelName="Address" :value="newClient.address"></LeInput>
     </div>
-
-    <LeBtn>Create Client</LeBtn>
   </div>
 </template>
 

@@ -7,16 +7,15 @@ import ModalCenter from './components/ModalCenter.vue'
 </script>
 
 <template>
-  <header>
-    <aside>
-      <TheNavigation></TheNavigation>
-    </aside>
+  <header class="">
+    <TheNavigation></TheNavigation>
   </header>
   <main>
     <RouterView class="main-view" />
-
-    <SelectClientMenu> </SelectClientMenu>
-    <ItemsEditor> </ItemsEditor>
+    <div class="absolute top-0 right-0 mr-4 flex gap-8">
+      <SelectClientMenu> </SelectClientMenu>
+      <ItemsEditor> </ItemsEditor>
+    </div>
     <ModalCenter btnTxt="Modal Global" title="Modal Title Baby" closeTxt="ok" />
   </main>
 </template>

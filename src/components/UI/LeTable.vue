@@ -1,18 +1,6 @@
 <script>
 export default {
   props: {
-    title: {
-      type: String,
-      default: 'Users',
-    },
-    description: {
-      type: String,
-      default: 'A list of all the users including their name, title, email, and role.',
-    },
-    buttonLabel: {
-      type: String,
-      default: 'Add User',
-    },
     columns: {
       type: Array,
       required: true, // [{ label: "Name", key: "name" }, { label: "Email", key: "email" }]
@@ -24,20 +12,10 @@ export default {
   },
 }
 </script>
-<script setup>
-import LeBtn from './LeBtn.vue'
-</script>
+<script setup></script>
 <template>
   <div class="px-4 sm:px-6 lg:px-8">
-    <div class="sm:flex sm:items-center">
-      <div class="sm:flex-auto">
-        <h1 class="text-base font-semibold text-gray-900">{{ title }}</h1>
-        <p class="mt-2 text-sm text-gray-700">{{ description }}</p>
-      </div>
-      <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-        <LeBtn @click="$emit('add')">{{ buttonLabel }}</LeBtn>
-      </div>
-    </div>
+    <div class="sm:flex sm:items-center"></div>
     <div class="mt-8 flow-root">
       <div class="-mx-4 -my-2 sm:-mx-6 lg:-mx-8">
         <div class="inline-block min-w-full py-2 align-middle">
@@ -53,7 +31,7 @@ import LeBtn from './LeBtn.vue'
                   {{ column.label }}
                 </th>
                 <th
-                  class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-4 pl-3"
+                  class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter"
                 ></th>
               </tr>
             </thead>
@@ -75,13 +53,23 @@ import LeBtn from './LeBtn.vue'
                     'relative py-4 pr-4 pl-3 text-right text-sm font-medium whitespace-nowrap',
                   ]"
                 >
-                  <a
-                    href="#"
-                    class="text-indigo-600 hover:text-indigo-900"
-                    @click="$emit('edit', row)"
-                  >
-                    Edit<span class="sr-only">, {{ row.name }}</span>
-                  </a>
+                  <div class="flex gap-4">
+                    <a
+                      href="#"
+                      class="text-indigo-600 hover:text-indigo-900"
+                      @click="$emit('edit', row)"
+                    >
+                      Edit<span class="sr-only">, {{ row.name }}</span>
+                    </a>
+
+                    <a
+                      href="#"
+                      class="text-red-600 hover:text-red-900"
+                      @click="$emit('delete', row)"
+                    >
+                      Delete<span class="sr-only">, {{ row.name }}</span>
+                    </a>
+                  </div>
                 </td>
               </tr>
             </tbody>

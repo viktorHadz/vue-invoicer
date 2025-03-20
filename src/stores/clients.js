@@ -25,7 +25,13 @@ export const useClientStore = defineStore('clients', () => {
       address: '456 Innovation Drive, New York, NY, 10001',
     },
   ])
+  const createNew = (client) => {
 
+    clients.push({
+      id: clients.length + 1,
+      ...client
+    })
+  }
   // Selected client reference
   const selectedClient = ref(null)
   // Sets localstorage on CHANGE of selected does NOT initially set
@@ -47,5 +53,5 @@ export const useClientStore = defineStore('clients', () => {
     selectedClient.value = JSON.parse(client)
     console.log('Client set to: ', selectedClient.value)
   }
-  return { clients, selectedClient, setClient }
+  return { clients, selectedClient, setClient, createNew }
 })

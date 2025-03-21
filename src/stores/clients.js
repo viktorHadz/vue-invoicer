@@ -25,6 +25,7 @@ export const useClientStore = defineStore('clients', () => {
       address: '456 Innovation Drive, New York, NY, 10001',
     },
   ])
+
   const createNew = (client) => {
     console.log('Store add ran')
     clients.push({
@@ -32,14 +33,16 @@ export const useClientStore = defineStore('clients', () => {
       ...client,
     })
   }
+  // Delete client from frontend and db (later)
   const del = (client) => {
-    clients.splice(clients.indexOf(client.id), 1)
-    // const id = client.id
-    // const toRemove = clients.find((el) => { if (el === id) return el })
-    // if (toRemove === -1) { return console.error('Did not find client index') }
-    // console.log('to remove: ', toRemove);
-    // clients.splice(clients[toRemove], 1, client)
+    const arrIndex = clients.indexOf(client)
+    console.log('Array index of objToRemove', arrIndex);
+    clients.splice(arrIndex, 1)
   }
+  // We want to achieve the following:
+  // If the deleted client is the same as selected. The selectedClient mutst be deleted too. 
+  // Then the localstorage must also be updated 
+
   // Selected client reference
   const selectedClient = ref(null)
   // Sets localstorage on CHANGE of selected does NOT initially set
@@ -52,15 +55,19 @@ export const useClientStore = defineStore('clients', () => {
     },
     { deep: true },
   )
+
   // This DOES
   /**
    * Sets selectedClient. Needs an onMounted() hook.
-   *  On mounted in - SelectClient.vue
+   *  On mounted hook resides in - SelectClient.vue
    */
   const setClient = (client) => {
     selectedClient.value = JSON.parse(client)
     console.log('Client set to: ', selectedClient.value)
   }
+  // const destroySetClient = () => {
+
+  // }
   const hasClients = computed(() => {
     if (clients.length > 0) {
       return true

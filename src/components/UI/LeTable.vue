@@ -12,7 +12,7 @@ export default {
   },
 }
 </script>
-<script setup></script>
+
 <template>
   <div class="px-4 sm:px-6 lg:px-8">
     <div class="sm:flex sm:items-center"></div>
@@ -36,6 +36,8 @@ export default {
               </tr>
             </thead>
             <tbody>
+              <!-- Allows top row insertion -->
+              <slot></slot>
               <tr v-for="(row, rowIndex) in data" :key="rowIndex">
                 <td
                   v-for="(column, colIndex) in columns"

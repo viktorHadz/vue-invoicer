@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { reactive, ref, watch } from 'vue'
+import { reactive, ref, watch, computed } from 'vue'
 
 export const useClientStore = defineStore('clients', () => {
   const clients = reactive([
@@ -26,11 +26,19 @@ export const useClientStore = defineStore('clients', () => {
     },
   ])
   const createNew = (client) => {
-
+    console.log('Store add ran')
     clients.push({
       id: clients.length + 1,
-      ...client
+      ...client,
     })
+  }
+  const del = (client) => {
+    clients.splice(clients.indexOf(client.id), 1)
+    // const id = client.id
+    // const toRemove = clients.find((el) => { if (el === id) return el })
+    // if (toRemove === -1) { return console.error('Did not find client index') }
+    // console.log('to remove: ', toRemove);
+    // clients.splice(clients[toRemove], 1, client)
   }
   // Selected client reference
   const selectedClient = ref(null)
@@ -53,5 +61,12 @@ export const useClientStore = defineStore('clients', () => {
     selectedClient.value = JSON.parse(client)
     console.log('Client set to: ', selectedClient.value)
   }
-  return { clients, selectedClient, setClient, createNew }
+  const hasClients = computed(() => {
+    if (clients.length > 0) {
+      return true
+    } else {
+      return false
+    }
+  })
+  return { clients, selectedClient, setClient, createNew, hasClients, del }
 })

@@ -10,6 +10,8 @@ const store = useClientStore()
     <div v-if="!store.hasClients">
       <NoClients></NoClients>
     </div>
-    <ClientsTable></ClientsTable>
+    <div v-else>
+      <ClientsTable></ClientsTable>
+    </div>
   </div>
 </template>

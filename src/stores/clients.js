@@ -36,12 +36,16 @@ export const useClientStore = defineStore('clients', () => {
   // Delete client from frontend and db (later)
   const del = (client) => {
     const arrIndex = clients.indexOf(client)
-    console.log('Array index of objToRemove', arrIndex);
+    console.log('Array index of objToRemove', arrIndex)
     clients.splice(arrIndex, 1)
+    if (client.id === selectedClient.value.id) {
+      console.warn('Selected client deleted. Triggering emergency select')
+      selectedClient.value = null
+    }
   }
   // We want to achieve the following:
-  // If the deleted client is the same as selected. The selectedClient mutst be deleted too. 
-  // Then the localstorage must also be updated 
+  // If the deleted client is the same as selected. The selectedClient mutst be deleted too.
+  // Then the localstorage must also be updated
 
   // Selected client reference
   const selectedClient = ref(null)
@@ -56,14 +60,13 @@ export const useClientStore = defineStore('clients', () => {
     { deep: true },
   )
 
-  // This DOES
   /**
    * Sets selectedClient. Needs an onMounted() hook.
    *  On mounted hook resides in - SelectClient.vue
    */
   const setClient = (client) => {
     selectedClient.value = JSON.parse(client)
-    console.log('Client set to: ', selectedClient.value)
+    console.log('Set client: ', selectedClient.value)
   }
   // const destroySetClient = () => {
 

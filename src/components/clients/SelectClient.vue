@@ -1,31 +1,74 @@
-<script setup>
-import { useClientStore } from '@/stores/clients'
-import { onMounted } from 'vue'
-const clients = useClientStore()
-
-onMounted(() => {
-  console.log('Client Select: Checking LS for client')
-
-  if (clients.selectedClient === null) {
-    console.log('Checking LS for client =>', clients.selectedClient)
-    const storedValue = localStorage.getItem('selectedClient')
-    if (storedValue !== null) {
-      console.table('Client found')
-      clients.setClient(storedValue)
-    } else {
-      console.warn('No client found. Select a client to continue')
-    }
-  }
-})
-</script>
-
 <template>
-  <select v-model="clients.selectedClient">
-    <option disabled value="">Please select one</option>
-    <option v-for="client in clients.clients" :key="client.id" v-bind:value="client">
-      {{ client.name }}
-    </option>
-  </select>
+  <Listbox as="div" v-model="clients.selectedClient">
+    <ListboxLabel class="block text-sm/6 font-medium text-gray-900 tracking-tighter pl-1">
+      Selected Client
+    </ListboxLabel>
+    <div class="relative min-w-40">
+      <ListboxButton
+        class="grid w-full cursor-default grid-cols-1 rounded-md bg-white py-1.5 pr-2 pl-3 text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+      >
+        <span class="col-start-1 row-start-1 truncate pr-6">{{
+          clients.selectedClient?.name || 'Select a client to continue'
+        }}</span>
+        <ChevronUpDownIcon
+          class="col-start-1 row-start-1 size-5 self-center justify-self-end text-gray-500 sm:size-4"
+          aria-hidden="true"
+        />
+      </ListboxButton>
+
+      <transition
+        leave-active-class="transition ease-in duration-100"
+        leave-from-class="opacity-100"
+        leave-to-class="opacity-0"
+      >
+        <ListboxOptions
+          class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base ring-1 shadow-lg ring-black/5 focus:outline-hidden sm:text-sm"
+        >
+          <ListboxOption
+            as="template"
+            v-for="client in clients.clients"
+            :key="client.id"
+            :value="client"
+            v-slot="{ active, selected }"
+          >
+            <li
+              :class="[
+                active ? 'bg-indigo-600 text-white outline-hidden' : 'text-gray-900',
+                'relative cursor-default py-2 pr-4 pl-8 select-none',
+              ]"
+            >
+              <span :class="[selected ? 'font-semibold' : 'font-normal', 'block truncate']">{{
+                client.name
+              }}</span>
+
+              <span
+                v-if="selected"
+                :class="[
+                  active ? 'text-white' : 'text-indigo-600',
+                  'absolute inset-y-0 left-0 flex items-center pl-1.5',
+                ]"
+              >
+                <CheckIcon class="size-5" aria-hidden="true" />
+              </span>
+            </li>
+          </ListboxOption>
+        </ListboxOptions>
+      </transition>
+    </div>
+  </Listbox>
 </template>
 
-<style></style>
+<script setup>
+import {
+  Listbox,
+  ListboxButton,
+  ListboxLabel,
+  ListboxOption,
+  ListboxOptions,
+} from '@headlessui/vue'
+import { ChevronUpDownIcon } from '@heroicons/vue/16/solid'
+import { CheckIcon } from '@heroicons/vue/20/solid'
+import { useClientStore } from '@/stores/clients'
+
+const clients = useClientStore()
+</script>

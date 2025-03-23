@@ -8,18 +8,18 @@ const isOpen = ref(true)
 
 import { useClientStore } from '@/stores/clients'
 const clientStore = useClientStore()
-const resetInputs = () => {
-  form.name = ''
-  form.company = ''
-  form.email = ''
-  form.address = ''
+const resetFormInputs = () => {
+  modalForm.name = ''
+  modalForm.company = ''
+  modalForm.email = ''
+  modalForm.address = ''
 }
-const form = reactive({ name: '', company: '', email: '', address: '' })
+const modalForm = reactive({ name: '', company: '', email: '', address: '' })
 
 function addNewClient() {
-  clientStore.createNew(form)
+  clientStore.createNew(modalForm)
   // Validation?
-  resetInputs()
+  resetFormInputs()
 }
 
 function closeModal() {
@@ -69,8 +69,11 @@ function openModal() {
                 <DialogPanel
                   class="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all"
                 >
-                  <DialogTitle as="h3" class="font-medium text-center leading-6 text-gray-900">
-                    New Client
+                  <DialogTitle
+                    as="h3"
+                    class="font-medium text-lg text-center leading-6 text-gray-800"
+                  >
+                    New client menu
                   </DialogTitle>
 
                   <div class="px-4 py-6 sm:p-8">
@@ -83,7 +86,7 @@ function openModal() {
                           type="text"
                           autocomplete="name"
                           required
-                          v-model="form.name"
+                          v-model="modalForm.name"
                         />
                       </div>
                       <div>
@@ -94,7 +97,7 @@ function openModal() {
                           type="text"
                           autocomplete="organization"
                           required
-                          v-model="form.company"
+                          v-model="modalForm.company"
                         />
                       </div>
                       <div>
@@ -105,7 +108,7 @@ function openModal() {
                           type="text"
                           autocomplete="email"
                           required
-                          v-model="form.email"
+                          v-model="modalForm.email"
                         />
                       </div>
                       <div>
@@ -116,14 +119,17 @@ function openModal() {
                           type="text"
                           autocomplete="address"
                           required
-                          v-model="form.address"
+                          v-model="modalForm.address"
                         />
                       </div>
                       <div class="flex w-full justify-center">
                         <LeBtn
-                          @click="(addNewClient(form), console.log('add new in template clicked '))"
-                          buttonText="Add New"
-                        ></LeBtn>
+                          @click="
+                            (addNewClient(modalForm), console.log('add new in template clicked '))
+                          "
+                        >
+                          <p class="text-sm">Add New</p>
+                        </LeBtn>
                       </div>
                     </div>
                   </div>

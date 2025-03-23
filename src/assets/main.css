@@ -11,15 +11,20 @@
   font-family: 'Manrope', sans-serif;
 }
 .container {
-  max-width: clamp(16rem, 64rem, 50%);
+  max-width: clamp(16rem, 80rem, 50%);
   margin-left: auto;
   margin-right: auto;
   padding-left: 1rem;
   padding-right: 1rem;
 }
-.flex {
-  display: inline-flex;
+.container-lg {
+  max-width: clamp(16rem, 70%, 100%);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
+
 .backdrop {
   z-index: 990;
   position: fixed;

@@ -8,8 +8,10 @@ const store = useClientStore()
     <div v-if="store.selectedClient === null && store.hasClients" class="backdrop">
       <div class="modal-outer rounded !bg-transparent">
         <div class="p-2">
-          <!-- Title -->
-          <SelectClient></SelectClient>
+          <SelectClient
+            select-title="No client selected"
+            select-title-class="text-white text-lg"
+          ></SelectClient>
           <slot></slot>
         </div>
       </div>

@@ -1,49 +1,53 @@
 <script setup>
 import { RouterView } from 'vue-router'
-import TheNavigation from './views/TheNavigation.vue'
-import SelectClientMenu from './components/clients/SelectClient.vue'
-import ItemsEditor from './components/ItemsEditor.vue'
+import { RouterLink } from 'vue-router'
+import SelectClient from './components/clients/SelectClient.vue'
+import ItemsEditor from './components/items/ItemsEditor.vue'
 import NoSelectedClientModal from './components/clients/NoSelectedClient.vue'
-import { onMounted } from 'vue'
 import { useClientStore } from '@/stores/clients'
+import LeBtn from './components/UI/LeBtn.vue'
 
-const clients = useClientStore()
-onMounted(() => {
-  if (clients.selectedClient === null) {
-    console.log('onMounted: Checking LS for client')
-    console.log('onMounted: No selected client found')
+const clientStore = useClientStore()
 
-    const storedValue = localStorage.getItem('selectedClient')
-
-    if (storedValue !== null) {
-      console.table('onMounted: Client found')
-
-      clients.setClient(storedValue)
-    } else {
-      console.warn('onMounted: No client found. Select a client to continue')
-    }
-  }
-})
+// If memorised in localstorage
 </script>
 
 <template>
-  <header class="">
-    <TheNavigation></TheNavigation>
-  </header>
-  <main>
-    <RouterView class="main-view" />
-    <div class="absolute top-0 right-0 mr-4 flex gap-8 w-full justify-around">
-      <ItemsEditor> </ItemsEditor>
-    </div>
-    <div class="absolute top-0 right-0 mr-4 flex gap-8 px-4">
-      <SelectClientMenu> </SelectClientMenu>
-    </div>
-    <NoSelectedClientModal></NoSelectedClientModal>
-  </main>
+  <div class="layout">
+    <header class="sidebar border-r border-gray-300 bg-gray-100/75">
+      <nav class="flex flex-col gap-4 p-4" v-if="clientStore.hasClients">
+        <RouterLink to="/clients">
+          <LeBtn type="button" button-text="Clients">Clients</LeBtn>
+        </RouterLink>
+
+        <RouterLink to="/invoice">
+          <LeBtn type="button" button-text="Invoice">Invoice</LeBtn>
+        </RouterLink>
+
+        <RouterLink to="/editor">
+          <LeBtn type="button" button-text="Editor">Editor</LeBtn>
+        </RouterLink>
+      </nav>
+    </header>
+    <main class="main-content">
+      <RouterView class="mt-20" />
+      <div
+        v-if="clientStore.hasClients"
+        class="absolute top-0 right-0 z-50 max-w-64 w-1/2 flex justify-end"
+      >
+        <div
+          class="relative border-b border-x rounded-b-md bg-gray-100/75 border-gray-300 flex gap-8 p-2 mr-4"
+        >
+          <SelectClient selectTitle="Select a Client" select-title-class="text-sm"> </SelectClient>
+          <div class="flex flex-col">
+            <ItemsEditor></ItemsEditor>
+          </div>
+        </div>
+      </div>
+      <!-- Modals -- Add parent component to decluter if needed  -->
+      <NoSelectedClientModal></NoSelectedClientModal>
+    </main>
+  </div>
 </template>
 
-<style scoped>
-.main-view {
-  width: 100%;
-}
-</style>
+<style scoped></style>

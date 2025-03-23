@@ -1,14 +1,17 @@
 <template>
-  <Listbox as="div" v-model="clients.selectedClient">
-    <ListboxLabel class="block text-sm/6 font-medium text-gray-900 tracking-tighter pl-1">
-      Selected Client
+  <Listbox as="div" v-model="clientStore.selectedClient">
+    <ListboxLabel
+      class="block font-medium tracking-tight pl-1"
+      :class="[`${props.selectTitleClass}`]"
+    >
+      {{ props.selectTitle }}
     </ListboxLabel>
     <div class="relative min-w-40">
       <ListboxButton
         class="grid w-full cursor-default grid-cols-1 rounded-md bg-white py-1.5 pr-2 pl-3 text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
       >
         <span class="col-start-1 row-start-1 truncate pr-6">{{
-          clients.selectedClient?.name || 'Select a client to continue'
+          clientStore.selectedClient?.name || 'Select a client to continue'
         }}</span>
         <ChevronUpDownIcon
           class="col-start-1 row-start-1 size-5 self-center justify-self-end text-gray-500 sm:size-4"
@@ -26,7 +29,7 @@
         >
           <ListboxOption
             as="template"
-            v-for="client in clients.clients"
+            v-for="client in clientStore.clients"
             :key="client.id"
             :value="client"
             v-slot="{ active, selected }"
@@ -48,7 +51,6 @@
                   'absolute inset-y-0 left-0 flex items-center pl-1.5',
                 ]"
               >
-                <CheckIcon class="size-5" aria-hidden="true" />
               </span>
             </li>
           </ListboxOption>
@@ -67,8 +69,11 @@ import {
   ListboxOptions,
 } from '@headlessui/vue'
 import { ChevronUpDownIcon } from '@heroicons/vue/16/solid'
-import { CheckIcon } from '@heroicons/vue/20/solid'
 import { useClientStore } from '@/stores/clients'
 
-const clients = useClientStore()
+const clientStore = useClientStore()
+const props = defineProps({
+  selectTitle: String,
+  selectTitleClass: String,
+})
 </script>

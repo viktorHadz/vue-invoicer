@@ -72,9 +72,9 @@ const filteredClients = computed(() => {
             class="pt-2 px-2 pb-3 ring-t ring-1 ring-x rounded-t-lg ring-black/10 bg-gray-100/75 w-fit -mb-1"
           >
             <div
-              class="flex items-center ring-1 ring-black/10 rounded-lg shadow-sm bg-white px-3 py-2 w-64"
+              class="flex items-center ring-1 ring-black/10 focus-within:ring-black/30 rounded-lg shadow-sm bg-white px-3 py-2 w-64 hover:ring-black/20"
             >
-              <MagnifyingGlassIcon class="h-4 w-4 text-gray-400 mr-2"></MagnifyingGlassIcon>
+              <MagnifyingGlassIcon class="h-4 w-4 text-gray-500 mr-2"></MagnifyingGlassIcon>
               <input
                 id="srchQry-clients-1"
                 v-model="searchQuery"
@@ -105,7 +105,7 @@ const filteredClients = computed(() => {
                 <LeTh>
                   <LeInput
                     label=""
-                    id="client-add-name-id-1"
+                    id="new-client-name-id-1"
                     name="client-name"
                     type="text"
                     autocomplete="name"
@@ -117,7 +117,7 @@ const filteredClients = computed(() => {
                 <LeTh>
                   <LeInput
                     label=""
-                    id="client-add-company-1"
+                    id="new-client-company-1"
                     name="client-company"
                     type="text"
                     placeholder="Company name"
@@ -129,7 +129,7 @@ const filteredClients = computed(() => {
                 <LeTh>
                   <LeInput
                     label=""
-                    id="client-add-email-1"
+                    id="new-client-email-1"
                     name="client-email"
                     type="text"
                     placeholder="Email"
@@ -141,7 +141,7 @@ const filteredClients = computed(() => {
                 <LeTh>
                   <LeInput
                     label=""
-                    id="client-add-address-1"
+                    id="new-client-address-1"
                     name="client-address"
                     type="text"
                     placeholder="Address"

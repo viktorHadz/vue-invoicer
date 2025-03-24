@@ -1,12 +1,30 @@
+<script setup>
+import {
+  Listbox,
+  ListboxButton,
+  ListboxLabel,
+  ListboxOption,
+  ListboxOptions,
+} from '@headlessui/vue'
+import { ChevronUpDownIcon } from '@heroicons/vue/16/solid'
+import { useClientStore } from '@/stores/clients'
+
+const clientStore = useClientStore()
+const props = defineProps({
+  selectTitle: String,
+  selectTitleClass: String,
+})
+</script>
+
 <template>
   <Listbox as="div" v-model="clientStore.selectedClient">
-    <ListboxLabel
-      class="block font-medium tracking-tight pl-1"
-      :class="[`${props.selectTitleClass}`]"
-    >
-      {{ props.selectTitle }}
-    </ListboxLabel>
     <div class="relative min-w-40">
+      <ListboxLabel
+        class="block font-medium tracking-tight pl-1"
+        :class="[`${props.selectTitleClass}`]"
+      >
+        {{ props.selectTitle }}
+      </ListboxLabel>
       <ListboxButton
         class="grid w-full cursor-default grid-cols-1 rounded-md bg-white py-1.5 pr-2 pl-3 text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
       >
@@ -59,21 +77,3 @@
     </div>
   </Listbox>
 </template>
-
-<script setup>
-import {
-  Listbox,
-  ListboxButton,
-  ListboxLabel,
-  ListboxOption,
-  ListboxOptions,
-} from '@headlessui/vue'
-import { ChevronUpDownIcon } from '@heroicons/vue/16/solid'
-import { useClientStore } from '@/stores/clients'
-
-const clientStore = useClientStore()
-const props = defineProps({
-  selectTitle: String,
-  selectTitleClass: String,
-})
-</script>

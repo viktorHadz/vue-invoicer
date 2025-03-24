@@ -50,4 +50,13 @@ const clientStore = useClientStore()
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+toggle-panel {
+  max-height: 40px; /* tucked in */
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+.toggle-panel:hover {
+  max-height: 100px; /* increased height on hover */
+}
+</style>

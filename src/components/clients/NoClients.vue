@@ -1,25 +1,25 @@
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref } from 'vue'
 import { UserPlusIcon } from '@heroicons/vue/24/outline'
 import { TransitionRoot, TransitionChild, Dialog, DialogPanel, DialogTitle } from '@headlessui/vue'
+import { useClientStore } from '@/stores/clients'
 import LeInput from '../UI/LeInput.vue'
 import LeBtn from '../UI/LeBtn.vue'
 const isOpen = ref(true)
 
-import { useClientStore } from '@/stores/clients'
 const clientStore = useClientStore()
-const resetFormInputs = () => {
-  modalForm.name = ''
-  modalForm.company = ''
-  modalForm.email = ''
-  modalForm.address = ''
+const resetFormNoClient = () => {
+  noClientsFormNew.name = ''
+  noClientsFormNew.company = ''
+  noClientsFormNew.email = ''
+  noClientsFormNew.address = ''
 }
-const modalForm = reactive({ name: '', company: '', email: '', address: '' })
+const noClientsFormNew = { name: '', company: '', email: '', address: '' }
 
 function addNewClient() {
-  clientStore.createNew(modalForm)
+  clientStore.createNew(noClientsFormNew)
   // Validation?
-  resetFormInputs()
+  resetFormNoClient()
 }
 
 function closeModal() {
@@ -81,51 +81,52 @@ function openModal() {
                       <div>
                         <LeInput
                           label="Name"
-                          id="client-add-name-id-1"
+                          id="no-client-add-name-id-1"
                           name="client-name"
                           type="text"
                           autocomplete="name"
                           required
-                          v-model="modalForm.name"
+                          v-model="noClientsFormNew.name"
                         />
                       </div>
                       <div>
                         <LeInput
                           label="Company"
-                          id="client-add-company-1"
+                          id="no-client-add-company-1"
                           name="client-company"
                           type="text"
                           autocomplete="organization"
                           required
-                          v-model="modalForm.company"
+                          v-model="noClientsFormNew.company"
                         />
                       </div>
                       <div>
                         <LeInput
                           label="Email"
-                          id="client-add-email-1"
+                          id="no-client-add-email-1"
                           name="client-email"
                           type="text"
                           autocomplete="email"
                           required
-                          v-model="modalForm.email"
+                          v-model="noClientsFormNew.email"
                         />
                       </div>
                       <div>
                         <LeInput
                           label="Address"
-                          id="client-add-address-1"
+                          id="no-client-add-address-1"
                           name="client-address"
                           type="text"
                           autocomplete="address"
                           required
-                          v-model="modalForm.address"
+                          v-model="noClientsFormNew.address"
                         />
                       </div>
                       <div class="flex w-full justify-center">
                         <LeBtn
                           @click="
-                            (addNewClient(modalForm), console.log('add new in template clicked '))
+                            (addNewClient(noClientsFormNew),
+                            console.log('add new in template clicked '))
                           "
                         >
                           <p class="text-sm">Add New</p>

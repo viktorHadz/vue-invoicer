@@ -1,8 +1,17 @@
 <script setup>
 import { ref } from 'vue'
 import { BriefcaseIcon } from '@heroicons/vue/24/outline'
+import { useItemsStore } from '@/stores/items'
 
-// const props = defineProps
+const itemStore = useItemsStore()
+const styles = ref(itemStore.fakeItems)
+const stySrchItems = ref('')
+
+// const displayStyles = computed(() => {
+//   return styles.value.filter((style) => {
+//     return style.title.trim().toLowerCase().includes(stySrchItems.value.toLowerCase())
+//   })
+// })
 const isOpen = ref(false)
 </script>
 <template>
@@ -26,7 +35,14 @@ const isOpen = ref(false)
       <div class="slide-over" v-if="isOpen">
         <div class="modal-inner">
           <p>Hello from the modal!</p>
+          <button @click="console.log(styles)">sssssssssss</button>
           <button @click="isOpen = false">Close</button>
+
+          <!-- <ul v-for="style in displayStyles" :key="style.id">
+            <li>{{ style.title }}</li>
+            <li>{{ style.category }}</li>
+            <li>{{ style.price }}</li>
+          </ul> -->
         </div>
       </div>
     </transition>

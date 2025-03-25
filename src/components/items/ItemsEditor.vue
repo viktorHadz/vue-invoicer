@@ -22,7 +22,7 @@ const isOpen = ref(false)
     <!-- Icon that changes color on hover -->
     <BriefcaseIcon
       @click="isOpen = true"
-      class="size-8 text-gray-500 hover:text-gray-900 transition-colors cursor-pointer"
+      class="size-8 stroke-1 text-gray-600 hover:text-gray-900 transition-colors cursor-pointer"
     ></BriefcaseIcon>
   </div>
 

@@ -5,12 +5,12 @@ export const useItemsStore = defineStore('items', () => {
   const fakeItems = ref([])
   const fetchStyles = async () => {
     fetch('https://dummyjson.com/products?limit=10&skip=10')
-      .then(res => res.json())
+      .then((res) => res.json())
       .then((data) => {
         console.log(data)
         fakeItems.value.push(data)
       })
-      .catch(error => console.error('Error:', error))
+      .catch((error) => console.error('Error:', error))
   }
 
   return { fakeItems, fetchStyles }

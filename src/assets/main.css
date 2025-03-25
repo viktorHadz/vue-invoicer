@@ -1,10 +1,19 @@
 @import 'tailwindcss';
 @import './base.css';
-@theme {
-  --color-primary: #10b981; /* Emerald 500 */
+
+/* Correct way to use theme variables in tailwind for darkmode 
+see: https://github.com/tailwindlabs/tailwindcss/discussions/15083
+*/
+@variant dark (&:where(.dark, .dark *));
+:root {
+  --text-fg: #ffffff;
+
+  :where(.dark) {
+    --text-fg: #111111;
+  }
 }
-[data-theme='dark'] {
-  --color-primary: #10b981; /* Emerald 500 */
+@theme inline {
+  --color-fg: var(--text-fg);
 }
 
 #app {

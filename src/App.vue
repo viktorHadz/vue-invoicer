@@ -6,14 +6,13 @@ import ItemsEditor from './components/items/ItemsEditor.vue'
 import NoSelectedClientModal from './components/clients/NoSelectedClient.vue'
 import { useClientStore } from '@/stores/clients'
 import LeBtn from './components/UI/LeBtn.vue'
+import LeDarkMode from './components/UI/LeDarkMode.vue'
 
 const clientStore = useClientStore()
-
-// If memorised in localstorage
 </script>
 
 <template>
-  <div class="layout">
+  <div class="layout bg-fg">
     <header class="sidebar border-r border-gray-300 bg-gray-100/75">
       <nav class="flex flex-col gap-4 p-4" v-if="clientStore.hasClients">
         <RouterLink to="/clients">
@@ -42,6 +41,7 @@ const clientStore = useClientStore()
           <div class="flex flex-col">
             <ItemsEditor></ItemsEditor>
           </div>
+          <LeDarkMode></LeDarkMode>
         </div>
       </div>
       <!-- Modals -- Add parent component to decluter if needed  -->
@@ -50,13 +50,4 @@ const clientStore = useClientStore()
   </div>
 </template>
 
-<style scoped>
-toggle-panel {
-  max-height: 40px; /* tucked in */
-  overflow: hidden;
-  transition: max-height 0.3s ease;
-}
-.toggle-panel:hover {
-  max-height: 100px; /* increased height on hover */
-}
-</style>
+<style scoped></style>

@@ -8,8 +8,8 @@ defineProps({
 <template>
   <button
     :disabled="disabled"
-    class="rounded-sm px-2 py-1 text-xs font-semibold ring-1 shadow-xs ring-inset bg-white text-gray-900 ring-gray-300 hover:bg-gray-50 cursor-pointer"
-    :class="{ 'opacity-70 cursor-not-allowed': disabled }"
+    class="cursor-pointer rounded-sm bg-white px-2 py-1 text-xs font-semibold text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset hover:bg-gray-50"
+    :class="{ 'cursor-not-allowed opacity-70': disabled }"
   >
     {{ buttonText }}
     <slot></slot>

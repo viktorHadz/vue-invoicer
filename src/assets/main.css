@@ -6,19 +6,104 @@ see: https://github.com/tailwindlabs/tailwindcss/discussions/15083
 */
 @variant dark (&:where(.dark, .dark *));
 :root {
-  --text-fg: #ffffff;
+  /* === PRIMARY === */
+  --prim-50: #f7fff9;
+  --prim-100: #ccffd9;
+  --prim-200: #93ffae;
+  --prim-300: #00f382;
+  --prim-400: #00c769;
+  --prim-500: #009c51;
+  --prim-600: #00733a;
+  --prim-700: #004d25;
+  --prim-800: #002911;
+
+  /* === SECONDARY === */
+  --sec-50: #e5e5c7;
+  --sec-100: #bdbda4;
+  --sec-200: #969682;
+  --sec-300: #717162;
+  --sec-400: #4f4f43;
+  --sec-500: #2e2e27;
+  --sec-600: #11110d;
+
+  /* === TERTIARY === */
+  --ter-50: #d8f7f7;
+  --ter-100: #a2d8d8;
+  --ter-200: #83afaf;
+  --ter-300: #658888;
+  --ter-400: #496363;
+  --ter-500: #2e4040;
+  --ter-600: #152020;
+
+  /* === NEUTRAL === */
+  --neu-50: #fdfdfd;
+  --neu-100: #d4d4d4;
+  --neu-200: #adadad;
+  --neu-300: #878787;
+  --neu-400: rgb(53, 49, 44);
+  --neu-500: rgb(49, 47, 44);
+  --neu-600: #232323;
+
+  /* === BASE COLORS (OKLCH) === */
+  --color-vbg: oklch(96.55% 0.039 100.86);
+  --color-vbg-head: oklch(89.41% 0.057 89.24);
+  --color-vbg-head2: oklch(92.31% 0.054 91.03); /* for hovers slight variations*/
+  --color-vbg-body: oklch(95.55% 0.055 96.15);
+
+  --color-acc: oklch(57.56% 0.066 199.49);
+  --color-acc-1: oklch(73.33% 0.062 199.87);
+  --color-acc-2: oklch(89.08% 0.062 199.92);
+
+  --color-fg: oklch(28.09% 0.006 34.3);
+  --color-fg-2: oklch(32.09% 0.006 34.3);
+
+  --color-vborder: oklch(85.41% 0.057 89.24);
+
+  --color-success: oklch(65.64% 0.135 109.11); /* green, mild */
+  --color-danger: oklch(54.58% 0.203 28.66); /* warm red */
+  --color-warn: oklch(72.51% 0.143 77.8); /*warm orange*/
 
   :where(.dark) {
-    --text-fg: #111111;
+    --color-vbg: oklch(20.69% 0.003 196.92);
+    --color-vbg-head: oklch(24.08% 0.005 219.67);
+    --color-vbg-head2: oklch(22.43% 0.003 196.94); /* for hovers slight variations*/
+    --color-vbg-body: oklch(27.68% 0 0);
+
+    --color-acc: oklch(70.48% 0.158 160.55);
+    --color-acc-1: oklch(81.01% 0.154 160.52);
+    --color-acc-2: oklch(91.71% 0.132 160.44);
+
+    --color-fg: oklch(80.61% 0.042 83.08);
+    --color-fg-2: oklch(91.55% 0.055 96.15);
+
+    --color-vborder: oklch(34.09% 0.006 34.3);
   }
 }
+/* === THEME COLORS === */
 @theme inline {
-  --color-fg: var(--text-fg);
+  --color-vbg: var(--color-vbg);
+  --color-vbg-body: var(--color-vbg-body);
+  --color-vbg-head: var(--color-vbg-head);
+  --color-vbg-head2: var(--color-vbg-head2);
+
+  --color-acc: var(--color-acc);
+  --color-acc-1: var(--color-acc-1);
+  --color-acc-2: var(--color-acc-2);
+
+  --color-fg: var(--color-fg);
+  --color-fg-2: var(--color-fg-2);
+
+  --color-vborder: var(--color-vborder);
+
+  --color-success: var(--color-success);
+  --color-danger: var(--color-danger);
+  --color-warn: var(--color-warn);
 }
 
 #app {
-  font-family: 'Manrope', sans-serif;
+  font-family: 'Manrope Variable', sans-serif;
 }
+
 .container {
   max-width: clamp(16rem, 80rem, 50%);
   margin-left: auto;
@@ -26,6 +111,7 @@ see: https://github.com/tailwindlabs/tailwindcss/discussions/15083
   padding-left: 1rem;
   padding-right: 1rem;
 }
+
 .container-lg {
   max-width: clamp(16rem, 70%, 100%);
   margin-left: auto;

@@ -12,8 +12,8 @@ const clientStore = useClientStore()
 </script>
 
 <template>
-  <div class="layout bg-fg">
-    <header class="sidebar border-r border-gray-300 bg-gray-100/75">
+  <div class="layout bg-vbg text-fg border-vborder">
+    <header class="sidebar border-vborder bg-vbg-head border-r">
       <nav class="flex flex-col gap-4 p-4" v-if="clientStore.hasClients">
         <RouterLink to="/clients">
           <LeBtn type="button" button-text="Clients">Clients</LeBtn>
@@ -32,10 +32,10 @@ const clientStore = useClientStore()
       <RouterView class="mt-20" />
       <div
         v-if="clientStore.hasClients"
-        class="absolute top-0 right-0 z-50 max-w-64 w-1/2 flex justify-end"
+        class="absolute top-0 right-0 z-50 flex w-1/2 max-w-64 justify-end"
       >
         <div
-          class="relative border-b border-x rounded-b-md bg-gray-100/75 border-gray-300 flex gap-8 p-2 mr-4"
+          class="border-vborder bg-vbg relative mr-4 flex gap-8 rounded-b-md border-x border-b p-2"
         >
           <SelectClient selectTitle="Select a Client" select-title-class="text-sm"> </SelectClient>
           <div class="flex flex-col">

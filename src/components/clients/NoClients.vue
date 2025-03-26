@@ -33,10 +33,10 @@ function openModal() {
   <div class="container">
     <button
       type="button"
-      class="relative block w-full rounded-lg border-2 border-dashed border-gray-300 p-12 text-center hover:border-gray-400 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-hidden cursor-pointer"
+      class="relative block w-full cursor-pointer rounded-lg border-2 border-dashed border-gray-300 p-12 text-center hover:border-gray-400 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-hidden"
       @click="openModal"
     >
-      <userPlusIcon class="size-12 mx-auto text-gray-400" />
+      <userPlusIcon class="mx-auto size-12 text-gray-400" />
 
       <span class="mt-2 block text-sm font-semibold text-gray-900">Create a new client</span>
     </button>
@@ -71,13 +71,13 @@ function openModal() {
                 >
                   <DialogTitle
                     as="h3"
-                    class="font-medium text-lg text-center leading-6 text-gray-800"
+                    class="text-center text-lg leading-6 font-medium text-gray-800"
                   >
                     New client menu
                   </DialogTitle>
 
                   <div class="px-4 py-6 sm:p-8">
-                    <div class="flex flex-col gap-8 w-full">
+                    <div class="flex w-full flex-col gap-8">
                       <div>
                         <LeInput
                           label="Name"

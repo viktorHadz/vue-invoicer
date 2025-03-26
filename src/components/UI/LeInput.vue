@@ -2,7 +2,7 @@
   <div class="relative">
     <label
       :for="props.id"
-      class="absolute -top-2 left-2 inline-block rounded-lg bg-white px-1 text-xs font-medium text-gray-900"
+      class="text-fg absolute -top-2 left-2 inline-block rounded-lg px-1 text-xs font-medium"
     >
       {{ props.label }}
     </label>
@@ -13,7 +13,7 @@
       :value="modelValue"
       @input="emit('update:modelValue', $event.target.value)"
       v-bind="$attrs"
-      class="block w-full rounded-md font-normal bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+      class="bg-vbg-head2 focus:bg-vbg-head hover:bg-vbg-head outline-vborder hover:outline-fg/50 placeholder:text-fg hover:placeholder:text-fg-2 focus:outline-fg text-fg2 block w-full rounded-md px-3 py-1.5 text-base font-normal outline-1 -outline-offset-1 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6"
     />
   </div>
 </template>

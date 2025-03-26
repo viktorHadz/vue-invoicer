@@ -17,12 +17,12 @@ const isOpen = ref(false)
 <template>
   <div class="flex flex-col items-center">
     <!-- Text that always stays gray-900 -->
-    <p class="block font-medium tracking-tight text-sm text-gray-900">Items</p>
+    <p class="text-fg block text-sm font-medium tracking-tight">Items</p>
 
     <!-- Icon that changes color on hover -->
     <BriefcaseIcon
       @click="isOpen = true"
-      class="size-8 stroke-1 text-gray-600 hover:text-gray-900 transition-colors cursor-pointer"
+      class="text-fg hover:text-fg-2 size-8 cursor-pointer stroke-1 transition-colors"
     ></BriefcaseIcon>
   </div>
 

@@ -26,12 +26,12 @@ export default {
                   v-for="(column, index) in columns"
                   :key="index"
                   scope="col"
-                  class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter"
+                  class="border-vborder text-fg bg-vbg-head sticky top-0 z-10 border-b px-3 py-3.5 text-left text-sm font-semibold backdrop-blur-sm backdrop-filter"
                 >
                   {{ column.label }}
                 </th>
                 <th
-                  class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter"
+                  class="border-vborder bg-vbg-head text-fg sticky top-0 z-10 border-b px-3 py-3.5 text-left text-sm font-semibold backdrop-blur-sm backdrop-filter"
                 ></th>
               </tr>
             </thead>
@@ -43,22 +43,22 @@ export default {
                   v-for="(column, colIndex) in columns"
                   :key="colIndex"
                   :class="[
-                    rowIndex !== data.length - 1 ? 'border-b border-gray-200' : '',
-                    'px-3 py-4 text-sm text-gray-500 whitespace-nowrap',
+                    rowIndex !== data.length - 1 ? 'border-vborder border-b' : '',
+                    'text-fg px-3 py-4 text-sm whitespace-nowrap',
                   ]"
                 >
                   {{ row[column.key] }}
                 </td>
                 <td
                   :class="[
-                    rowIndex !== data.length - 1 ? 'border-b border-gray-200' : '',
+                    rowIndex !== data.length - 1 ? 'border-vborder border-b' : '',
                     'relative py-4 pr-4 pl-3 text-right text-sm font-medium whitespace-nowrap',
                   ]"
                 >
                   <div class="flex gap-4">
                     <a
                       href="#"
-                      class="text-indigo-600 hover:text-indigo-900"
+                      class="text-success hover:text-indigo-900"
                       @click="$emit('edit', row)"
                     >
                       Edit<span class="sr-only">, {{ row.name }}</span>

@@ -67,30 +67,32 @@ const filteredClients = computed(() => {
     <div class="align-middle">
       <div class="inline-block min-w-full">
         <!-- Search -->
-        <div class="w-full max-w-[90%] 2xl:max-w-[70%] mx-auto">
+        <div class="mx-auto w-full max-w-[90%] 2xl:max-w-[70%]">
           <div
-            class="pt-2 px-2 pb-3 ring-t ring-1 ring-x rounded-t-lg ring-black/10 bg-gray-100/75 w-fit -mb-1"
+            class="ring-t ring-x ring-vborder bg-vbg group -mb-2 w-fit rounded-t-lg px-2 pt-2 pb-4 ring-1"
           >
             <div
-              class="flex items-center ring-1 ring-black/10 focus-within:ring-black/30 rounded-lg shadow-sm bg-white px-3 py-2 w-64 hover:ring-black/20"
+              class="bg-vbg-head2 group-focus-within:ring-fg/50 group-hover:ring-fg/50 ring-vborder/80 flex w-64 items-center rounded-lg px-3 py-2 shadow-sm ring-1 transition-colors"
             >
-              <MagnifyingGlassIcon class="h-4 w-4 text-gray-500 mr-2"></MagnifyingGlassIcon>
+              <MagnifyingGlassIcon
+                class="text-fg group-hover:text-fg-2 group-focus-within:text-fg-2 mr-2 h-4 w-4"
+              ></MagnifyingGlassIcon>
               <input
                 id="srchQry-clients-1"
                 v-model="searchQuery"
                 type="text"
                 placeholder="Search clients..."
-                class="w-full outline-none text-sm"
+                class="placeholder:text-fg w-full bg-transparent text-sm outline-none"
               />
             </div>
           </div>
         </div>
         <div
-          class="ring-1 overflow-y-auto max-h-[80vh] shadow-md ring-black/10 sm:rounded-lg max-w-[90%] 2xl:max-w-[70%] mx-auto"
+          class="ring-vborder mx-auto max-h-[80vh] max-w-[90%] overflow-y-auto shadow-md ring-1 sm:rounded-lg 2xl:max-w-[70%]"
         >
-          <table class="min-w-full divide-y divide-gray-300">
+          <table class="divide-vborder min-w-full divide-y">
             <thead
-              class="sticky top-0 z-10 bg-gray-100/75 px-3 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter border-b ring-1 ring-gray-300"
+              class="bg-vbg text-fgring-1 sticky top-0 z-10 border-b px-3 text-left text-sm font-semibold backdrop-blur-sm backdrop-filter"
             >
               <tr>
                 <th scope="col" class="py-3.5 pr-3 pl-4 text-left text-sm font-semibold sm:pl-4">
@@ -99,7 +101,7 @@ const filteredClients = computed(() => {
                 <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold">Company</th>
                 <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold">Email</th>
                 <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold">Address</th>
-                <th scope="col" class="relative py-3.5 pr-4 pl-3 sm:pr-6 text-center">Action</th>
+                <th scope="col" class="relative py-3.5 pr-4 pl-3 text-center sm:pr-6">Action</th>
               </tr>
               <tr>
                 <LeTh>
@@ -151,7 +153,7 @@ const filteredClients = computed(() => {
                   />
                 </LeTh>
                 <LeTh class="">
-                  <div class="w-full mx-1 flex justify-center">
+                  <div class="mx-1 flex w-full justify-center">
                     <LeBtn
                       @click="
                         (addNewClient(clientForm), console.log('add new in template clicked '))
@@ -192,11 +194,11 @@ const filteredClients = computed(() => {
                       v-model="editForm.address"
                   /></LeTd>
                   <LeTd>
-                    <div class="flex gap-5 items-center text-center justify-center w-full py-4">
-                      <a href="#" class="text-green-500 hover:text-green-600" @click="editSave()"
+                    <div class="flex w-full items-center justify-center gap-5 py-4 text-center">
+                      <a href="#" class="text-success hover:brightness-110" @click="editSave()"
                         ><CheckCircleIcon class="size-5"></CheckCircleIcon
                       ></a>
-                      <a href="#" class="text-red-400 hover:text-red-500" @click="cancelEdit()"
+                      <a href="#" class="text-danger hover:brightness-110" @click="cancelEdit()"
                         ><XCircleIcon class="size-5"></XCircleIcon
                       ></a>
                     </div>
@@ -210,11 +212,11 @@ const filteredClients = computed(() => {
                   <LeTd> {{ client.address }}</LeTd>
                   <LeTd>
                     <!-- Controls pading for entire read only row -->
-                    <div class="flex gap-5 items-center text-center justify-center w-full py-3">
+                    <div class="flex w-full items-center justify-center gap-5 py-3 text-center">
                       <a href="#" @click="editTrue(client)">
-                        <PencilIcon class="size-5.5 hover:text-blue-500"></PencilIcon>
+                        <PencilIcon class="hover:text-success size-5.5"></PencilIcon>
                       </a>
-                      <a href="#" class="hover:text-red-400" @click="removeClient(client)">
+                      <a href="#" class="hover:text-danger" @click="removeClient(client)">
                         <TrashIcon class="size-5.5"></TrashIcon>
                       </a>
                     </div>

@@ -12,8 +12,10 @@ const clientStore = useClientStore()
 </script>
 
 <template>
-  <div class="layout bg-vbg text-fg border-vborder">
-    <header class="sidebar border-vborder bg-vbg-head border-r">
+  <div class="layout bg-white text-neutral-700 dark:bg-neutral-800 dark:text-neutral-400">
+    <header
+      class="sidebar border-r border-neutral-400 bg-neutral-200 dark:border-neutral-700 dark:bg-neutral-900"
+    >
       <nav class="flex flex-col gap-4 p-4" v-if="clientStore.hasClients">
         <RouterLink to="/clients">
           <LeBtn type="button" button-text="Clients">Clients</LeBtn>
@@ -34,9 +36,7 @@ const clientStore = useClientStore()
         v-if="clientStore.hasClients"
         class="absolute top-0 right-0 z-50 flex w-1/2 max-w-64 justify-end"
       >
-        <div
-          class="border-vborder bg-vbg relative mr-4 flex gap-8 rounded-b-md border-x border-b p-2"
-        >
+        <div class="relative mr-4 flex gap-8 rounded-b-md border-x border-b p-2">
           <SelectClient selectTitle="Select a Client" select-title-class="text-sm"> </SelectClient>
           <div class="flex flex-col">
             <ItemsEditor></ItemsEditor>

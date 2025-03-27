@@ -67,32 +67,30 @@ const filteredClients = computed(() => {
     <div class="align-middle">
       <div class="inline-block min-w-full">
         <!-- Search -->
-        <div class="mx-auto w-full max-w-[90%] 2xl:max-w-[70%]">
+        <div class="mx-auto w-full max-w-[80%] 2xl:max-w-[70%]">
           <div
-            class="ring-t ring-x ring-vborder bg-vbg group -mb-2 w-fit rounded-t-lg px-2 pt-2 pb-4 ring-1"
+            class="ring-t ring-x group -mb-2 w-fit rounded-t-lg px-2 pt-2 pb-4 ring-1 ring-neutral-400 dark:ring-neutral-600"
           >
             <div
-              class="bg-vbg-head2 group-focus-within:ring-fg/50 group-hover:ring-fg/50 ring-vborder/80 flex w-64 items-center rounded-lg px-3 py-2 shadow-sm ring-1 transition-colors"
+              class="dark:focus-within: flex w-64 items-center rounded-lg bg-neutral-100 px-3 py-2 shadow-sm ring-1 ring-neutral-400 transition-colors focus-within:bg-neutral-50 focus-within:ring-neutral-500 hover:bg-neutral-50 hover:ring-neutral-500 dark:bg-zinc-900 dark:ring-neutral-600 dark:focus-within:bg-neutral-900 dark:focus-within:ring-neutral-600 dark:hover:bg-neutral-900 dark:hover:ring-neutral-600"
             >
-              <MagnifyingGlassIcon
-                class="text-fg group-hover:text-fg-2 group-focus-within:text-fg-2 mr-2 h-4 w-4"
-              ></MagnifyingGlassIcon>
+              <MagnifyingGlassIcon class="mr-2 size-4"></MagnifyingGlassIcon>
               <input
                 id="srchQry-clients-1"
                 v-model="searchQuery"
                 type="text"
                 placeholder="Search clients..."
-                class="placeholder:text-fg w-full bg-transparent text-sm outline-none"
+                class="w-full bg-transparent text-sm outline-none placeholder:text-neutral-700 dark:placeholder:text-neutral-400"
               />
             </div>
           </div>
         </div>
         <div
-          class="ring-vborder mx-auto max-h-[80vh] max-w-[90%] overflow-y-auto shadow-md ring-1 sm:rounded-lg 2xl:max-w-[70%]"
+          class="mx-auto max-h-[80vh] max-w-[80%] overflow-y-auto shadow-lg ring-1 ring-neutral-400 sm:rounded-lg 2xl:max-w-[70%] dark:ring-neutral-600"
         >
           <table class="divide-vborder min-w-full divide-y">
             <thead
-              class="bg-vbg text-fgring-1 sticky top-0 z-10 border-b px-3 text-left text-sm font-semibold backdrop-blur-sm backdrop-filter"
+              class="sticky top-0 z-10 border-b bg-neutral-200 px-3 text-left text-sm font-semibold backdrop-blur-sm backdrop-filter dark:bg-zinc-900"
             >
               <tr>
                 <th scope="col" class="py-3.5 pr-3 pl-4 text-left text-sm font-semibold sm:pl-4">
@@ -103,7 +101,7 @@ const filteredClients = computed(() => {
                 <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold">Address</th>
                 <th scope="col" class="relative py-3.5 pr-4 pl-3 text-center sm:pr-6">Action</th>
               </tr>
-              <tr>
+              <tr class="bg-neutral-200 dark:bg-zinc-900">
                 <LeTh>
                   <LeInput
                     label=""
@@ -209,15 +207,15 @@ const filteredClients = computed(() => {
                   <LeTd>{{ client.name }}</LeTd>
                   <LeTd>{{ client.company }}</LeTd>
                   <LeTd>{{ client.email }}</LeTd>
-                  <LeTd> {{ client.address }}</LeTd>
+                  <LeTd class="text-xs"> {{ client.address }}</LeTd>
                   <LeTd>
                     <!-- Controls pading for entire read only row -->
                     <div class="flex w-full items-center justify-center gap-5 py-3 text-center">
                       <a href="#" @click="editTrue(client)">
-                        <PencilIcon class="hover:text-success size-5.5"></PencilIcon>
+                        <PencilIcon class="hover:text-success size-5"></PencilIcon>
                       </a>
                       <a href="#" class="hover:text-danger" @click="removeClient(client)">
-                        <TrashIcon class="size-5.5"></TrashIcon>
+                        <TrashIcon class="size-5"></TrashIcon>
                       </a>
                     </div>
                   </LeTd>

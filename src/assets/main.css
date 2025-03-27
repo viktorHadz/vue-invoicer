@@ -45,38 +45,28 @@ see: https://github.com/tailwindlabs/tailwindcss/discussions/15083
   --neu-600: #232323;
 
   /* === BASE COLORS (OKLCH) === */
-  --color-vbg: oklch(96.55% 0.039 100.86);
-  --color-vbg-head: oklch(89.41% 0.057 89.24);
-  --color-vbg-head2: oklch(92.31% 0.054 91.03); /* for hovers slight variations*/
-  --color-vbg-body: oklch(95.55% 0.055 96.15);
+  --color-prim: oklch(100% 0 0);
 
-  --color-acc: oklch(57.56% 0.066 199.49);
-  --color-acc-1: oklch(73.33% 0.062 199.87);
-  --color-acc-2: oklch(89.08% 0.062 199.92);
+  --color-sec: oklch(30.23% 0.0152 252.34);
+  --color-sec-mute: oklch(42.71% 0.0272 254.56);
 
-  --color-fg: oklch(28.09% 0.006 34.3);
-  --color-fg-2: oklch(32.09% 0.006 34.3);
+  --color-ter: oklch(48.85% 0.106 161.97);
 
-  --color-vborder: oklch(85.41% 0.057 89.24);
+  --color-acc: oklch(50.75% 0.1387 21.84);
 
-  --color-success: oklch(65.64% 0.135 109.11); /* green, mild */
-  --color-danger: oklch(54.58% 0.203 28.66); /* warm red */
-  --color-warn: oklch(72.51% 0.143 77.8); /*warm orange*/
+  --color-danger: oklch(46.44% 0.1477 24.17);
+  --color-danger: oklch(75.22% 0.1235 62.47);
+  --color-danger: oklch(68.1% 0.1708 151.16);
 
   :where(.dark) {
-    --color-vbg: oklch(20.69% 0.003 196.92);
-    --color-vbg-head: oklch(24.08% 0.005 219.67);
-    --color-vbg-head2: oklch(22.43% 0.003 196.94); /* for hovers slight variations*/
-    --color-vbg-body: oklch(27.68% 0 0);
+    --color-prim: oklch(23.93% 0 0);
 
-    --color-acc: oklch(70.48% 0.158 160.55);
-    --color-acc-1: oklch(81.01% 0.154 160.52);
-    --color-acc-2: oklch(91.71% 0.132 160.44);
+    --color-sec: oklch(19.13% 0 0);
+    --color-sec-mute: oklch(47.31% 0.0061 247.96);
 
-    --color-fg: oklch(80.61% 0.042 83.08);
-    --color-fg-2: oklch(91.55% 0.055 96.15);
+    --color-ter: oklch(48.85% 0.106 161.97);
 
-    --color-vborder: oklch(34.09% 0.006 34.3);
+    --color-acc: oklch(50.75% 0.1387 21.84);
   }
 }
 /* === THEME COLORS === */

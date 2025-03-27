@@ -11,6 +11,7 @@ import {
   CheckCircleIcon,
   XCircleIcon,
   MagnifyingGlassIcon,
+  UserPlusIcon,
 } from '@heroicons/vue/24/outline'
 
 const clientStore = useClientStore()
@@ -156,8 +157,13 @@ const filteredClients = computed(() => {
                       @click="
                         (addNewClient(clientForm), console.log('add new in template clicked '))
                       "
-                      buttonText="Add New"
-                    ></LeBtn>
+                      buttonText=""
+                    >
+                      <div class="flex items-center gap-2">
+                        <UserPlusIcon class="size-5"></UserPlusIcon>
+                        Add New
+                      </div>
+                    </LeBtn>
                   </div>
                 </LeTh>
               </tr>

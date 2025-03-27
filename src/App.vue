@@ -5,28 +5,29 @@ import SelectClient from './components/clients/SelectClient.vue'
 import ItemsEditor from './components/items/ItemsEditor.vue'
 import NoSelectedClientModal from './components/clients/NoSelectedClient.vue'
 import { useClientStore } from '@/stores/clients'
-import LeBtn from './components/UI/LeBtn.vue'
 import LeDarkMode from './components/UI/LeDarkMode.vue'
-
+import NavBtn from './components/UI/NavBtn.vue'
 const clientStore = useClientStore()
 </script>
 
 <template>
-  <div class="layout bg-white text-neutral-700 dark:bg-neutral-800 dark:text-neutral-400">
+  <div
+    class="layout bg-white text-neutral-700 transition duration-500 dark:bg-neutral-800 dark:text-neutral-400"
+  >
     <header
       class="sidebar border-r border-neutral-400 bg-neutral-200 dark:border-neutral-700 dark:bg-neutral-900"
     >
       <nav class="flex flex-col gap-4 p-4" v-if="clientStore.hasClients">
         <RouterLink to="/clients">
-          <LeBtn type="button" button-text="Clients">Clients</LeBtn>
+          <NavBtn href="#" button-text="Clients" class=""></NavBtn>
         </RouterLink>
 
         <RouterLink to="/invoice">
-          <LeBtn type="button" button-text="Invoice">Invoice</LeBtn>
+          <NavBtn type="button" button-text="Invoice"></NavBtn>
         </RouterLink>
 
         <RouterLink to="/editor">
-          <LeBtn type="button" button-text="Editor">Editor</LeBtn>
+          <NavBtn type="button" button-text="Editor"></NavBtn>
         </RouterLink>
       </nav>
     </header>

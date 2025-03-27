@@ -51,23 +51,23 @@ see: https://github.com/tailwindlabs/tailwindcss/discussions/15083
   --color-sec-mute: oklch(42.71% 0.0272 254.56);
 
   --color-ter: oklch(48.85% 0.106 161.97);
-
-  --color-acc: oklch(50.75% 0.1387 21.84);
+  /* ACCENT */
+  --color-acc: oklch(76.17% 0.132 31.66);
 
   --color-danger: oklch(46.44% 0.1477 24.17);
   --color-danger: oklch(75.22% 0.1235 62.47);
   --color-danger: oklch(68.1% 0.1708 151.16);
+}
+:where(.dark) {
+  --color-prim: oklch(23.93% 0 0);
 
-  :where(.dark) {
-    --color-prim: oklch(23.93% 0 0);
+  --color-sec: oklch(19.13% 0 0);
+  --color-sec-mute: oklch(47.31% 0.0061 247.96);
 
-    --color-sec: oklch(19.13% 0 0);
-    --color-sec-mute: oklch(47.31% 0.0061 247.96);
+  --color-ter: oklch(48.85% 0.106 161.97);
 
-    --color-ter: oklch(48.85% 0.106 161.97);
-
-    --color-acc: oklch(50.75% 0.1387 21.84);
-  }
+  /* ACCENT */
+  --color-acc: oklch(70.25% 0.132 160.37);
 }
 /* === THEME COLORS === */
 @theme inline {
@@ -88,6 +88,20 @@ see: https://github.com/tailwindlabs/tailwindcss/discussions/15083
   --color-success: var(--color-success);
   --color-danger: var(--color-danger);
   --color-warn: var(--color-warn);
+}
+@layer components {
+  .le-btn {
+    /* Base */
+    @apply cursor-pointer rounded-sm px-2 py-1 text-xs font-semibold shadow-xs ring-1 ring-offset-2 transition duration-300;
+    /* Variables D/L Theme */
+    @apply hover:bg-acc hover:ring-acc/80;
+    /* Variant Colors */
+    @apply bg-white text-neutral-700 ring-neutral-300 hover:text-white;
+    /* No need to prepend with dark here due to the @variant */
+    @variant dark {
+      @apply bg-neutral-800 text-neutral-300 ring-neutral-600 ring-offset-neutral-800 hover:text-neutral-700;
+    }
+  }
 }
 
 #app {

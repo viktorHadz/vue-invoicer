@@ -8,7 +8,7 @@ defineProps({
 <template>
   <button
     :disabled="disabled"
-    class="le-btn"
+    class="hover:text-acc cursor-pointer decoration-2 underline-offset-2 hover:underline"
     :class="{ 'cursor-not-allowed opacity-70': disabled }"
   >
     {{ buttonText }}

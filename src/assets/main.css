@@ -103,6 +103,17 @@ see: https://github.com/tailwindlabs/tailwindcss/discussions/15083
     }
   }
 }
+@layer components {
+  .input-label {
+    @apply absolute -top-2 left-2 inline-block rounded-lg px-1 text-xs font-medium text-neutral-800;
+  }
+  .input {
+    @apply block w-full rounded-md bg-neutral-100 px-3 py-1.5 text-base font-normal text-neutral-900 outline-1 -outline-offset-1 outline-neutral-400 placeholder:text-neutral-700 hover:bg-neutral-50 hover:outline-neutral-600 focus:bg-neutral-50 focus:outline-2 focus:-outline-offset-2 focus:outline-neutral-600 sm:text-sm/6;
+    @variant dark {
+      @apply bg-zinc-900 text-neutral-400 outline-neutral-600 placeholder:text-neutral-500 hover:bg-neutral-900 hover:outline-neutral-600 focus:bg-neutral-900;
+    }
+  }
+}
 
 #app {
   font-family: 'Manrope Variable', sans-serif;

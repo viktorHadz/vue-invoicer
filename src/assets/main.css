@@ -4,57 +4,19 @@
 /* Correct way to use theme variables in tailwind for darkmode 
 see: https://github.com/tailwindlabs/tailwindcss/discussions/15083
 */
+
 @variant dark (&:where(.dark, .dark *));
+
 :root {
-  /* === PRIMARY === */
-  --prim-50: #f7fff9;
-  --prim-100: #ccffd9;
-  --prim-200: #93ffae;
-  --prim-300: #00f382;
-  --prim-400: #00c769;
-  --prim-500: #009c51;
-  --prim-600: #00733a;
-  --prim-700: #004d25;
-  --prim-800: #002911;
-
-  /* === SECONDARY === */
-  --sec-50: #e5e5c7;
-  --sec-100: #bdbda4;
-  --sec-200: #969682;
-  --sec-300: #717162;
-  --sec-400: #4f4f43;
-  --sec-500: #2e2e27;
-  --sec-600: #11110d;
-
-  /* === TERTIARY === */
-  --ter-50: #d8f7f7;
-  --ter-100: #a2d8d8;
-  --ter-200: #83afaf;
-  --ter-300: #658888;
-  --ter-400: #496363;
-  --ter-500: #2e4040;
-  --ter-600: #152020;
-
-  /* === NEUTRAL === */
-  --neu-50: #fdfdfd;
-  --neu-100: #d4d4d4;
-  --neu-200: #adadad;
-  --neu-300: #878787;
-  --neu-400: rgb(53, 49, 44);
-  --neu-500: rgb(49, 47, 44);
-  --neu-600: #232323;
-
-  /* FONT */
   font-family: 'Manrope Variable', sans-serif;
-
-  /* === BASE COLORS (OKLCH) === */
-  --color-background: oklch(100% 0 0);
+  --color-prim: oklch(100% 0 0);
 
   --color-sec: oklch(30.23% 0.0152 252.34);
   --color-sec-mute: oklch(42.71% 0.0272 254.56);
 
   /* ACCENT */
-  --color-acc: oklch(76.17% 0.132 31.66);
+  --color-acc: oklch(64.84% 0.1927 31.66);
+  --color-acc-mute: oklch(76.17% 0.132 31.66);
 
   --color-ter: oklch(48.85% 0.106 161.97);
 
@@ -63,7 +25,7 @@ see: https://github.com/tailwindlabs/tailwindcss/discussions/15083
   --color-danger: oklch(68.1% 0.1708 151.16);
 }
 :where(.dark) {
-  --color-background: oklch(23.93% 0 0);
+  --color-prim: oklch(23.93% 0 0);
 
   --color-sec: oklch(19.13% 0 0);
   --color-sec-mute: oklch(47.31% 0.0061 247.96);
@@ -74,35 +36,25 @@ see: https://github.com/tailwindlabs/tailwindcss/discussions/15083
   --color-ter: oklch(48.85% 0.106 161.97);
 }
 @theme inline {
-  /* === THEME COLORS === */
-  --color-background: var(--color-background);
+  --color-prim: var(--color-prim);
 
   --color-sec-mute: var(--color-sec);
   --color-sec-mute: var(--color-sec-mute);
 
   --color-acc: var(--color-acc);
+
   --color-ter: var(--color-ter);
-
-  --color-fg: var(--color-fg);
-  --color-fg-2: var(--color-fg-2);
-
-  --color-vborder: var(--color-vborder);
 
   --color-success: var(--color-success);
   --color-danger: var(--color-danger);
   --color-warn: var(--color-warn);
-  /* === THEME FONTS === */
   --default-font-family-*: initial;
 }
 @layer components {
   .le-btn {
-    /* Base */
     @apply line-clamp-1 cursor-pointer truncate rounded-sm px-2 py-1 text-xs font-semibold shadow-xs ring-1 ring-offset-2 transition duration-300;
-    /* Variables D/L Theme */
     @apply hover:bg-acc hover:ring-acc;
-    /* Variant Colors */
     @apply bg-white text-neutral-700 ring-neutral-300 hover:text-white;
-    /* No need to prepend with dark here due to the @variant */
     @variant dark {
       @apply bg-neutral-800 text-neutral-300 ring-neutral-600 ring-offset-neutral-800 hover:text-neutral-900;
     }
@@ -124,10 +76,21 @@ see: https://github.com/tailwindlabs/tailwindcss/discussions/15083
     }
   }
 }
+/* THE PROBLEM SEEMS TO BE THAT MODALS GET TELEPORTED OUTSIDE OF THE APP ELEMENT STRAIGHT TO THE BODY RESULTING IN AN ELEMENT WHICH SITS OUTSIDE DARKMODE WHICH IS APPLIED TO THE APP NOT THE BODY 
 
-#app {
-  /* placeholder */
+SOLUTION: TRY STICKING DARKMODE TO THE HTML? */
+@layer components {
+  .bg-color-var {
+    @apply bg-prim;
+    @variant dark {
+      @apply dark:bg-prim;
+    }
+  }
 }
+
+/* #app {
+  /* placeholder */
+/* }  */
 
 .container {
   max-width: clamp(16rem, 80rem, 50%);

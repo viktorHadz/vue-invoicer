@@ -6,13 +6,12 @@ import ItemsEditor from './components/items/ItemsEditor.vue'
 import NoSelectedClientModal from './components/clients/NoSelectedClient.vue'
 import { useClientStore } from '@/stores/clients'
 import LeDarkMode from './components/UI/LeDarkMode.vue'
-import NavBtn from './components/UI/NavBtn.vue'
 
 const clientStore = useClientStore()
 </script>
 
 <template>
-  <div class="layout bg-background text-neutral-700 transition duration-500 dark:text-neutral-400">
+  <div class="layout bg-color-var text-neutral-700 transition duration-500 dark:text-neutral-400">
     <header
       class="sidebar border-r border-neutral-400 bg-neutral-200 dark:border-neutral-700 dark:bg-neutral-900"
     >
@@ -41,6 +40,7 @@ const clientStore = useClientStore()
     </header>
     <main class="main-content">
       <RouterView class="mt-20" />
+      <div class="p-4">hello</div>
       <div
         v-if="clientStore.hasClients"
         class="absolute top-0 right-0 z-50 flex w-1/2 max-w-64 justify-end"
@@ -49,9 +49,7 @@ const clientStore = useClientStore()
           class="relative mr-4 flex gap-8 rounded-b-md border-x border-b border-neutral-400 p-2 dark:border-neutral-600"
         >
           <SelectClient selectTitle="Select a Client" select-title-class="text-sm"> </SelectClient>
-          <div class="flex flex-col">
-            <ItemsEditor></ItemsEditor>
-          </div>
+          <ItemsEditor></ItemsEditor>
           <LeDarkMode></LeDarkMode>
         </div>
       </div>

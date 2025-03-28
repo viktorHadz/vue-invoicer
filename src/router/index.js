@@ -21,7 +21,7 @@ const router = createRouter({
       component: () => import('../views/TheEditor.vue'),
     },
   ],
-  linkActiveClass: 'router-active'
+  linkActiveClass: 'router-active',
 })
 
 export default router

@@ -5,7 +5,7 @@ import { useItemsStore } from '@/stores/items'
 
 const itemStore = useItemsStore()
 const styles = ref(itemStore.fakeItems)
-const stySrchItems = ref('')
+// const stySrchItems = ref('')
 
 // const displayStyles = computed(() => {
 //   return styles.value.filter((style) => {
@@ -28,15 +28,21 @@ const isOpen = ref(false)
 
   <Teleport to="body">
     <transition name="fadeItIn">
-      <div v-if="isOpen" class="backdrop"></div>
+      <div
+        v-if="isOpen"
+        class="fixed inset-0 top-0 right-0 z-[900] h-[100vh] w-[100vw] bg-black/50 select-none"
+      ></div>
     </transition>
 
     <transition mode="out-in" name="slideItIn">
-      <div class="slide-over" v-if="isOpen">
-        <div class="modal-inner">
+      <div
+        class="fixed top-0 right-0 z-[901] h-[100vh] w-[50vw] bg-white 2xl:w-1/3 dark:bg-neutral-800"
+        v-if="isOpen"
+      >
+        <div class="back-of-modal">
           <p>Hello from the modal!</p>
           <button @click="console.log(styles)">ss</button>
-          <button @click="isOpen = false">Close</button>
+          <button @click="isOpen = false" class="bg-acc p-4">Close</button>
 
           <!-- <ul v-for="style in displayStyles" :key="style.id">
             <li>{{ style.title }}</li>
@@ -49,25 +55,7 @@ const isOpen = ref(false)
   </Teleport>
 </template>
 <style scoped>
-.backdrop {
-  z-index: 900;
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: 100vw;
-  height: 100vh;
-
-  background-color: rgba(0, 0, 0, 0.5);
-}
-.slide-over {
-  z-index: 901;
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: 50vw;
-  height: 100vh;
-  background-color: white;
-}
+@reference '@/assets/main.css';
 
 .fadeItIn-enter-active,
 .fadeItIn-leave-active {

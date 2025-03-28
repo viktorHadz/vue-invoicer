@@ -1,4 +1,4 @@
-import '@fontsource-variable/manrope';
+import '@fontsource-variable/manrope'
 import './assets/main.css'
 
 import { createApp } from 'vue'

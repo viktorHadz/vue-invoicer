@@ -26,7 +26,7 @@ const props = defineProps({
         {{ props.selectTitle }}
       </ListboxLabel>
       <ListboxButton
-        class="grid w-full cursor-default grid-cols-1 rounded-md bg-neutral-200 py-1.5 pr-2 pl-3 text-left text-neutral-900 outline-1 -outline-offset-1 outline-neutral-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6 dark:bg-zinc-900 dark:text-neutral-300 dark:outline-neutral-600 dark:focus:outline-neutral-600"
+        class="focus:outline-acc hover:text-acc grid w-full cursor-pointer grid-cols-1 rounded-md bg-neutral-100 py-1.5 pr-2 pl-3 text-left text-neutral-900 outline-1 -outline-offset-1 outline-neutral-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6 dark:bg-zinc-900 dark:text-neutral-300 dark:outline-neutral-600"
       >
         <span class="col-start-1 row-start-1 truncate pr-6">{{
           clientStore.selectedClient?.name || 'Select a client to continue'
@@ -43,7 +43,7 @@ const props = defineProps({
         leave-to-class="opacity-0"
       >
         <ListboxOptions
-          class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-neutral-100 py-1 text-base shadow-lg ring-1 focus:outline-hidden sm:text-sm dark:bg-zinc-900"
+          class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-neutral-100 py-1 text-base shadow-lg ring-1 ring-neutral-400 focus:outline-hidden sm:text-sm dark:bg-zinc-900 dark:ring-neutral-600"
         >
           <ListboxOption
             as="template"
@@ -55,16 +55,13 @@ const props = defineProps({
             <li
               :class="[
                 active
-                  ? 'bg-neutral-50 text-neutral-950 outline-hidden dark:bg-zinc-800 dark:text-neutral-300'
-                  : 'text-neutral-700 dark:text-neutral-500',
+                  ? 'text-acc bg-neutral-200 outline-hidden dark:bg-zinc-800'
+                  : 'text-neutral-700 dark:text-neutral-400',
                 'relative cursor-default py-2 pr-4 pl-8 select-none',
               ]"
             >
               <span
-                :class="[
-                  selected ? 'font-semibold text-neutral-900 dark:text-neutral-300' : 'font-normal',
-                  'block truncate',
-                ]"
+                :class="[selected ? 'text-acc font-semibold' : 'font-normal', 'block truncate']"
                 >{{ client.name }}</span
               >
 

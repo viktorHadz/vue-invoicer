@@ -70,10 +70,10 @@ const filteredClients = computed(() => {
         <!-- Search -->
         <div class="mx-auto w-full max-w-[80%] 2xl:max-w-[70%]">
           <div
-            class="ring-t ring-x group -mb-2 w-fit rounded-t-lg px-2 pt-2 pb-4 ring-1 ring-neutral-400 dark:ring-neutral-600"
+            class="ring-t ring-x -mb-2 w-fit rounded-t-lg px-2 pt-2 pb-4 ring-1 ring-neutral-400 dark:ring-neutral-600"
           >
             <div
-              class="dark:focus-within: flex w-64 items-center rounded-lg bg-neutral-100 px-3 py-2 shadow-sm ring-1 ring-neutral-400 transition-colors focus-within:bg-neutral-50 focus-within:ring-neutral-500 hover:bg-neutral-50 hover:ring-neutral-500 dark:bg-zinc-900 dark:ring-neutral-600 dark:focus-within:bg-neutral-900 dark:focus-within:ring-neutral-600 dark:hover:bg-neutral-900 dark:hover:ring-neutral-600"
+              class="hover:ring-acc focus-within:ring-acc flex w-52 items-center rounded-lg bg-neutral-100 px-3 py-2 shadow-sm ring-1 ring-neutral-400 transition focus-within:ring-2 dark:bg-zinc-900 dark:ring-neutral-600 dark:focus-within:bg-zinc-900"
             >
               <MagnifyingGlassIcon class="mr-2 size-4"></MagnifyingGlassIcon>
               <input
@@ -89,7 +89,7 @@ const filteredClients = computed(() => {
         <div
           class="mx-auto max-h-[80vh] max-w-[80%] overflow-y-auto shadow-lg ring-1 ring-neutral-400 sm:rounded-lg 2xl:max-w-[70%] dark:ring-neutral-600"
         >
-          <table class="divide-vborder min-w-full divide-y">
+          <table class="min-w-full">
             <thead
               class="sticky top-0 z-10 border-b bg-neutral-200 px-3 text-left text-sm font-semibold backdrop-blur-sm backdrop-filter dark:bg-zinc-900"
             >

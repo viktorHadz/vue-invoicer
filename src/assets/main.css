@@ -44,41 +44,44 @@ see: https://github.com/tailwindlabs/tailwindcss/discussions/15083
   --neu-500: rgb(49, 47, 44);
   --neu-600: #232323;
 
+  /* FONT */
+  font-family: 'Manrope Variable', sans-serif;
+
   /* === BASE COLORS (OKLCH) === */
-  --color-prim: oklch(100% 0 0);
+  --color-background: oklch(100% 0 0);
 
   --color-sec: oklch(30.23% 0.0152 252.34);
   --color-sec-mute: oklch(42.71% 0.0272 254.56);
 
-  --color-ter: oklch(48.85% 0.106 161.97);
   /* ACCENT */
   --color-acc: oklch(76.17% 0.132 31.66);
+
+  --color-ter: oklch(48.85% 0.106 161.97);
 
   --color-danger: oklch(46.44% 0.1477 24.17);
   --color-danger: oklch(75.22% 0.1235 62.47);
   --color-danger: oklch(68.1% 0.1708 151.16);
 }
 :where(.dark) {
-  --color-prim: oklch(23.93% 0 0);
+  --color-background: oklch(23.93% 0 0);
 
   --color-sec: oklch(19.13% 0 0);
   --color-sec-mute: oklch(47.31% 0.0061 247.96);
 
-  --color-ter: oklch(48.85% 0.106 161.97);
-
   /* ACCENT */
   --color-acc: oklch(70.25% 0.132 160.37);
+
+  --color-ter: oklch(48.85% 0.106 161.97);
 }
-/* === THEME COLORS === */
 @theme inline {
-  --color-vbg: var(--color-vbg);
-  --color-vbg-body: var(--color-vbg-body);
-  --color-vbg-head: var(--color-vbg-head);
-  --color-vbg-head2: var(--color-vbg-head2);
+  /* === THEME COLORS === */
+  --color-background: var(--color-background);
+
+  --color-sec-mute: var(--color-sec);
+  --color-sec-mute: var(--color-sec-mute);
 
   --color-acc: var(--color-acc);
-  --color-acc-1: var(--color-acc-1);
-  --color-acc-2: var(--color-acc-2);
+  --color-ter: var(--color-ter);
 
   --color-fg: var(--color-fg);
   --color-fg-2: var(--color-fg-2);
@@ -88,35 +91,42 @@ see: https://github.com/tailwindlabs/tailwindcss/discussions/15083
   --color-success: var(--color-success);
   --color-danger: var(--color-danger);
   --color-warn: var(--color-warn);
+  /* === THEME FONTS === */
+  --default-font-family-*: initial;
 }
 @layer components {
   .le-btn {
     /* Base */
-    @apply cursor-pointer rounded-sm px-2 py-1 text-xs font-semibold shadow-xs ring-1 ring-offset-2 transition duration-300;
+    @apply line-clamp-1 cursor-pointer truncate rounded-sm px-2 py-1 text-xs font-semibold shadow-xs ring-1 ring-offset-2 transition duration-300;
     /* Variables D/L Theme */
-    @apply hover:bg-acc hover:ring-acc/80;
+    @apply hover:bg-acc hover:ring-acc;
     /* Variant Colors */
     @apply bg-white text-neutral-700 ring-neutral-300 hover:text-white;
     /* No need to prepend with dark here due to the @variant */
     @variant dark {
-      @apply bg-neutral-800 text-neutral-300 ring-neutral-600 ring-offset-neutral-800 hover:text-neutral-700;
+      @apply bg-neutral-800 text-neutral-300 ring-neutral-600 ring-offset-neutral-800 hover:text-neutral-900;
     }
   }
 }
 @layer components {
   .input-label {
-    @apply absolute -top-2 left-2 inline-block rounded-lg px-1 text-xs font-medium text-neutral-800;
+    @apply absolute -top-2 left-2 inline-block rounded-lg px-1 text-xs font-medium text-neutral-700;
+    @variant dark {
+      @apply text-neutral-300;
+    }
   }
   .input {
-    @apply block w-full rounded-md bg-neutral-100 px-3 py-1.5 text-base font-normal text-neutral-900 outline-1 -outline-offset-1 outline-neutral-400 placeholder:text-neutral-700 hover:bg-neutral-50 hover:outline-neutral-600 focus:bg-neutral-50 focus:outline-2 focus:-outline-offset-2 focus:outline-neutral-600 sm:text-sm/6;
+    @apply focus:ring-acc hover:ring-acc focus:ring-2;
+    @apply block w-full rounded-md bg-neutral-100 px-2 py-1 text-base font-normal text-neutral-900 ring-1 ring-neutral-400 transition-all duration-150 outline-none placeholder:text-neutral-700 hover:bg-neutral-50 focus:bg-neutral-50 sm:text-sm/6;
+
     @variant dark {
-      @apply bg-zinc-900 text-neutral-400 outline-neutral-600 placeholder:text-neutral-500 hover:bg-neutral-900 hover:outline-neutral-600 focus:bg-neutral-900;
+      @apply bg-neutral-800 text-neutral-300 ring-neutral-600 placeholder:text-neutral-400 hover:bg-neutral-800 focus:bg-neutral-800;
     }
   }
 }
 
 #app {
-  font-family: 'Manrope Variable', sans-serif;
+  /* placeholder */
 }
 
 .container {
@@ -153,4 +163,7 @@ see: https://github.com/tailwindlabs/tailwindcss/discussions/15083
   width: clamp(15rem, 32vw, 20rem);
   height: clamp(10rem, 16vh, 20vh);
   background-color: white;
+}
+.router-active {
+  @apply text-acc;
 }

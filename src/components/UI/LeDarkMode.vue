@@ -31,15 +31,15 @@ watch(darkModeOn, () => {
 <template>
   <div>
     <div v-if="!darkModeOn">
-      <p class="text-fg block text-sm font-medium tracking-tight">Light</p>
+      <p class="block text-sm font-medium tracking-tight">Light</p>
       <button class="cursor-pointer" @click="toggleDarkMode">
-        <SunIcon class="text-fg hover:text-fg-2 size-8 stroke-1 transition-colors"></SunIcon>
+        <SunIcon class="hover:text-acc size-8 stroke-1 transition-colors"></SunIcon>
       </button>
     </div>
     <div v-if="darkModeOn">
-      <p class="text-fg block text-sm font-medium tracking-tight">Dark</p>
+      <p class="block text-sm font-medium tracking-tight">Dark</p>
       <button class="cursor-pointer" @click="toggleDarkMode">
-        <MoonIcon class="hover:text-fg-2 text-fg size-8 stroke-1 transition-colors"></MoonIcon>
+        <MoonIcon class="hover:text-acc size-8 stroke-1 transition-colors"></MoonIcon>
       </button>
     </div>
   </div>

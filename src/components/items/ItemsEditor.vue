@@ -17,12 +17,12 @@ const isOpen = ref(false)
 <template>
   <div class="flex flex-col items-center">
     <!-- Text that always stays gray-900 -->
-    <p class="text-fg block text-sm font-medium tracking-tight">Items</p>
+    <p class="block text-sm font-medium tracking-tight">Items</p>
 
     <!-- Icon that changes color on hover -->
     <BriefcaseIcon
       @click="isOpen = true"
-      class="text-fg hover:text-fg-2 size-8 cursor-pointer stroke-1 transition-colors"
+      class="hover:text-acc size-8 cursor-pointer stroke-1 transition-colors"
     ></BriefcaseIcon>
   </div>
 
@@ -35,7 +35,7 @@ const isOpen = ref(false)
       <div class="slide-over" v-if="isOpen">
         <div class="modal-inner">
           <p>Hello from the modal!</p>
-          <button @click="console.log(styles)">sssssssssss</button>
+          <button @click="console.log(styles)">ss</button>
           <button @click="isOpen = false">Close</button>
 
           <!-- <ul v-for="style in displayStyles" :key="style.id">

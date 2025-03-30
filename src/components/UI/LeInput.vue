@@ -1,15 +1,14 @@
 <template>
-  <div class="relative">
-    <label :for="props.id" class="input-label">
+  <div class="relative" :class="props.classNames">
+    <label v-if="!labelHidden" :for="props.id" class="input-label">
       {{ props.label }}
     </label>
-
     <input
+      v-bind="$attrs"
       :id="id"
       :name="name"
       :value="modelValue"
       @input="emit('update:modelValue', $event.target.value)"
-      v-bind="$attrs"
       class="input"
     />
   </div>
@@ -22,6 +21,7 @@ const props = defineProps({
   name: String,
   modelValue: [String, Number],
   labelHidden: Boolean,
+  classNames: String,
 })
 
 const emit = defineEmits(['update:modelValue'])

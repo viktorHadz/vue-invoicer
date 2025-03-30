@@ -34,7 +34,7 @@ export const useClientStore = defineStore('clients', () => {
   }
   const selectedClientId = ref(loadSelectedClientId())
 
-  // Computed property with a getter and a setter for two-way binding.
+  // Computed property with a getter and a setter for two-way binding
   const selectedClient = computed({
     get() {
       return clients.find((client) => client.id === selectedClientId.value) || null
@@ -44,7 +44,7 @@ export const useClientStore = defineStore('clients', () => {
     },
   })
 
-  // Persist the selected client id to localStorage whenever it changes.
+  // Persist the selected client id to localStorage whenever it changes
   watch(selectedClientId, (newValue) => {
     if (newValue) {
       localStorage.setItem('selectedClientId', newValue.toString())
@@ -69,7 +69,7 @@ export const useClientStore = defineStore('clients', () => {
     }
   }
 
-  // Delete a client and clear the selection if the deleted client was selected.
+  // Delete a client and clear the selection if the deleted client was selected
   const del = (client) => {
     const index = clients.findIndex((c) => c.id === client.id)
     if (index !== -1) {

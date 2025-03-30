@@ -1,26 +1,50 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { reactive } from 'vue'
 
 export const useItemsStore = defineStore('items', () => {
-  const fakeItems = ref([])
-  const fetchStyles = async () => {
-    fetch('https://dummyjson.com/products?limit=10&skip=10')
-      .then((res) => res.json())
-      .then((data) => {
-        // console.log('Initial fetch', data)
-        // console.log('Fetched products:', data.products)
-        fakeItems.value.push(...data.products)
-        console.log('Fake items: ', fakeItems.value)
-      })
-      .catch((error) => console.error('Error:', error))
+  const items = reactive({
+    style: [],
+    sample: [],
+  })
+
+  const fetchItems = async (type, url) => {
+    // Here I should be passing a client ID when I establish the backend. There should be checks
+    // For selected client (should i crash the program if no selected? - to think about -
+    // maybe have the select client call again here although i have it in an erarlier stage of the program so this shouldnt be an issue here ])
+    try {
+      const res = await fetch(url)
+      const data = await res.json()
+      const transformed = data.products.map((product) => ({
+        id: `${type}-${product.id}`,
+        name: product.title,
+        type,
+        price: product.price,
+        time: product.rating,
+      }))
+      items[type].push(...transformed)
+    } catch (error) {
+      console.error(`Error fetching ${type}s:`, error)
+    }
   }
 
-  return { fakeItems, fetchStyles }
-})
+  const updateItem = (type, item) => {
+    const index = items[type].findIndex((i) => i.id === item.id)
+    if (index !== -1) {
+      Object.assign(items[type][index], item)
+    }
+  }
 
-// { client: 1, name: 'T-Shirt', type: 'style', price: 100, time: 'N/A' },
-// { client: 1, name: 'Jeans', type: 'sample', price: 60, time: 30 },
-// { client: 2, name: 'Jacket', type: 'style', price: 110, time: 'N/A' },
-// { client: 2, name: 'Skirt', type: 'sample', price: 70, time: 25 },
-// { client: 3, name: 'Coat', type: 'style', price: 120, time: 'N/A' },
-// { client: 3, name: 'Shorts', type: 'sample', price: 80, time: 20 }
+  const deleteItem = (type, item) => {
+    const index = items[type].findIndex((i) => i.id === item.id)
+    if (index !== -1) {
+      items[type].splice(index, 1)
+    }
+  }
+
+  return {
+    items,
+    fetchItems,
+    deleteItem,
+    updateItem,
+  }
+})

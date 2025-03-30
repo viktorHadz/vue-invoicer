@@ -30,7 +30,7 @@ const clientStore = useClientStore()
         class="absolute top-0 right-0 z-50 flex w-1/2 max-w-64 justify-end"
       >
         <div
-          class="relative mr-4 flex gap-8 rounded-b-md border-x border-b border-neutral-400 p-2 dark:border-neutral-600"
+          class="bg-sec relative mr-4 flex gap-8 rounded-b-md border-x border-b border-neutral-400 p-2 dark:border-neutral-600"
         >
           <SelectClient selectTitle="Select a Client" select-title-class="text-sm"> </SelectClient>
           <ItemsEditor></ItemsEditor>

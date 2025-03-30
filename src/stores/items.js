@@ -7,8 +7,10 @@ export const useItemsStore = defineStore('items', () => {
     fetch('https://dummyjson.com/products?limit=10&skip=10')
       .then((res) => res.json())
       .then((data) => {
-        console.log(data)
-        fakeItems.value.push(data)
+        // console.log('Initial fetch', data)
+        // console.log('Fetched products:', data.products)
+        fakeItems.value.push(...data.products)
+        console.log('Fake items: ', fakeItems.value)
       })
       .catch((error) => console.error('Error:', error))
   }

@@ -1,44 +1,27 @@
 <script setup>
 import { SunIcon, MoonIcon } from '@heroicons/vue/24/outline'
-import { useStorage } from '@vueuse/core'
-import { onMounted, watch } from 'vue'
+import { useColorMode } from '@vueuse/core'
 
-onMounted(() => {
-  const app = document.getElementById('app')
-  if (darkModeOn.value) {
-    app.classList.add('dark')
-  } else {
-    app.classList.remove('dark')
-  }
-})
-
-const darkModeOn = useStorage('darkModeOn', false)
-
-function toggleDarkMode() {
-  darkModeOn.value = !darkModeOn.value
-  console.log('darkModeOn?: ', darkModeOn.value)
-
-  let app = document.getElementById('app')
-
-  app.classList.toggle('dark')
-}
-
-watch(darkModeOn, () => {
-  const app = document.getElementById('app')
-  darkModeOn.value === true ? app.classList.add('dark') : app.classList.remove('dark')
+const mode = useColorMode({
+  attribute: 'data-theme',
+  modes: {
+    light: 'light',
+    dark: 'dark',
+  },
+  disableTransition: false,
 })
 </script>
 <template>
   <div>
-    <div v-if="!darkModeOn">
+    <div v-if="mode === 'light'">
       <p class="block text-sm font-medium tracking-tight">Light</p>
-      <button class="cursor-pointer" @click="toggleDarkMode">
+      <button class="cursor-pointer" @click="((mode = 'dark'), console.log(mode))">
         <SunIcon class="hover:text-acc size-8 stroke-1 transition-colors"></SunIcon>
       </button>
     </div>
-    <div v-if="darkModeOn">
+    <div v-if="mode === 'dark'">
       <p class="block text-sm font-medium tracking-tight">Dark</p>
-      <button class="cursor-pointer" @click="toggleDarkMode">
+      <button class="cursor-pointer" @click="((mode = 'light'), console.log(mode))">
         <MoonIcon class="hover:text-acc size-8 stroke-1 transition-colors"></MoonIcon>
       </button>
     </div>

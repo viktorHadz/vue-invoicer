@@ -11,36 +11,20 @@ const clientStore = useClientStore()
 </script>
 
 <template>
-  <div class="layout bg-color-var text-neutral-700 transition duration-500 dark:text-neutral-400">
-    <header
-      class="sidebar border-r border-neutral-400 bg-neutral-200 dark:border-neutral-700 dark:bg-neutral-900"
-    >
-      <nav class="flex flex-col gap-4 p-4" v-if="clientStore.hasClients">
-        <RouterLink
-          to="/clients"
-          class="hover:text-acc cursor-pointer text-neutral-900 decoration-2 underline-offset-2 hover:underline dark:text-neutral-400"
-        >
-          Clients
-        </RouterLink>
+  <div
+    class="bg-primary text-fg flex min-h-[100vh] w-[100%] transition duration-500 will-change-transform"
+  >
+    <header>
+      <nav class="navigation" v-if="clientStore.hasClients">
+        <RouterLink to="/clients" class="link"> Clients </RouterLink>
 
-        <RouterLink
-          to="/invoice"
-          class="hover:text-acc cursor-pointer text-neutral-900 decoration-2 underline-offset-2 hover:underline dark:text-neutral-400"
-        >
-          Invoice
-        </RouterLink>
+        <RouterLink to="/invoice" class="link"> Invoice </RouterLink>
 
-        <RouterLink
-          to="/editor"
-          class="hover:text-acc cursor-pointer text-neutral-900 decoration-2 underline-offset-2 hover:underline dark:text-neutral-400"
-        >
-          Editor</RouterLink
-        >
+        <RouterLink to="/editor" class="link"> Editor</RouterLink>
       </nav>
     </header>
     <main class="main-content">
       <RouterView class="mt-20" />
-      <div class="p-4">hello</div>
       <div
         v-if="clientStore.hasClients"
         class="absolute top-0 right-0 z-50 flex w-1/2 max-w-64 justify-end"

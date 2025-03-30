@@ -33,12 +33,12 @@ function openModal() {
   <div class="container">
     <button
       type="button"
-      class="relative block w-full cursor-pointer rounded-lg border-2 border-dashed border-gray-300 p-12 text-center hover:border-gray-400 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-hidden"
+      class="hover:border-acc focus:border-acc border-fg relative block w-full cursor-pointer rounded-lg border-2 border-dashed p-12 text-center focus:outline-hidden"
       @click="openModal"
     >
-      <userPlusIcon class="mx-auto size-12 text-gray-400" />
+      <userPlusIcon class="text-fg mx-auto size-12" />
 
-      <span class="mt-2 block text-sm font-semibold text-gray-900">Create a new client</span>
+      <span class="text-fg mt-2 block text-sm font-semibold">Create a new client</span>
     </button>
     <Teleport to="body">
       <TransitionRoot appear :show="isOpen" as="template">
@@ -67,12 +67,9 @@ function openModal() {
                 leave-to="opacity-0 scale-95"
               >
                 <DialogPanel
-                  class="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all"
+                  class="bg-primary w-full max-w-md transform overflow-hidden rounded-2xl p-6 text-left align-middle shadow-xl transition-all"
                 >
-                  <DialogTitle
-                    as="h3"
-                    class="text-center text-lg leading-6 font-medium text-gray-800"
-                  >
+                  <DialogTitle as="h3" class="text-fg text-center text-lg leading-6 font-medium">
                     New client menu
                   </DialogTitle>
 
@@ -80,7 +77,7 @@ function openModal() {
                     <div class="flex w-full flex-col gap-8">
                       <div>
                         <LeInput
-                          label="Name"
+                          placeholder="Name"
                           id="no-client-add-name-id-1"
                           name="client-name"
                           type="text"
@@ -91,7 +88,7 @@ function openModal() {
                       </div>
                       <div>
                         <LeInput
-                          label="Company"
+                          placeholder="Company"
                           id="no-client-add-company-1"
                           name="client-company"
                           type="text"
@@ -102,7 +99,7 @@ function openModal() {
                       </div>
                       <div>
                         <LeInput
-                          label="Email"
+                          placeholder="Email"
                           id="no-client-add-email-1"
                           name="client-email"
                           type="text"
@@ -113,7 +110,7 @@ function openModal() {
                       </div>
                       <div>
                         <LeInput
-                          label="Address"
+                          placeholder="Address"
                           id="no-client-add-address-1"
                           name="client-address"
                           type="text"

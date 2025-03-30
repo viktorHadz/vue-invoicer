@@ -10,7 +10,6 @@ import {
   TrashIcon,
   CheckCircleIcon,
   XCircleIcon,
-  MagnifyingGlassIcon,
   UserPlusIcon,
 } from '@heroicons/vue/24/outline'
 
@@ -70,18 +69,15 @@ const filteredClients = computed(() => {
         <!-- Search -->
         <div class="mx-auto w-full max-w-[80%] 2xl:max-w-[70%]">
           <div
-            class="ring-t ring-x -mb-2 w-fit rounded-t-lg px-2 pt-2 pb-4 ring-1 ring-neutral-400 dark:ring-neutral-600"
+            class="ring-t ring-x bg-sec -mb-2 w-fit rounded-t-lg px-2 pt-2 pb-4 ring-1 ring-neutral-400 dark:ring-neutral-600"
           >
-            <div
-              class="hover:ring-acc focus-within:ring-acc flex w-52 items-center rounded-lg bg-neutral-100 px-3 py-2 shadow-sm ring-1 ring-neutral-400 transition focus-within:ring-2 dark:bg-zinc-900 dark:ring-neutral-600 dark:focus-within:bg-zinc-900"
-            >
-              <MagnifyingGlassIcon class="mr-2 size-4"></MagnifyingGlassIcon>
+            <div class="flex items-center">
               <input
                 id="srchQry-clients-1"
                 v-model="searchQuery"
                 type="text"
                 placeholder="Search clients..."
-                class="w-full bg-transparent text-sm outline-none placeholder:text-neutral-700 dark:placeholder:text-neutral-400"
+                class="input"
               />
             </div>
           </div>
@@ -91,7 +87,7 @@ const filteredClients = computed(() => {
         >
           <table class="min-w-full">
             <thead
-              class="sticky top-0 z-10 border-b bg-neutral-200 px-3 text-left text-sm font-semibold backdrop-blur-sm backdrop-filter dark:bg-zinc-900"
+              class="bg-sec text-fg2 sticky top-0 z-10 border-b px-3 text-left text-sm font-semibold backdrop-blur-sm backdrop-filter"
             >
               <tr>
                 <th scope="col" class="py-3.5 pr-3 pl-4 text-left text-sm font-semibold sm:pl-4">
@@ -102,7 +98,7 @@ const filteredClients = computed(() => {
                 <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold">Address</th>
                 <th scope="col" class="relative py-3.5 pr-4 pl-3 text-center sm:pr-6">Action</th>
               </tr>
-              <tr class="bg-neutral-200 dark:bg-zinc-900">
+              <tr class="bg-sec">
                 <LeTh>
                   <LeInput
                     label=""

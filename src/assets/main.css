@@ -1,65 +1,61 @@
 @import 'tailwindcss';
-@import './base.css';
 
-/* Correct way to use theme variables in tailwind for darkmode 
-see: https://github.com/tailwindlabs/tailwindcss/discussions/15083
-*/
+@layer base {
+  :root {
+    /* font-family: 'Manrope Variable', sans-serif; */
+  }
+}
 
-@variant dark (&:where(.dark, .dark *));
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+@custom-variant light (&:where([data-theme=light], [data-theme=light] *));
+[data-theme='light'] {
+  --color-primary: oklch(100% 0 0);
+  --color-sec: oklch(0.69 0.1179 150.16);
+  --color-acc: oklch(0.84 0.146 85.9);
 
-:root {
-  font-family: 'Manrope Variable', sans-serif;
-  --color-prim: oklch(100% 0 0);
-
-  --color-sec: oklch(30.23% 0.0152 252.34);
-  --color-sec-mute: oklch(42.71% 0.0272 254.56);
-
-  /* ACCENT */
-  --color-acc: oklch(64.84% 0.1927 31.66);
-  --color-acc-mute: oklch(76.17% 0.132 31.66);
-
-  --color-ter: oklch(48.85% 0.106 161.97);
+  --color-body-el: oklch(100% 0 0);
+  --color-brdr: oklch(0.708 0 0);
+  --color-font: oklch(0.27 0.0055 286.03);
+  --color-font2: oklch(100% 0 0);
 
   --color-danger: oklch(46.44% 0.1477 24.17);
-  --color-danger: oklch(75.22% 0.1235 62.47);
-  --color-danger: oklch(68.1% 0.1708 151.16);
+  --color-warning: oklch(75.22% 0.1235 62.47);
+  --color-success: oklch(68.1% 0.1708 151.16);
 }
-:where(.dark) {
-  --color-prim: oklch(23.93% 0 0);
-
-  --color-sec: oklch(19.13% 0 0);
-  --color-sec-mute: oklch(47.31% 0.0061 247.96);
-
-  /* ACCENT */
+[data-theme='dark'] {
+  --color-primary: oklch(23.93% 0 0);
+  --color-sec: oklch(0.205 0 0);
   --color-acc: oklch(70.25% 0.132 160.37);
 
-  --color-ter: oklch(48.85% 0.106 161.97);
+  --color-body-el: oklch(0.27 0.0055 286.03);
+  --color-brdr: oklch(0.439 0 0);
+  --color-font: oklch(0.708 0 0);
+  --color-font2: oklch(0.808 0 0);
+
+  --color-danger: oklch(46.44% 0.1477 24.17);
+  --color-warning: oklch(75.22% 0.1235 62.47);
+  --color-success: oklch(68.1% 0.1708 151.16);
 }
-@theme inline {
-  --color-prim: var(--color-prim);
 
-  --color-sec-mute: var(--color-sec);
+@theme {
+  --font-sans: 'Manrope Variable', sans-serif;
+
+  --color-primary: var(--color-primary);
+  --color-sec: var(--color-sec);
   --color-sec-mute: var(--color-sec-mute);
-
   --color-acc: var(--color-acc);
-
   --color-ter: var(--color-ter);
+
+  --color-nav: var(--color-navigation);
+  --color-brdr: var(--color-brdr);
+  --color-fg: var(--color-font);
+  --color-fg2: var(--color-font2);
 
   --color-success: var(--color-success);
   --color-danger: var(--color-danger);
   --color-warn: var(--color-warn);
-  --default-font-family-*: initial;
 }
-@layer components {
-  .le-btn {
-    @apply line-clamp-1 cursor-pointer truncate rounded-sm px-2 py-1 text-xs font-semibold shadow-xs ring-1 ring-offset-2 transition duration-300;
-    @apply hover:bg-acc hover:ring-acc;
-    @apply bg-white text-neutral-700 ring-neutral-300 hover:text-white;
-    @variant dark {
-      @apply bg-neutral-800 text-neutral-300 ring-neutral-600 ring-offset-neutral-800 hover:text-neutral-900;
-    }
-  }
-}
+
 @layer components {
   .input-label {
     @apply absolute -top-2 left-2 inline-block rounded-lg px-1 text-xs font-medium text-neutral-700;
@@ -76,21 +72,30 @@ see: https://github.com/tailwindlabs/tailwindcss/discussions/15083
     }
   }
 }
-/* THE PROBLEM SEEMS TO BE THAT MODALS GET TELEPORTED OUTSIDE OF THE APP ELEMENT STRAIGHT TO THE BODY RESULTING IN AN ELEMENT WHICH SITS OUTSIDE DARKMODE WHICH IS APPLIED TO THE APP NOT THE BODY 
 
-SOLUTION: TRY STICKING DARKMODE TO THE HTML? */
 @layer components {
-  .bg-color-var {
-    @apply bg-prim;
+  .navigation {
+    @apply border-brdr bg-sec sticky top-0 flex h-[100vh] shrink-0 flex-col gap-4 overflow-y-auto border-r p-4 transition duration-500;
+  }
+}
+@layer components {
+  .link {
+    @apply hover:text-primary text-fg cursor-pointer decoration-2 underline-offset-2 hover:underline;
     @variant dark {
-      @apply dark:bg-prim;
+      @apply hover:text-acc;
     }
   }
 }
 
-/* #app {
-  /* placeholder */
-/* }  */
+.router-active {
+  @apply text-primary dark:text-acc;
+}
+@layer components {
+  .main-content {
+    flex-grow: 1;
+    min-width: 0;
+  }
+}
 
 .container {
   max-width: clamp(16rem, 80rem, 50%);
@@ -126,7 +131,4 @@ SOLUTION: TRY STICKING DARKMODE TO THE HTML? */
   width: clamp(15rem, 32vw, 20rem);
   height: clamp(10rem, 16vh, 20vh);
   background-color: white;
-}
-.router-active {
-  @apply text-acc;
 }

@@ -31,7 +31,7 @@ const filteredItems = computed(() => {
 const selectedEl = ref('style')
 
 const sliderTransform = computed(() =>
-  selectedEl.value === 'style' ? 'translate-x-[-51%] text-red-500' : 'translate-x-[51%]',
+  selectedEl.value === 'style' ? 'translate-x-[-51%] ' : 'translate-x-[51%]',
 )
 
 function moveSlider(tabName) {
@@ -107,51 +107,45 @@ function cancelEdit() {
                 />
               </div>
             </div>
-            <LeBtn @click="isOpen = false" class="absolute right-20">Close</LeBtn>
+            <LeBtn @click="isOpen = false" class="absolute right-6">Close</LeBtn>
           </div>
           <div class="w-full px-2 py-12 sm:px-0">
             <TabGroup>
               <TabList class="relative flex w-full items-center justify-around place-self-center">
                 <!-- Slider-->
                 <span
-                  class="dark:bg-acc/30 bg-sec border-brdr dark:border-brdr absolute -bottom-1 z-10 h-[130%] w-[48%] transform rounded-md border transition-transform duration-300 ease-in-out"
+                  class="dark:bg-sec bg-sec absolute -bottom-1 z-10 h-[130%] w-[48%] transform rounded-md  transition-transform duration-300 ease-in-out"
                   :class="sliderTransform"
                 />
                 <!-- Tabs -->
                 <Tab
                   class="z-20 w-1/2 cursor-pointer focus:outline-none"
                   @click="moveSlider('style')"
+                  :class="
+                    selectedEl === 'style'
+                      ? 'text-fg dark:text-acc transition duration-500 ease-out'
+                      : 'text-fg hover:text-acc hover:cursor-pointer'
+                  "
                 >
-                  <button
-                    :class="
-                      selectedEl === 'style'
-                        ? 'text-fg2 dark:text-sec transition duration-500 ease-out'
-                        : 'text-fg hover:text-acc hover:cursor-pointer'
-                    "
-                  >
-                    Styles
-                  </button>
+                  Styles
                 </Tab>
                 <Tab
                   class="z-20 w-1/2 cursor-pointer focus:outline-none"
                   @click="moveSlider('sample')"
+                  :class="
+                    selectedEl === 'sample'
+                      ? 'text-fg2 dark:text-acc transition duration-500 ease-out'
+                      : 'text-fg hover:text-acc hover:cursor-pointer'
+                  "
                 >
-                  <button
-                    :class="
-                      selectedEl === 'sample'
-                        ? 'text-fg2 dark:text-sec transition duration-500 ease-out'
-                        : 'text-fg hover:text-acc hover:cursor-pointer'
-                    "
-                  >
-                    Samples
-                  </button>
+                  Samples
                 </Tab>
               </TabList>
               <TabPanels class="p-2">
                 <LeFlexTh class="rounded-t-md">
-                  <div scope="col" class="w-[40%] py-3 pl-2">Name</div>
-                  <div scope="col" class="w-[20%] py-3 pl-2">Price</div>
-                  <div scope="col" class="w-[20%] py-3 pl-2">Time</div>
+                  <div scope="col" class="w-[50%] py-3 pl-2">Name</div>
+                  <div scope="col" class="w-[20%] py-3">Price</div>
+                  <div scope="col" class="w-[10%] py-3">Time</div>
                   <div scope="col" class="w-[20%] py-3 text-center">Action</div>
                 </LeFlexTh>
                 <TabPanel
@@ -165,45 +159,47 @@ function cancelEdit() {
                     <!-- Editable Row -->
                     <template v-if="editing && editedRowId === item.id">
                       <LeInput
-                        :id="`edit-style-name-${item.id}`"
+                        :id="`edit-sample-name-${item.id}`"
                         :placeholder="item.name"
                         v-model="editForm.name"
-                        class-names="w-[45%] px-1"
+                        class-names="w-[50%] px-1"
                       />
                       <LeInput
-                        :id="`edit-style-price-${item.id}`"
+                        :id="`edit-sample-company-${item.id}`"
                         :placeholder="item.price"
                         v-model="editForm.price"
-                        class-names="w-[25%] px-1"
+                        class-names="w-[20%] px-1"
                       />
                       <LeInput
-                        :id="`edit-style-time-${item.id}`"
+                        :id="`edit-sample-email-${item.id}`"
                         :placeholder="item.time"
                         v-model="editForm.time"
-                        class-names="w-[25%] px-1"
+                        class-names="w-[10%] px-1"
                       />
-                      <div class="flex w-[20%] items-center justify-center gap-5 py-4 text-center">
-                        <a @click="editSave()"
-                          ><CheckCircleIcon class="text-success size-5 cursor-pointer"
-                        /></a>
-                        <a @click="cancelEdit()"
-                          ><XCircleIcon class="text-danger size-5 cursor-pointer"
-                        /></a>
+                      <div
+                        class="flex w-[20%] items-center justify-center gap-5 py-4 pl-4 text-center"
+                      >
+                        <a href="#" class="text-success hover:brightness-110" @click="editSave()"
+                          ><CheckCircleIcon class="size-5"></CheckCircleIcon
+                        ></a>
+                        <a href="#" class="text-danger hover:brightness-110" @click="cancelEdit()"
+                          ><XCircleIcon class="size-5"></XCircleIcon
+                        ></a>
                       </div>
                     </template>
                     <!-- Read-Only Row -->
                     <template v-else>
                       <!-- name -->
-                      <div class="line-clamp-1 w-[40%] pl-2">{{ item.name }}</div>
+                      <div class="line-clamp-1 w-[50%] pl-2">{{ item.name }}</div>
                       <!-- time -->
                       <div class="w-[20%] pl-2">{{ item.price }}</div>
                       <!-- price -->
-                      <div class="w-[20%] pl-2">{{ item.time }}</div>
+                      <div class="w-[10%] pl-2">{{ item.price }}</div>
                       <!-- action -->
-                      <div class="w-[20%] pl-2">
+                      <div class="w-[20%]">
                         <!-- Controls pading for entire read only row -->
                         <div
-                          class="flex w-full items-center justify-center gap-5 py-3.5 text-center"
+                          class="flex w-full items-center justify-center gap-5 py-3 pl-4 text-center"
                         >
                           <a href="#" @click="editTrue(item)">
                             <PencilIcon class="hover:text-success size-5"></PencilIcon>
@@ -216,79 +212,69 @@ function cancelEdit() {
                     </template>
                   </LeFlexTd>
                 </TabPanel>
-                <TabPanel class="border-brdr rounded-b border-x border-b">
-                  <div class="max-h-[70vh] overflow-y-auto">
-                    <div
-                      v-for="(item, index) in filteredItems"
-                      :key="index"
-                      class="w-full items-center"
-                    >
-                      <LeFlexTd class="items-center">
-                        <!-- Editable Row -->
-                        <template v-if="editing && editedRowId === item.id">
-                          <LeInput
-                            :id="`edit-sample-name-${item.id}`"
-                            :placeholder="item.name"
-                            v-model="editForm.name"
-                          />
-                          ><LeInput
-                            :id="`edit-sample-company-${item.id}`"
-                            :placeholder="item.company"
-                            v-model="editForm.company"
-                          />
-                          ><LeInput
-                            :id="`edit-sample-email-${item.id}`"
-                            :placeholder="item.email"
-                            v-model="editForm.email"
-                          />
-                          ><LeInput
-                            :id="`edit-sample-address-${item.id}`"
-                            :placeholder="item.address"
-                            v-model="editForm.address"
-                          />
-                          <div
-                            class="flex w-full items-center justify-center gap-5 py-4 text-center"
-                          >
-                            <a
-                              href="#"
-                              class="text-success hover:brightness-110"
-                              @click="editSave()"
-                              ><CheckCircleIcon class="size-5"></CheckCircleIcon
-                            ></a>
-                            <a
-                              href="#"
-                              class="text-danger hover:brightness-110"
-                              @click="cancelEdit()"
-                              ><XCircleIcon class="size-5"></XCircleIcon
-                            ></a>
-                          </div>
-                        </template>
-                        <!-- Read-Only Row -->
-                        <template v-else>
-                          <!-- name -->
-                          <div class="line-clamp-1 w-[40%] pl-2">{{ item.name }}</div>
-                          <!-- time -->
-                          <div class="w-[20%] pl-2">{{ item.price }}</div>
-                          <!-- price -->
-                          <div class="w-[20%] pl-2">{{ item.price }}</div>
-                          <!-- action -->
-                          <div class="w-[20%]">
-                            <!-- Controls pading for entire read only row -->
-                            <div
-                              class="flex w-full items-center justify-center gap-5 py-3 text-center"
-                            >
-                              <a href="#" @click="editTrue(item)">
-                                <PencilIcon class="hover:text-success size-5"></PencilIcon>
-                              </a>
-                              <a href="#" class="hover:text-danger" @click="removeItem(item)">
-                                <TrashIcon class="size-5"></TrashIcon>
-                              </a>
-                            </div>
-                          </div>
-                        </template>
-                      </LeFlexTd>
-                    </div>
-                  </div>
+                <TabPanel
+                  class="border-brdr max-h-[70vh] overflow-y-auto rounded-b border-x border-b"
+                >
+                  <LeFlexTd
+                    v-for="(item, index) in filteredItems"
+                    :key="index"
+                    class="flex w-full items-center"
+                  >
+                    <!-- Editable Row -->
+                    <template v-if="editing && editedRowId === item.id">
+                      <LeInput
+                        :id="`edit-sample-name-${item.id}`"
+                        :placeholder="item.name"
+                        v-model="editForm.name"
+                        class-names="w-[50%] px-1"
+                      />
+                      <LeInput
+                        :id="`edit-sample-company-${item.id}`"
+                        :placeholder="item.price"
+                        v-model="editForm.price"
+                        class-names="w-[20%] px-1"
+                      />
+                      <LeInput
+                        :id="`edit-sample-email-${item.id}`"
+                        :placeholder="item.time"
+                        v-model="editForm.time"
+                        class-names="w-[10%] px-1"
+                      />
+                      <div
+                        class="flex w-[20%] items-center justify-center gap-5 py-4 pl-4 text-center"
+                      >
+                        <a href="#" class="text-success hover:brightness-110" @click="editSave()"
+                          ><CheckCircleIcon class="size-5"></CheckCircleIcon
+                        ></a>
+                        <a href="#" class="text-danger hover:brightness-110" @click="cancelEdit()"
+                          ><XCircleIcon class="size-5"></XCircleIcon
+                        ></a>
+                      </div>
+                    </template>
+                    <!-- Read-Only Row -->
+                    <template v-else>
+                      <!-- name -->
+                      <div class="line-clamp-1 w-[50%] pl-2">{{ item.name }}</div>
+                      <!-- time -->
+                      <div class="w-[20%] pl-2">{{ item.price }}</div>
+                      <!-- price -->
+                      <div class="w-[10%] pl-2">{{ item.price }}</div>
+                      <!-- action -->
+                      <div class="w-[20%]">
+                        <!-- Controls pading for entire read only row -->
+                        <div
+                          class="flex w-full items-center justify-center gap-5 py-3 pl-4 text-center"
+                        >
+                          <a href="#" @click="editTrue(item)">
+                            <PencilIcon class="hover:text-success size-5"></PencilIcon>
+                          </a>
+                          <a href="#" class="hover:text-danger" @click="removeItem(item)">
+                            <TrashIcon class="size-5"></TrashIcon>
+                          </a>
+                        </div>
+                      </div>
+                    </template>
+                  </LeFlexTd>
                 </TabPanel>
               </TabPanels>
             </TabGroup>

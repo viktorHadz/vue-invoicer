@@ -6,7 +6,7 @@ import ItemsEditor from './components/items/ItemsEditor.vue'
 import NoSelectedClientModal from './components/clients/NoSelectedClient.vue'
 import { useClientStore } from '@/stores/clients'
 import LeDarkMode from './components/UI/LeDarkMode.vue'
-
+import LeInvoiceBook from './components/UI/LeInvoiceBook.vue'
 const clientStore = useClientStore()
 </script>
 
@@ -33,8 +33,9 @@ const clientStore = useClientStore()
           class="bg-sec relative mr-4 flex gap-8 rounded-b-md border-x border-b border-neutral-400 p-2 dark:border-neutral-600"
         >
           <SelectClient selectTitle="Select a Client" select-title-class="text-sm"> </SelectClient>
-          <ItemsEditor></ItemsEditor>
           <LeDarkMode></LeDarkMode>
+          <LeInvoiceBook></LeInvoiceBook>
+          <ItemsEditor></ItemsEditor>
         </div>
       </div>
       <!-- Modals -- Add parent component to decluter if needed  -->

@@ -8,13 +8,14 @@ import LeBtn from '../UI/LeBtn.vue'
 import LeInput from '../UI/LeInput.vue'
 import LeFlexTd from '../UI/table/LeFlexTd.vue'
 import LeFlexTh from '../UI/table/LeFlexTh.vue'
+import { PlusCircleIcon } from '@heroicons/vue/16/solid'
 
 const isOpen = ref(false)
 const itemStore = useItemsStore()
 
 onMounted(() => {
-  itemStore.fetchItems('style', 'https://dummyjson.com/products?limit=20&skip=20')
-  itemStore.fetchItems('sample', 'https://dummyjson.com/products?limit=25&skip=25')
+  itemStore.fetchItems('style', 'https://dummyjson.com/products?limit=5')
+  itemStore.fetchItems('sample', 'https://dummyjson.com/products?limit=5&skip=5')
 })
 
 const searchQueries = reactive({
@@ -38,36 +39,53 @@ function moveSlider(tabName) {
   selectedEl.value = tabName
   console.log(selectedEl.value)
 }
+// Crud
+const newItemForm = reactive({
+  id: null,
+  name: '',
+  time: null,
+  price: null,
+})
+const editForm = reactive({ id: null, name: '', time: null, price: null })
+const editing = ref(false)
+const editedRowId = ref(null)
+
+function addNewItem(type, item) {
+  console.log('New item sent to shop: ', type, item)
+
+  itemStore.createItem(type, item)
+  resetInputs(newItemForm)
+}
+
 function removeItem(item) {
   itemStore.deleteItem(selectedEl.value, item)
 }
-// Edits
-const resetInputs = (formName) => {
-  formName.id = null
-  formName.name = ''
-  formName.type = ''
-  formName.time = null
-  formName.price = null
-}
-const editForm = reactive({ id: null, name: '', type: '', time: null, price: null })
-const editing = ref(false)
-const editedRowId = ref(null)
 
 function editSave() {
   itemStore.updateItem(selectedEl.value, editForm)
   editing.value = false
   resetInputs(editForm)
 }
+
 function editTrue(item) {
   editedRowId.value = item.id
   Object.assign(editForm, item)
   editing.value = true
 }
+
 function cancelEdit() {
   // Reset edit state
   editing.value = false
   editedRowId.value = null
   resetInputs(editForm)
+}
+
+const resetInputs = (formName) => {
+  formName.id = null
+  formName.name = ''
+  formName.type = ''
+  formName.time = null
+  formName.price = null
 }
 </script>
 <template>
@@ -101,6 +119,7 @@ function cancelEdit() {
               <div class="flex items-center">
                 <input
                   v-model="searchQueries[selectedEl]"
+                  :id="`${selectedEl}-search-1`"
                   :placeholder="`Search ${selectedEl}s...`"
                   type="text"
                   class="input"
@@ -114,7 +133,7 @@ function cancelEdit() {
               <TabList class="relative flex w-full items-center justify-around place-self-center">
                 <!-- Slider-->
                 <span
-                  class="dark:bg-sec bg-sec absolute -bottom-1 z-10 h-[130%] w-[48%] transform rounded-md  transition-transform duration-300 ease-in-out"
+                  class="dark:bg-sec bg-sec absolute -bottom-1 z-10 h-[130%] w-[48%] transform rounded-md transition-transform duration-300 ease-in-out"
                   :class="sliderTransform"
                 />
                 <!-- Tabs -->
@@ -148,6 +167,46 @@ function cancelEdit() {
                   <div scope="col" class="w-[10%] py-3">Time</div>
                   <div scope="col" class="w-[20%] py-3 text-center">Action</div>
                 </LeFlexTh>
+                <div class="bg-sec disabled: flex w-full items-center gap-4 pt-1 pb-2 pl-2">
+                  <LeInput
+                    label=""
+                    :id="`new-${selectedEl}-name-1`"
+                    v-model="newItemForm.name"
+                    :placeholder="selectedEl + ' name'"
+                    class-names="w-[50%]"
+                  ></LeInput>
+                  <LeInput
+                    label=""
+                    :id="`new-${selectedEl}-price-1`"
+                    v-model="newItemForm.price"
+                    class-names="w-[20%]"
+                    placeholder="price"
+                  ></LeInput>
+                  <LeInput
+                    label=""
+                    :id="`new-${selectedEl}-time-1`"
+                    v-model="newItemForm.time"
+                    class-names="w-[15%]"
+                    :placeholder="selectedEl === 'style' ? 'N/A' : 'minutes'"
+                    :disabled="selectedEl === 'style'"
+                    :class="
+                      selectedEl === 'style'
+                        ? 'disabled:hover:border-warn disabled:cursor-not-allowed'
+                        : ''
+                    "
+                  ></LeInput>
+                  <div class="flex w-[15%] justify-start">
+                    <LeBtn
+                      @click="addNewItem(selectedEl, newItemForm)"
+                      buttonText=""
+                      class="flex"
+                      :title="`add new ${selectedEl}`"
+                    >
+                      <PlusCircleIcon class="size-5"></PlusCircleIcon>
+                    </LeBtn>
+                  </div>
+                </div>
+
                 <TabPanel
                   class="border-brdr max-h-[70vh] overflow-y-auto rounded-b border-x border-b"
                 >

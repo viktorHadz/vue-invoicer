@@ -27,6 +27,18 @@ export const useItemsStore = defineStore('items', () => {
     }
   }
 
+  const createItem = (type, item) => {
+    // I will need some real id here
+    console.log('item type', type)
+    console.log('item received', item)
+    const newId = items[type].length - 1 + 1
+    const newItem = {
+      ...item,
+      id: newId,
+    }
+    items[type].push(newItem)
+    console.log('added new item here: ', items[type]);
+  }
   const updateItem = (type, item) => {
     const index = items[type].findIndex((i) => i.id === item.id)
     if (index !== -1) {
@@ -46,5 +58,6 @@ export const useItemsStore = defineStore('items', () => {
     fetchItems,
     deleteItem,
     updateItem,
+    createItem,
   }
 })

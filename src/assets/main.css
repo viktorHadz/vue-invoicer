@@ -18,7 +18,7 @@
   --color-font: oklch(0.27 0.0055 286.03);
   --color-font2: oklch(100% 0 0);
 
-  --color-danger: oklch(0.59 0.2363 29.3);
+  --color-danger: oklch(0.737 0.237 25.331);
   --color-warning: oklch(75.22% 0.1235 62.47);
   --color-success: oklch(68.1% 0.1708 151.16);
 }
@@ -32,7 +32,7 @@
   --color-font: oklch(0.708 0 0);
   --color-font2: oklch(0.808 0 0);
 
-  --color-danger: oklch(56.44% 0.2677 24.17);
+  --color-danger: oklch(0.637 0.237 25.331);
   --color-warning: oklch(75.22% 0.1235 62.47);
   --color-success: oklch(68.1% 0.1708 151.16);
 }
@@ -53,7 +53,7 @@
 
   --color-success: var(--color-success);
   --color-danger: var(--color-danger);
-  --color-warn: var(--color-warn);
+  --color-warn: var(--color-danger);
 }
 
 @layer components {
@@ -64,11 +64,11 @@
     }
   }
   .input {
-    @apply focus:ring-acc hover:ring-acc focus:ring-2;
+    @apply disabled:hover:ring-warn focus:ring-acc hover:ring-acc bg-red-500 focus:ring-2;
     @apply block w-full rounded-md bg-neutral-100 px-2 py-1 text-base font-normal text-neutral-900 ring-1 ring-neutral-400 transition-all duration-150 outline-none placeholder:text-neutral-700 hover:bg-neutral-50 focus:bg-neutral-50 sm:text-sm/6;
 
     @variant dark {
-      @apply bg-neutral-800 text-neutral-300 ring-neutral-600 placeholder:text-neutral-400 hover:bg-neutral-800 focus:bg-neutral-800;
+      @apply bg-neutral-800 text-neutral-300 ring-neutral-600 placeholder:text-neutral-400 hover:bg-neutral-800 focus:bg-neutral-800 disabled:placeholder:text-neutral-600;
     }
   }
 }

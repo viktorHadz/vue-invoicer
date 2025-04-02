@@ -1,12 +1,10 @@
 <script setup>
 import { RouterView } from 'vue-router'
 import { RouterLink } from 'vue-router'
-import SelectClient from './components/clients/SelectClient.vue'
-import ItemsEditor from './components/items/ItemsEditor.vue'
 import NoSelectedClientModal from './components/clients/NoSelectedClient.vue'
 import { useClientStore } from '@/stores/clients'
-import LeDarkMode from './components/UI/LeDarkMode.vue'
-import LeInvoiceBook from './components/UI/LeInvoiceBook.vue'
+import LeTopBar from './components/UI/LeTopBar.vue'
+
 const clientStore = useClientStore()
 </script>
 
@@ -24,8 +22,9 @@ const clientStore = useClientStore()
       </nav>
     </header>
     <main class="main-content">
-      <RouterView class="mt-20" />
-      <div
+      <RouterView />
+      <LeTopBar />
+      <!-- <div
         v-if="clientStore.hasClients"
         class="absolute top-0 right-0 z-50 flex w-1/2 max-w-64 justify-end"
       >
@@ -37,7 +36,7 @@ const clientStore = useClientStore()
           <LeInvoiceBook></LeInvoiceBook>
           <ItemsEditor></ItemsEditor>
         </div>
-      </div>
+      </div> -->
       <!-- Modals -- Add parent component to decluter if needed  -->
       <NoSelectedClientModal></NoSelectedClientModal>
     </main>

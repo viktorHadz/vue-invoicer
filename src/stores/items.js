@@ -37,7 +37,7 @@ export const useItemsStore = defineStore('items', () => {
       id: newId,
     }
     items[type].push(newItem)
-    console.log('added new item here: ', items[type]);
+    console.log('added new item here: ', items[type])
   }
   const updateItem = (type, item) => {
     const index = items[type].findIndex((i) => i.id === item.id)

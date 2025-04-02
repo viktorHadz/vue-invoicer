@@ -91,11 +91,10 @@ const resetInputs = (formName) => {
 <template>
   <div class="flex flex-col items-center">
     <!-- Text that always stays gray-900 -->
-    <p class="block text-sm font-medium tracking-tight">Items</p>
 
     <BriefcaseIcon
       @click="isOpen = true"
-      class="hover:text-acc size-8 cursor-pointer stroke-1 transition-colors"
+      class="hover:text-acc size-8 cursor-pointer stroke-1"
     ></BriefcaseIcon>
   </div>
 
@@ -188,6 +187,7 @@ const resetInputs = (formName) => {
                     v-model="newItemForm.time"
                     class-names="w-[15%]"
                     :placeholder="selectedEl === 'style' ? 'N/A' : 'minutes'"
+                    :title="selectedEl === 'style' ? 'Styles do not contain time' : ''"
                     :disabled="selectedEl === 'style'"
                     :class="
                       selectedEl === 'style'
@@ -195,7 +195,7 @@ const resetInputs = (formName) => {
                         : ''
                     "
                   ></LeInput>
-                  <div class="flex w-[15%] justify-start">
+                  <div class="flex w-[15%] justify-center pr-2">
                     <LeBtn
                       @click="addNewItem(selectedEl, newItemForm)"
                       buttonText=""

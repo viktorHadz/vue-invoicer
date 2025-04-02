@@ -12,19 +12,21 @@ const mode = useColorMode({
 })
 </script>
 <template>
-  <div>
-    <div v-if="mode === 'light'">
-      <p class="block text-sm font-medium tracking-tight">Light</p>
-      <button class="cursor-pointer" @click="((mode = 'dark'), console.log(mode))">
-        <SunIcon class="hover:text-acc size-8 stroke-1 transition-colors"></SunIcon>
-      </button>
-    </div>
-    <div v-if="mode === 'dark'">
-      <p class="block text-sm font-medium tracking-tight">Dark</p>
-      <button class="cursor-pointer" @click="((mode = 'light'), console.log(mode))">
-        <MoonIcon class="hover:text-acc size-8 stroke-1 transition-colors"></MoonIcon>
-      </button>
-    </div>
+  <div v-if="mode === 'light'">
+    <button
+      class="flex cursor-pointer flex-col items-center"
+      @click="((mode = 'dark'), console.log(mode))"
+    >
+      <SunIcon class="hover:text-acc size-8 stroke-1 transition-all duration-75"></SunIcon>
+    </button>
+  </div>
+  <div v-if="mode === 'dark'">
+    <button
+      class="flex cursor-pointer flex-col items-center"
+      @click="((mode = 'light'), console.log(mode))"
+    >
+      <MoonIcon class="hover:text-acc size-7.5 stroke-1"></MoonIcon>
+    </button>
   </div>
 </template>
 

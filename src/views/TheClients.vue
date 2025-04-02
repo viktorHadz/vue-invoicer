@@ -6,7 +6,7 @@ const clientStore = useClientStore()
 </script>
 
 <template>
-  <div>
+  <div class="mt-20">
     <div v-if="clientStore.hasClients === false">
       <NoClients></NoClients>
     </div>

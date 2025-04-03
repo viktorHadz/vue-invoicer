@@ -29,20 +29,27 @@ function hideTopBar() {
         class="relative flex items-center gap-4"
         :class="show ? 'translate-y-2 delay-[260ms]' : 'translate-y-0 delay-300'"
       >
-        <SelectClient> </SelectClient>
+        <SelectClient title="Select a client"> </SelectClient>
         <LeDarkMode></LeDarkMode>
         <ItemsEditor></ItemsEditor>
       </div>
-      <div id="chev-top-bar" class="relative w-fit place-self-end text-right">
-        <div class="flex h-5 overflow-hidden">
-          <span
-            class="flex size-5 w-full transform pt-0.5 transition-transform duration-300"
-            :class="show ? 'translate-y-full' : 'translate-y-0'"
-            >Selected client, Theme & Items</span
-          >
+      <div class="relative">
+        <div class="flex h-5 w-full cursor-default items-center justify-between overflow-hidden">
           <ChevronDoubleDownIcon
-            class="mt-1 size-5 transform transition-transform duration-300"
-            :class="show ? 'translate-y-full' : 'translate-y-0'"
+            class="mt-1 mr-1 size-5 transform transition-transform duration-300"
+            :class="show ? 'translate-y-full delay-100' : 'translate-y-0 delay-100'"
+          ></ChevronDoubleDownIcon>
+          <div
+            class="flex size-5 w-full transform justify-between pt-0.5 text-sm transition-transform duration-300"
+            :class="show ? 'translate-y-full delay-100' : 'translate-y-0 delay-100'"
+          >
+            <p>Selected Client</p>
+            <p>Theme</p>
+            <p>Items</p>
+          </div>
+          <ChevronDoubleDownIcon
+            class="mt-1 ml-1 size-5 transform transition-transform duration-300"
+            :class="show ? 'translate-y-full delay-100' : 'translate-y-0 delay-100'"
           ></ChevronDoubleDownIcon>
         </div>
       </div>

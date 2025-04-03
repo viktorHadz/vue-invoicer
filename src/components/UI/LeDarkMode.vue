@@ -14,6 +14,7 @@ const mode = useColorMode({
 <template>
   <div v-if="mode === 'light'">
     <button
+      title="Light mode"
       class="flex cursor-pointer flex-col items-center"
       @click="((mode = 'dark'), console.log(mode))"
     >
@@ -22,6 +23,7 @@ const mode = useColorMode({
   </div>
   <div v-if="mode === 'dark'">
     <button
+      title="Dark mode"
       class="flex cursor-pointer flex-col items-center"
       @click="((mode = 'light'), console.log(mode))"
     >

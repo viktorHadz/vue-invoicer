@@ -101,12 +101,10 @@ const filteredPeople = computed(() =>
     <!-- Central Items Table -->
     <div class="mt-12 grid cursor-default grid-cols-8 items-baseline font-semibold">
       <div class="col-span-4 pb-2 text-3xl font-bold">Invoice Items</div>
-      <div class="bold col-span-1">Quantity</div>
-      <div class="bold col-span-1 truncate">
-        Time <span class="text-xs font-normal">(min)</span>
-      </div>
-      <div class="bold col-span-1">Unit price</div>
-      <div class="bold col-span-1">
+      <div class="col-span-1">Quantity</div>
+      <div class="col-span-1 truncate">Time <span class="text-xs font-normal">(min)</span></div>
+      <div class="col-span-1">Unit price</div>
+      <div class="col-span-1">
         <div class="flex items-center justify-between" title="double click on an item to edit">
           <span class="">Item total</span>
 
@@ -117,7 +115,7 @@ const filteredPeople = computed(() =>
       </div>
     </div>
     <hr />
-    <!-- Item Selection -->
+    <!-- Item Select Inputs  -->
     <div class="grid grid-cols-8 items-baseline font-semibold">
       <!-- Combobox -->
       <Combobox
@@ -182,6 +180,19 @@ const filteredPeople = computed(() =>
       <div class="col-span-1 pr-8 text-end">60m</div>
       <div class="col-span-1 pr-8 text-end">£99.99</div>
       <div class="col-span-1 pr-8 text-end">£999.99</div>
+    </div>
+    <div class="mt-12 grid grid-cols-4 items-baseline font-semibold">
+      <div class="col-span-1 col-start-3 text-end text-2xl">Subtotal:</div>
+      <div class="col-span-1 col-start-4 mr-8 text-end text-2xl">£256 000.00</div>
+    </div>
+    <div class="grid grid-cols-4 items-baseline font-normal">
+      <hr class="col-span-2 col-start-3 mx-4 ml-12" />
+    </div>
+    <div class="grid grid-cols-4 items-baseline font-normal">
+      <div class="col-span-1 col-start-3 text-end text-xl">Discount:</div>
+      <div class="col-span-1 col-start-3 text-end text-xl">VAT:</div>
+      <div class="col-span-1 col-start-3 text-end text-xl">Total:</div>
+      <div class="col-span-1 col-start-3 text-end text-xl">Deposit:</div>
     </div>
   </main>
 </template>

@@ -89,7 +89,7 @@ const resetInputs = (formName) => {
 }
 </script>
 <template>
-  <div class="flex flex-col items-center">
+  <div class="flex flex-col items-center" title="client items">
     <!-- Text that always stays gray-900 -->
 
     <BriefcaseIcon

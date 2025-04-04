@@ -18,7 +18,7 @@ const props = defineProps({
 
 <template>
   <Listbox as="div" v-model="clientStore.selectedClient">
-    <div class="relative min-w-40">
+    <div class="relative min-w-30">
       <ListboxLabel
         class="block pl-1 font-medium tracking-tight"
         :class="[`${props.selectTitleClass}`]"
@@ -26,7 +26,8 @@ const props = defineProps({
         {{ props.selectTitle }}
       </ListboxLabel>
       <ListboxButton
-        class="focus:outline-sec dark:focus:outline-acc dark:hover:text-acc hover:text-sec grid w-full cursor-pointer grid-cols-1 rounded-md bg-neutral-100 py-1.5 pr-2 pl-3 text-left text-neutral-900 outline-1 -outline-offset-1 outline-neutral-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6 dark:bg-zinc-900 dark:text-neutral-300 dark:outline-neutral-600"
+        class="focus:outline-fg/50 dark:focus:outline-acc dark:hover:text-acc hover:text-sec grid w-full cursor-pointer grid-cols-1 rounded-md bg-neutral-100 py-1.5 pr-2 pl-3 text-left text-neutral-900 outline-1 -outline-offset-1 outline-neutral-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6 dark:bg-zinc-900 dark:text-neutral-300 dark:outline-neutral-600"
+        @click="clientStore.openToggle"
       >
         <span class="col-start-1 row-start-1 truncate pr-6">{{
           clientStore.selectedClient?.name || 'Select a client to continue'
@@ -51,31 +52,21 @@ const props = defineProps({
             :key="client.id"
             :value="client"
             v-slot="{ active, selected }"
+            @click="clientStore.openToggle"
           >
             <li
               :class="[
                 active
-                  ? 'text-fg2 bg-head outline-hidden dark:bg-zinc-800'
+                  ? 'text-fg2 dark:text-acc bg-sec hover:text-fg2 dark:hover:text-acc outline-hidden dark:bg-zinc-800'
                   : 'text-neutral-700 dark:text-neutral-400',
-                'relative cursor-default py-2 pr-4 pl-8 select-none',
+                'relative block cursor-default truncate py-2 pr-4 pl-8 select-none',
+
+                selected
+                  ? 'text-fg2 dark:text-acc hover:text-fg2 dark:hover:text-acc font-semibold'
+                  : '',
               ]"
             >
-              <span
-                :class="[
-                  selected ? 'text-sec dark:text-acc font-semibold' : 'font-normal',
-                  'block truncate',
-                ]"
-                >{{ client.name }}</span
-              >
-
-              <span
-                v-if="selected"
-                :class="[
-                  active ? 'text-fg-2' : 'text-fg',
-                  'absolute inset-y-0 left-0 flex items-center pl-1.5',
-                ]"
-              >
-              </span>
+              {{ client.name }}
             </li>
           </ListboxOption>
         </ListboxOptions>

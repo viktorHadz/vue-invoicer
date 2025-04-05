@@ -188,11 +188,16 @@ const filteredPeople = computed(() =>
     <div class="grid grid-cols-4 items-baseline font-normal">
       <hr class="col-span-2 col-start-3 mx-4 ml-12" />
     </div>
-    <div class="grid grid-cols-4 items-baseline font-normal">
-      <div class="col-span-1 col-start-3 text-end text-xl">Discount:</div>
-      <div class="col-span-1 col-start-3 text-end text-xl">VAT:</div>
-      <div class="col-span-1 col-start-3 text-end text-xl">Total:</div>
-      <div class="col-span-1 col-start-3 text-end text-xl">Deposit:</div>
+    <div class="grid grid-cols-4 grid-rows-4 items-baseline font-normal">
+      <div class="col-span-1 col-start-3 row-start-1 text-end text-xl">Discount:</div>
+      <div class="col-span-1 col-start-3 row-start-2 text-end text-xl">VAT:</div>
+      <div class="col-span-1 col-start-3 row-start-3 text-end text-xl">Total:</div>
+      <div class="col-span-1 col-start-3 row-start-4 text-end text-xl">Deposit:</div>
+
+      <div class="col-span-1 col-start-4 row-start-1 mr-8 text-end text-xl">50%(£128 000.00)</div>
+      <div class="col-span-1 col-start-4 row-start-2 mr-8 text-end text-xl">£25600</div>
+      <div class="col-span-1 col-start-4 row-start-3 mr-8 text-end text-xl">£153 600.00</div>
+      <div class="col-span-1 col-start-4 row-start-4 mr-8 text-end text-xl">40%</div>
     </div>
   </main>
 </template>

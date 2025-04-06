@@ -6,7 +6,7 @@ import {
   ListboxOption,
   ListboxOptions,
 } from '@headlessui/vue'
-import { ChevronUpDownIcon } from '@heroicons/vue/16/solid'
+import { ChevronUpDownIcon, CheckIcon } from '@heroicons/vue/24/outline'
 import { useClientStore } from '@/stores/clients'
 
 const clientStore = useClientStore()
@@ -59,14 +59,17 @@ const props = defineProps({
                 active
                   ? 'text-fg2 dark:text-acc bg-sec hover:text-fg2 dark:hover:text-acc outline-hidden dark:bg-zinc-800'
                   : 'text-neutral-700 dark:text-neutral-400',
-                'relative block cursor-default truncate py-2 pr-4 pl-8 select-none',
+                'relative block cursor-default truncate select-none',
 
                 selected
                   ? 'text-fg2 dark:text-acc hover:text-fg2 dark:hover:text-acc font-semibold'
                   : '',
               ]"
             >
-              {{ client.name }}
+              <div class="flex items-center justify-between px-2 py-1">
+                {{ client.name }}
+                <CheckIcon v-if="selected" class="size-4 p-0.5"></CheckIcon>
+              </div>
             </li>
           </ListboxOption>
         </ListboxOptions>

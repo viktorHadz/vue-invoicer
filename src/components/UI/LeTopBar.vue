@@ -4,7 +4,6 @@ import SelectClient from '../clients/SelectClient.vue'
 import LeDarkMode from './LeDarkMode.vue'
 import ItemsEditor from '@/components/items/ItemsEditor.vue'
 import { useClientStore } from '@/stores/clients'
-import { ChevronDoubleDownIcon } from '@heroicons/vue/24/outline'
 
 const clientStore = useClientStore()
 
@@ -15,13 +14,13 @@ function toggleTopBar() {
 }
 </script>
 <template>
-  <div v-if="clientStore.hasClients" class="absolute top-0 right-0">
+  <div v-if="clientStore.hasClients" class="absolute top-0 right-4">
     <div
-      class="bg-sec relative mr-4 rounded-b-md border-x border-b border-neutral-400 transition-transform delay-150 duration-300 ease-in-out will-change-transform dark:border-neutral-600"
-      :class="show === true ? 'translate-y' : '-translate-y-13.5'"
+      class="bg-sec relative rounded-b-md border-x border-b border-neutral-400 transition-transform delay-150 duration-300 ease-in-out will-change-transform dark:border-neutral-600"
+      :class="show === true ? 'translate-y' : '-translate-y-12'"
     >
-      <div class="relative flex items-center gap-4 p-2">
-        <div>
+      <div class="grid grid-cols-5 items-center gap-x-4 gap-y-2">
+        <div class="col-span-3 row-start-1 mx-2 pt-1">
           <SelectClient
             title="select a client"
             select-title=""
@@ -29,27 +28,20 @@ function toggleTopBar() {
           >
           </SelectClient>
         </div>
-        <LeDarkMode></LeDarkMode>
-        <ItemsEditor></ItemsEditor>
-      </div>
-      <button
-        @click="toggleTopBar()"
-        :title="!show ? 'click to expand' : ''"
-        class="hover:bg-acc/70 dark:hover:bg-acc/10 dark:hover:text-acc flex size-5 w-full cursor-pointer items-center p-1 text-sm"
-      >
-        <div
-          class="flex w-full justify-between px-2 text-xs"
-          :class="show == true ? '' : 'dark:text-acc text-fg rotate-0'"
-        >
-          <span class="">Selected Client</span> <span>Theme</span> <span>Items</span>
+        <div class="col-span-1 row-start-1 flex w-full justify-center self-center">
+          <LeDarkMode></LeDarkMode>
         </div>
-
-        <ChevronDoubleDownIcon
-          class="size-4 transition-transform duration-300 ease-in-out will-change-transform"
-          :class="show == true ? 'rotate-180' : 'dark:text-acc text-fg rotate-0'"
+        <div class="col-span-1 row-start-1 pr-2"><ItemsEditor></ItemsEditor></div>
+        <button
+          @click="toggleTopBar()"
+          :title="!show ? 'click to expand' : ''"
+          class="hover:bg-acc/70 dark:hover:bg-acc/10 dark:text-acc dark:hover:text-acc col-span-5 grid cursor-pointer grid-cols-subgrid grid-rows-subgrid items-center rounded-b-md pb-1 text-xs"
         >
-        </ChevronDoubleDownIcon>
-      </button>
+          <div class="col-span-3 row-start-2 tracking-wider">Selected Client</div>
+          <div class="col-span-1 row-start-2">Theme</div>
+          <div class="col-span-1 row-start-2 pr-2">Items</div>
+        </button>
+      </div>
     </div>
   </div>
 </template>

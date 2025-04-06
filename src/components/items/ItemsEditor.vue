@@ -112,7 +112,7 @@ const resetInputs = (formName) => {
         v-if="isOpen"
       >
         <div class="">
-          <div class="relative top-6 flex w-full">
+          <div class="relative top-2 flex w-full">
             <!-- Search -->
             <div class="ml-2 w-1/3">
               <div class="flex items-center">
@@ -125,7 +125,7 @@ const resetInputs = (formName) => {
                 />
               </div>
             </div>
-            <LeBtn @click="isOpen = false" class="absolute right-6">Close</LeBtn>
+            <LeBtn @click="isOpen = false" class="absolute right-4">Close</LeBtn>
           </div>
           <div class="w-full px-2 py-12 sm:px-0">
             <TabGroup>

@@ -19,7 +19,7 @@ export const useItemsStore = defineStore('items', () => {
         name: product.title,
         type,
         price: product.price,
-        time: product.rating,
+        time: type === 'sample' ? product.rating : 1,
       }))
       items[type].push(...transformed)
     } catch (error) {

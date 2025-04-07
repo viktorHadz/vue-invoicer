@@ -1,8 +1,12 @@
 <script setup>
 import InvoiceTo from '@/components/invoice/InvoiceTo.vue'
 import LeInput from '@/components/UI/LeInput.vue'
-import { computed, ref } from 'vue'
-import { ChevronUpDownIcon, QuestionMarkCircleIcon } from '@heroicons/vue/20/solid'
+import { computed, ref, reactive } from 'vue'
+import {
+  ChevronUpDownIcon,
+  QuestionMarkCircleIcon,
+  ChevronDownIcon,
+} from '@heroicons/vue/24/outline'
 import {
   Combobox,
   ComboboxButton,
@@ -10,34 +14,67 @@ import {
   ComboboxOption,
   ComboboxOptions,
 } from '@headlessui/vue'
+import { Popover, PopoverPanel, PopoverButton } from '@headlessui/vue'
+import { useItemsStore } from '@/stores/items'
+import LeBtn from '@/components/UI/LeBtn.vue'
 
-const people = [
-  { id: 1, name: 'Leslie Alexander' },
-  { id: 1, name: 'Leslie Alexander' },
-  { id: 1, name: 'Leslie Alexander' },
-  { id: 1, name: 'Leslie Alexander' },
-  { id: 1, name: 'Leslie Alexander' },
-  { id: 1, name: 'Leslie Alexander' },
-  { id: 2, name: 'Kakati Huq' },
-  // More users...
-]
+const itemStore = useItemsStore()
 
-const query = ref('')
-const selectedPerson = ref(null)
-const filteredPeople = computed(() =>
-  query.value === ''
-    ? people
-    : people.filter((person) => {
-        return person.name.toLowerCase().includes(query.value.toLowerCase())
-      }),
-)
-const active = ref('')
+// const searchQueries = ref('')
+const searchQueries = reactive({
+  style: '',
+  sample: '',
+})
+const itemForm = reactive({
+  id: '',
+  name: '',
+  type: '',
+  time: 0,
+  qty: 1,
+  price: 0,
+  itemTotal: 0,
+})
+
+// const filteredItems = computed(() =>
+//   query.value === ''
+//     ? people
+//     : people.filter((person) => {
+//         return person.name.toLowerCase().includes(query.value.toLowerCase())
+//       }),
+// )
+const itemType = ref('style')
+const filteredItems = computed(() => {
+  return itemStore.items[itemType.value].filter((item) =>
+    item.name.toLowerCase().includes(searchQueries[itemType.value].toLowerCase()),
+  )
+})
+// const addItemToInvo = (item) => {
+//   Object.assign(itemForm, item)
+// }
+const addItemToForm = (item) => {
+  Object.assign(itemForm, item)
+  console.log(itemForm)
+}
+const resetInputs = (formName) => {
+  formName.id = ''
+  formName.name = ''
+  formName.type = itemType.value
+  formName.time = 0
+  formName.qty = 1
+  formName.price = 0
+  formName.itemTotal = 0
+}
+/*
+1. Have to loop over items based on selectedEl.value - DONE
+
+*/
 </script>
 
 <template>
   <main
     class="px-20 py-18 2xl:mx-auto 2xl:flex 2xl:max-w-[70%] 2xl:flex-col 2xl:items-center 2xl:px-40"
   >
+    <LeBtn @click="console.log('Item: ', itemType, 'selectedItem: ', itemForm)">log</LeBtn>
     <!-- Top 3 flex-box cols -->
     <InvoiceTo></InvoiceTo>
     <!-- Invoice Items -->
@@ -63,39 +100,94 @@ const active = ref('')
         </div>
       </div>
       <hr class="text-fg/50 col-span-8 mt-1 mb-2" />
+      <div class="col-span-9 grid grid-cols-subgrid items-center pt-5">
+        <Popover v-slot="{ open }" class="col-span-4">
+          <PopoverButton
+            :class="open ? 'text-white' : 'text-white/90'"
+            class="group inline-flex items-center rounded-md px-3 py-2 text-base font-medium hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75"
+          >
+            <LeBtn class="flex items-center">
+              open
+              <ChevronDownIcon
+                :class="open ? 'text-acc' : 'text-acc/70'"
+                class="group-hover:acc/80 size-5 transition duration-150 ease-in-out"
+                aria-hidden="true"
+              />
+            </LeBtn>
+          </PopoverButton>
 
-      <div class="col-span-8 grid grid-cols-subgrid items-center pt-5">
+          <transition
+            enter-active-class="transition duration-200 ease-out"
+            enter-from-class="translate-y-1 opacity-0"
+            enter-to-class="translate-y-0 opacity-100"
+            leave-active-class="transition duration-150 ease-in"
+            leave-from-class="translate-y-0 opacity-100"
+            leave-to-class="translate-y-1 opacity-0"
+          >
+            <PopoverPanel
+              class="absolute z-10 mt-3 w-screen max-w-sm -translate-x-0 transform px-4"
+            >
+              <div class="ring-brdr overflow-hidden rounded-lg shadow-lg ring-1">
+                <div class="bg-primary">
+                  <div
+                    v-if="filteredItems.length > 0"
+                    class="max-h-60 w-full overflow-auto rounded-md py-1 text-base shadow-md focus:outline-hidden sm:text-sm"
+                  >
+                    <div v-for="item in filteredItems" :key="item.id" :value="item" as="template">
+                      <ul
+                        class="'hover:text-acc dark:hover:text-acc select-none', relative py-2 pr-4 pl-3"
+                      >
+                        <div
+                          class="grid w-full grid-cols-[minmax(0,1fr)_auto_auto_auto] items-center gap-2"
+                        >
+                          <div class="truncate">{{ item.name }}</div>
+                          <LeBtn class="text-xs" title="Select to edit item">select</LeBtn>
+                          <LeInput class="max-w-8" v-model="itemForm.qty"></LeInput>
+                          <LeBtn class="text-xs">add</LeBtn>
+                        </div>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </PopoverPanel>
+          </transition>
+        </Popover>
+      </div>
+      <div class="col-span-9 grid grid-cols-subgrid items-center pt-5">
         <!-- Item Select Inputs  -->
         <Combobox
           as="div"
-          v-model="selectedPerson"
-          @update:modelValue="query = ''"
+          v-model="itemForm"
+          @update:modelValue="searchQueries[itemType] = ''"
           class="col-span-4 pr-6"
         >
           <div class="relative">
+            <!-- Style/Sample Toggle -->
             <div class="absolute -top-6 z-10 w-full text-sm">
               <div class="relative flex h-7 w-[8rem] items-center justify-between text-sm">
+                <!-- animated handel -->
                 <span
-                  class="bg-sec dark:bg-acc/20 absolute bottom-1.5 left-0 h-4 w-1/2 rounded transition-transform duration-300"
-                  :class="active === 'style' ? 'translate-x-0' : 'translate-x-full'"
+                  class="bg-acc dark:bg-acc/20 absolute bottom-1.5 left-0 h-4 w-1/2 rounded transition-transform duration-300"
+                  :class="itemType === 'style' ? 'translate-x-0' : 'translate-x-full'"
                 ></span>
                 <button
-                  @click="active = 'style'"
+                  @click="itemType = 'style'"
                   :class="
-                    active === 'style'
-                      ? 'dark:text-acc'
-                      : 'text-fg hover:text-sec cursor-pointer dark:hover:text-white'
+                    itemType === 'style'
+                      ? 'text-fg2 dark:text-acc'
+                      : 'text-fg hover:text-acc cursor-pointer dark:hover:text-white'
                   "
                   class="z-10 w-1/2"
                 >
                   style
                 </button>
                 <button
-                  @click="active = 'sample'"
+                  @click="itemType = 'sample'"
                   :class="
-                    active === 'sample'
-                      ? 'dark:text-acc'
-                      : 'text-fg hover:text-sec cursor-pointer dark:hover:text-white'
+                    itemType === 'sample'
+                      ? 'text-fg2 dark:text-acc'
+                      : 'text-fg hover:text-acc cursor-pointer dark:hover:text-white'
                   "
                   class="z-10 w-1/2"
                 >
@@ -104,11 +196,10 @@ const active = ref('')
               </div>
             </div>
             <ComboboxInput
+              :id="'invo-item-name-combo-1'"
               class="input block w-full py-1 pr-12 pl-3 text-base sm:text-sm/6"
-              @change="query = $event.target.value"
-              @blur="query = ''"
-              :display-value="(person) => person?.name"
-              :placeholder="`Click to search by ${active} name`"
+              @change="searchQueries[itemType] = $event.target.value"
+              :placeholder="`Click to search by ${itemType} name`"
             />
             <ComboboxButton
               class="absolute inset-y-0 top-0 right-0 flex items-center rounded-r-md px-2 focus:outline-hidden"
@@ -116,42 +207,53 @@ const active = ref('')
               <ChevronUpDownIcon class="size-5 text-gray-400" aria-hidden="true" />
             </ComboboxButton>
             <ComboboxOptions
-              v-if="filteredPeople.length > 0"
+              v-if="filteredItems.length > 0"
               class="input-dropdown absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md py-1 text-base shadow-md focus:outline-hidden sm:text-sm"
             >
               <ComboboxOption
-                v-for="person in filteredPeople"
-                :key="person.id"
-                :value="person"
+                v-for="item in filteredItems"
+                :key="item.id"
+                :value="item"
                 as="template"
-                v-slot="{ active, selected }"
               >
                 <li
-                  :class="[
-                    'hover:text-sec dark:hover:text-acc relative cursor-pointer py-2 pr-9 pl-3 select-none',
-                    active
-                      ? 'text-head bg-neutral-200/60 outline-hidden dark:bg-neutral-700/30'
-                      : 'text-fg',
-                  ]"
+                  class="'hover:text-acc dark:hover:text-acc select-none', relative py-2 pr-4 pl-3"
                 >
-                  <span
-                    :class="[
-                      'block truncate font-normal',
-                      selected && 'dark:text-acc font-semibold',
-                    ]"
+                  <div
+                    class="grid w-full grid-cols-[minmax(0,1fr)_auto_auto_auto] items-center gap-2"
                   >
-                    {{ person.name }}
-                  </span>
+                    <div class="truncate">{{ item.name }}</div>
+                    <LeBtn class="text-xs" title="Select to edit item">select</LeBtn>
+                    <LeInput class="max-w-8" v-model="itemForm.qty"></LeInput>
+                    <LeBtn class="text-xs">add</LeBtn>
+                  </div>
                 </li>
               </ComboboxOption>
             </ComboboxOptions>
           </div>
         </Combobox>
         <!-- Numerics -->
-        <LeInput class="col-span-1 pr-5" placeholder="e.g. x1"></LeInput>
-        <LeInput class="col-span-1 pr-5" placeholder="minutes"></LeInput>
-        <LeInput class="col-span-1 pr-5" placeholder="single"></LeInput>
-        <LeInput class="col-span-1 pr-5" placeholder="total"></LeInput>
+        <LeInput
+          class="col-span-1 pr-5"
+          placeholder="e.g. x1"
+          v-model="itemForm.qty"
+          :id="'invo-qty-1'"
+          :type="'number'"
+        ></LeInput>
+        <LeInput
+          class="col-span-1 pr-5"
+          v-model="itemForm.time"
+          :id="'invo-time-1'"
+          :type="'number'"
+        ></LeInput>
+        <LeInput
+          class="col-span-1 pr-5"
+          v-model="itemForm.price"
+          :id="'invo-price-1'"
+          :type="'number'"
+        ></LeInput>
+        <div class="col-span-1 pr-5" v-html="itemForm.itemTotal"></div>
+        <div>s</div>
       </div>
       <!-- Items -->
       <div class="col-span-8 mt-2 grid grid-cols-subgrid items-center text-base font-normal">
@@ -166,9 +268,6 @@ const active = ref('')
       <div
         class="pointer-events-none col-span-8 mt-2 grid grid-cols-subgrid items-center text-lg font-normal"
       >
-        <!-- border -->
-        <!-- <div class="col-start-6 col-end-9 row-start-1 row-end-6 h-full rounded-md border"></div> -->
-        <!-- horizontal line -->
         <div
           class="border-fg/50 col-span-3 col-start-6 row-start-1 h-full items-end border-b"
         ></div>

@@ -6,7 +6,7 @@ import {
   ListboxOption,
   ListboxOptions,
 } from '@headlessui/vue'
-import { ChevronUpDownIcon, CheckIcon } from '@heroicons/vue/24/outline'
+import { ChevronUpDownIcon, CheckIcon, UserIcon } from '@heroicons/vue/24/outline'
 import { useClientStore } from '@/stores/clients'
 
 const clientStore = useClientStore()
@@ -20,16 +20,19 @@ const props = defineProps({
   <Listbox as="div" v-model="clientStore.selectedClient">
     <div class="relative min-w-30">
       <ListboxLabel
+        for="top-bar-select-1"
         class="block pl-1 font-medium tracking-tight"
         :class="[`${props.selectTitleClass}`]"
       >
         {{ props.selectTitle }}
       </ListboxLabel>
       <ListboxButton
-        class="focus:outline-fg/50 dark:focus:outline-acc dark:hover:text-acc hover:text-sec grid w-full cursor-pointer grid-cols-1 rounded-md bg-neutral-100 py-1.5 pr-2 pl-3 text-left text-neutral-900 outline-1 -outline-offset-1 outline-neutral-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6 dark:bg-zinc-900 dark:text-neutral-300 dark:outline-neutral-600"
+        :id="'top-bar-select-1'"
+        class="input flex items-center justify-between"
         @click="clientStore.openToggle"
       >
-        <span class="col-start-1 row-start-1 truncate pr-6">{{
+        <UserIcon class="fixed mt-0.5 -ml-0.5 size-4"></UserIcon>
+        <span class="col-start-1 row-start-1 ml-5 truncate">{{
           clientStore.selectedClient?.name || 'Select a client to continue'
         }}</span>
         <ChevronUpDownIcon
@@ -44,7 +47,7 @@ const props = defineProps({
         leave-to-class="opacity-0"
       >
         <ListboxOptions
-          class="bg-primary absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md py-1 text-base shadow-lg ring-1 ring-neutral-400 focus:outline-hidden sm:text-sm dark:bg-zinc-900 dark:ring-neutral-600"
+          class="bg-primary absolute z-[100] mt-1 max-h-26 w-full overflow-auto rounded-md py-1 text-base shadow-lg ring-1 ring-neutral-400 focus:outline-hidden sm:text-sm dark:bg-neutral-800 dark:ring-neutral-600"
         >
           <ListboxOption
             as="template"
@@ -57,12 +60,12 @@ const props = defineProps({
             <li
               :class="[
                 active
-                  ? 'text-fg2 dark:text-acc bg-sec hover:text-fg2 dark:hover:text-acc outline-hidden dark:bg-zinc-800'
+                  ? 'text-fg dark:text-acc bg-sec/30 hover:text-fg dark:hover:text-acc outline-hidden dark:bg-zinc-800'
                   : 'text-neutral-700 dark:text-neutral-400',
                 'relative block cursor-default truncate select-none',
 
                 selected
-                  ? 'text-fg2 dark:text-acc hover:text-fg2 dark:hover:text-acc font-semibold'
+                  ? 'text-fg dark:text-acc hover:text-fg dark:hover:text-acc font-semibold'
                   : '',
               ]"
             >

@@ -8,7 +8,7 @@ import LeBtn from '../UI/LeBtn.vue'
 import LeInput from '../UI/LeInput.vue'
 import LeFlexTd from '../UI/table/LeFlexTd.vue'
 import LeFlexTh from '../UI/table/LeFlexTh.vue'
-import { PlusCircleIcon } from '@heroicons/vue/16/solid'
+import { MagnifyingGlassIcon } from '@heroicons/vue/24/outline'
 
 const isOpen = ref(false)
 const itemStore = useItemsStore()
@@ -116,12 +116,13 @@ const resetInputs = (formName) => {
             <!-- Search -->
             <div class="ml-2 w-1/3">
               <div class="flex items-center">
+                <MagnifyingGlassIcon class="text-fg fixed ml-1.5 size-4.5"></MagnifyingGlassIcon>
                 <input
                   v-model="searchQueries[selectedEl]"
                   :id="`${selectedEl}-search-1`"
                   :placeholder="`Search ${selectedEl}s...`"
                   type="text"
-                  class="input"
+                  class="input pl-7.5"
                 />
               </div>
             </div>
@@ -152,7 +153,7 @@ const resetInputs = (formName) => {
                   @click="moveSlider('sample')"
                   :class="
                     selectedEl === 'sample'
-                      ? 'text-fg2 dark:text-acc transition duration-500 ease-out'
+                      ? 'text-fg dark:text-acc transition duration-500 ease-out'
                       : 'text-fg hover:text-acc hover:cursor-pointer'
                   "
                 >
@@ -161,10 +162,10 @@ const resetInputs = (formName) => {
               </TabList>
               <TabPanels class="p-2">
                 <LeFlexTh class="rounded-t-md">
-                  <div scope="col" class="w-[50%] py-3 pl-2">Name</div>
-                  <div scope="col" class="w-[20%] py-3">Price</div>
-                  <div scope="col" class="w-[10%] py-3">Time</div>
-                  <div scope="col" class="w-[20%] py-3 text-center">Action</div>
+                  <div scope="col" class="text-fg w-[50%] py-3 pl-2">Name</div>
+                  <div scope="col" class="text-fg w-[20%] py-3">Price</div>
+                  <div scope="col" class="text-fg w-[10%] py-3">Time</div>
+                  <div scope="col" class="text-fg w-[20%] py-3 text-center">Action</div>
                 </LeFlexTh>
                 <div class="bg-sec disabled: flex w-full items-center gap-4 pt-1 pb-2 pl-2">
                   <LeInput
@@ -202,7 +203,7 @@ const resetInputs = (formName) => {
                       class="flex"
                       :title="`add new ${selectedEl}`"
                     >
-                      <PlusCircleIcon class="size-5"></PlusCircleIcon>
+                      Add
                     </LeBtn>
                   </div>
                 </div>

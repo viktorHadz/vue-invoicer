@@ -25,6 +25,41 @@ export const useClientStore = defineStore('clients', () => {
       email: 'john.innovate@gmail.com',
       address: '456 Innovation Drive, New York, NY, 10001',
     },
+    {
+      id: 4,
+      name: 'Emma',
+      company: 'CreativeWorks',
+      email: 'emma.creative@gmail.com',
+      address: '78 Creative Road, Austin, TX, 73301',
+    },
+    {
+      id: 5,
+      name: 'Liam',
+      company: 'Proto Inc.',
+      email: 'liam.proto@gmail.com',
+      address: '90 Proto Street, Boston, MA, 02110',
+    },
+    {
+      id: 6,
+      name: 'Olivia',
+      company: 'Designify',
+      email: 'olivia.designify@gmail.com',
+      address: '22 Design Blvd, San Francisco, CA, 94102',
+    },
+    {
+      id: 7,
+      name: 'Noah',
+      company: 'BuildRight',
+      email: 'noah.build@gmail.com',
+      address: '300 Build Ave, Seattle, WA, 98101',
+    },
+    {
+      id: 8,
+      name: 'Ava',
+      company: 'NextGen Solutions',
+      email: 'ava.nextgen@gmail.com',
+      address: '15 NextGen Street, Denver, CO, 80203',
+    },
   ])
 
   // Load the stored selected client id from localStorage

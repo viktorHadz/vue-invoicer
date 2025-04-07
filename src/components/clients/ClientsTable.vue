@@ -11,6 +11,7 @@ import {
   CheckCircleIcon,
   XCircleIcon,
   UserPlusIcon,
+  MagnifyingGlassIcon,
 } from '@heroicons/vue/24/outline'
 
 const clientStore = useClientStore()
@@ -72,12 +73,13 @@ const filteredClients = computed(() => {
             class="ring-t ring-x bg-sec -mb-2 w-fit rounded-t-lg px-2 pt-2 pb-4 ring-1 ring-neutral-400 dark:ring-neutral-600"
           >
             <div class="flex items-center">
+              <MagnifyingGlassIcon class="fixed ml-2 size-4.5"></MagnifyingGlassIcon>
               <input
                 id="srchQry-clients-1"
                 v-model="searchQuery"
                 type="text"
-                placeholder="Search clients..."
-                class="input"
+                placeholder="Search by name..."
+                class="input pl-8"
               />
             </div>
           </div>
@@ -87,7 +89,7 @@ const filteredClients = computed(() => {
         >
           <table class="min-w-full">
             <thead
-              class="bg-sec text-fg2 sticky top-0 z-10 border-b px-3 text-left text-sm font-semibold backdrop-blur-sm backdrop-filter"
+              class="bg-sec text-fg sticky top-0 z-10 border-b px-3 text-left text-sm font-semibold backdrop-blur-sm backdrop-filter"
             >
               <tr>
                 <th scope="col" class="py-3.5 pr-3 pl-4 text-left text-sm font-semibold sm:pl-4">

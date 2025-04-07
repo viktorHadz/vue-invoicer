@@ -6,6 +6,7 @@ export const useInvoiceStore = defineStore('invoice', () => {
     invoiceNumber: '#S.A.M.-1',
     createdDate: '',
     dueDate: '',
+    items: [{}],
   })
   return { data }
 })

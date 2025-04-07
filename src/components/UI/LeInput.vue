@@ -10,6 +10,8 @@
       :value="modelValue"
       @input="emit('update:modelValue', $event.target.value)"
       class="input"
+      :type="type"
+      @focus="$event.target.select()"
     />
   </div>
 </template>
@@ -22,6 +24,7 @@ const props = defineProps({
   modelValue: [String, Number],
   labelHidden: Boolean,
   classNames: String,
+  type: String,
 })
 
 const emit = defineEmits(['update:modelValue'])

@@ -20,7 +20,7 @@ function toggleTopBar() {
       :class="show === true ? 'translate-y' : '-translate-y-12'"
     >
       <div class="grid grid-cols-5 items-center gap-x-4 gap-y-2">
-        <div class="col-span-3 row-start-1 mx-2 pt-1">
+        <div class="col-span-3 row-start-1 mx-2 pt-2">
           <SelectClient
             title="select a client"
             select-title=""
@@ -28,18 +28,18 @@ function toggleTopBar() {
           >
           </SelectClient>
         </div>
-        <div class="col-span-1 row-start-1 flex w-full justify-center self-center">
+        <div class="col-span-1 row-start-1 mt-2 flex w-full justify-center self-center">
           <LeDarkMode></LeDarkMode>
         </div>
-        <div class="col-span-1 row-start-1 pr-2"><ItemsEditor></ItemsEditor></div>
+        <div class="col-span-1 row-start-1 mt-1.5 pr-2"><ItemsEditor></ItemsEditor></div>
         <button
           @click="toggleTopBar()"
           :title="!show ? 'click to expand' : ''"
-          class="hover:bg-acc/70 dark:hover:bg-acc/10 dark:text-acc dark:hover:text-acc col-span-5 grid cursor-pointer grid-cols-subgrid grid-rows-subgrid items-center rounded-b-md pb-1 text-xs"
+          class="hover:bg-acc/70 dark:hover:bg-acc/10 dark:text-fg dark:hover:text-acc col-span-5 grid cursor-pointer grid-cols-subgrid grid-rows-subgrid items-center rounded-b-md text-xs"
         >
-          <div class="col-span-3 row-start-2 tracking-wider">Selected Client</div>
-          <div class="col-span-1 row-start-2">Theme</div>
-          <div class="col-span-1 row-start-2 pr-2">Items</div>
+          <div class="col-span-3 row-start-2 mb-0.5 tracking-wider">Selected Client</div>
+          <div class="col-span-1 row-start-2 mb-0.5">Theme</div>
+          <div class="col-span-1 row-start-2 mb-0.5 pr-2">Items</div>
         </button>
       </div>
     </div>

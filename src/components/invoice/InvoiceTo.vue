@@ -53,7 +53,6 @@ const invoice = useInvoiceStore()
     <div class="col-span-1 col-start-6 row-start-3"><p>Company:</p></div>
     <div class="col-span-1 col-start-6 row-start-4"><p>Address:</p></div>
     <!-- Values -->
-    <input for="" class="hidden" v-model="invoice.data.client.name" />
     <div class="col-span-2 col-start-7 row-start-2">{{ clients.selectedClient.name }}</div>
     <div class="col-span-2 col-start-7 row-start-3">{{ clients.selectedClient.company }}</div>
     <div class="col-span-2 col-start-7 row-start-4 line-clamp-2">

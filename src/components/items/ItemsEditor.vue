@@ -14,7 +14,7 @@ const isOpen = ref(false)
 const itemStore = useItemsStore()
 
 onMounted(() => {
-  itemStore.fetchItems('style', 'https://dummyjson.com/products?limit=5')
+  itemStore.fetchItems('style', 'https://dummyjson.com/products?limit=20')
   itemStore.fetchItems('sample', 'https://dummyjson.com/products?limit=5&skip=5')
 })
 

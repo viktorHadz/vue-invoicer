@@ -100,14 +100,14 @@ const addItemToForm = (item) => {
           <!-- animated handle -->
           <div class="relative">
             <span
-              class="bg-acc dark:bg-acc/20 absolute bottom-0 left-0 h-5.5 w-1/2 rounded transition-transform duration-300"
+              class="bg-acc/20 dark:bg-acc/20 absolute bottom-0 left-0 z-[1] h-5.5 w-1/2 rounded transition-transform duration-300"
               :class="itemType === 'style' ? 'translate-x-0' : 'translate-x-full'"
             ></span>
             <button
               @click="itemType = 'style'"
               :class="
                 itemType === 'style'
-                  ? 'text-fg2 dark:text-acc'
+                  ? 'text-acc dark:text-acc'
                   : 'text-fg hover:text-acc cursor-pointer dark:hover:text-white'
               "
               class="z-10 w-1/2"
@@ -118,7 +118,7 @@ const addItemToForm = (item) => {
               @click="itemType = 'sample'"
               :class="
                 itemType === 'sample'
-                  ? 'text-fg2 dark:text-acc'
+                  ? 'text-acc dark:text-acc'
                   : 'text-fg hover:text-acc cursor-pointer dark:hover:text-white'
               "
               class="z-10 w-1/2"

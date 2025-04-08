@@ -2,11 +2,7 @@
 import InvoiceTo from '@/components/invoice/InvoiceTo.vue'
 import LeInput from '@/components/UI/LeInput.vue'
 import { computed, ref, reactive } from 'vue'
-import {
-  ChevronUpDownIcon,
-  QuestionMarkCircleIcon,
-  ChevronDownIcon,
-} from '@heroicons/vue/24/outline'
+import { ChevronUpDownIcon, QuestionMarkCircleIcon } from '@heroicons/vue/24/outline'
 import {
   Combobox,
   ComboboxButton,
@@ -14,13 +10,11 @@ import {
   ComboboxOption,
   ComboboxOptions,
 } from '@headlessui/vue'
-import { Popover, PopoverPanel, PopoverButton } from '@headlessui/vue'
 import { useItemsStore } from '@/stores/items'
 import LeBtn from '@/components/UI/LeBtn.vue'
 
 const itemStore = useItemsStore()
 
-// const searchQueries = ref('')
 const searchQueries = reactive({
   style: '',
   sample: '',
@@ -29,19 +23,12 @@ const itemForm = reactive({
   id: '',
   name: '',
   type: '',
-  time: 0,
+  time: 1,
   qty: 1,
   price: 0,
   itemTotal: 0,
 })
 
-// const filteredItems = computed(() =>
-//   query.value === ''
-//     ? people
-//     : people.filter((person) => {
-//         return person.name.toLowerCase().includes(query.value.toLowerCase())
-//       }),
-// )
 const itemType = ref('style')
 const filteredItems = computed(() => {
   return itemStore.items[itemType.value].filter((item) =>
@@ -52,22 +39,23 @@ const filteredItems = computed(() => {
 //   Object.assign(itemForm, item)
 // }
 const addItemToForm = (item) => {
-  Object.assign(itemForm, item)
+  console.log(item)
+  // mutate item dependent on itemType
+  const newItem = { ...item, itemTotal: item.time * item.price }
+  Object.assign(itemForm, newItem)
+
   console.log(itemForm)
 }
-const resetInputs = (formName) => {
-  formName.id = ''
-  formName.name = ''
-  formName.type = itemType.value
-  formName.time = 0
-  formName.qty = 1
-  formName.price = 0
-  formName.itemTotal = 0
-}
-/*
-1. Have to loop over items based on selectedEl.value - DONE
 
-*/
+// const resetInputs = (formName) => {
+//   formName.id = ''
+//   formName.name = ''
+//   formName.type = itemType.value
+//   formName.time = 0
+//   formName.qty = 1
+//   formName.price = 0
+//   formName.itemTotal = 0
+// }
 </script>
 
 <template>
@@ -79,7 +67,7 @@ const resetInputs = (formName) => {
     <InvoiceTo></InvoiceTo>
     <!-- Invoice Items -->
     <div class="mt-12 grid w-full cursor-default grid-cols-8 items-baseline font-semibold">
-      <div class="col-span-8 grid grid-cols-subgrid items-baseline">
+      <div class="col-span-8 grid grid-cols-subgrid items-baseline gap-6">
         <div class="col-span-4 text-3xl font-bold">
           <div class="flex w-full items-end justify-between">
             <h1 class="">Invoice Items</h1>
@@ -100,157 +88,107 @@ const resetInputs = (formName) => {
         </div>
       </div>
       <hr class="text-fg/50 col-span-8 mt-1 mb-2" />
-      <div class="relative col-span-9 grid grid-cols-subgrid items-center pt-5">
-        <Popover v-slot="{ open }" class="col-span-4">
-          <PopoverButton
-            :class="open ? 'text-white' : 'text-white/90'"
-            class="group inline-flex items-center rounded-md px-3 py-2 text-base font-medium hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75"
-          >
-            <LeBtn class="flex items-center gap-2">
-              Add
-              <ChevronDownIcon
-                :class="open ? 'text-acc' : 'text-acc/70'"
-                class="group-hover:acc/80 size-4 transition duration-150 ease-in-out"
-                aria-hidden="true"
-              />
-            </LeBtn>
-          </PopoverButton>
-
-          <transition
-            enter-active-class="transition duration-200 ease-out"
-            enter-from-class="translate-y-1 opacity-0"
-            enter-to-class="translate-y-0 opacity-100"
-            leave-active-class="transition duration-150 ease-in"
-            leave-from-class="translate-y-0 opacity-100"
-            leave-to-class="translate-y-1 opacity-0"
-          >
-            <PopoverPanel class="absolute right-0 left-0 z-50 ml-3 max-w-md focus:outline-none">
-              <div class="ring-brdr overflow-hidden rounded-lg ring-1">
-                <div class="bg-primary">
-                  <div
-                    v-if="filteredItems.length > 0"
-                    class="max-h-60 w-full overflow-auto rounded-md text-base focus:outline-hidden sm:text-sm"
-                  >
-                    <div class="border-brdr sticky top-0 h-12 w-full border-b bg-amber-200">
-                      <p class="text-2xl">Hello my friends</p>
-                    </div>
-                    <div
-                      v-for="item in filteredItems"
-                      :key="item.id"
-                      :value="item"
-                      class="my-2 grid grid-cols-[minmax(0,1fr)_auto_auto_auto] gap-2"
-                    >
-                      <div class="">{{ item.name }}</div>
-                      <LeBtn class="text-xs" title="Select to edit item">select</LeBtn>
-                      <input class="input h-6.5 max-w-8" v-model="itemForm.qty" />
-                      <LeBtn class="text-xs">add</LeBtn>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </PopoverPanel>
-          </transition>
-        </Popover>
-      </div>
-      <div class="col-span-9 grid grid-cols-subgrid items-center pt-5">
-        <!-- Item Select Inputs  -->
-        <Combobox
-          as="div"
-          v-model="itemForm"
-          @update:modelValue="searchQueries[itemType] = ''"
-          class="col-span-4 pr-6"
-        >
+      <!-- Item Select Inputs  -->
+      <Combobox
+        as="div"
+        @update:modelValue="searchQueries[itemType] = ''"
+        v-model="itemForm"
+        class="relative col-span-8 grid grid-cols-subgrid items-center gap-6 pt-5"
+      >
+        <!-- Style/Sample Toggle -->
+        <div class="absolute -top-1 w-full max-w-36">
+          <!-- animated handle -->
           <div class="relative">
-            <!-- Style/Sample Toggle -->
-            <div class="absolute -top-6 z-10 w-full text-sm">
-              <div class="relative flex h-7 w-[8rem] items-center justify-between text-sm">
-                <!-- animated handel -->
-                <span
-                  class="bg-acc dark:bg-acc/20 absolute bottom-1.5 left-0 h-4 w-1/2 rounded transition-transform duration-300"
-                  :class="itemType === 'style' ? 'translate-x-0' : 'translate-x-full'"
-                ></span>
-                <button
-                  @click="itemType = 'style'"
-                  :class="
-                    itemType === 'style'
-                      ? 'text-fg2 dark:text-acc'
-                      : 'text-fg hover:text-acc cursor-pointer dark:hover:text-white'
-                  "
-                  class="z-10 w-1/2"
-                >
-                  style
-                </button>
-                <button
-                  @click="itemType = 'sample'"
-                  :class="
-                    itemType === 'sample'
-                      ? 'text-fg2 dark:text-acc'
-                      : 'text-fg hover:text-acc cursor-pointer dark:hover:text-white'
-                  "
-                  class="z-10 w-1/2"
-                >
-                  sample
-                </button>
-              </div>
-            </div>
-            <ComboboxInput
-              :id="'invo-item-name-combo-1'"
-              class="input block w-full py-1 pr-12 pl-3 text-base sm:text-sm/6"
-              @change="searchQueries[itemType] = $event.target.value"
-              :placeholder="`Click to search by ${itemType} name`"
-            />
-            <ComboboxButton
-              class="absolute inset-y-0 top-0 right-0 flex items-center rounded-r-md px-2 focus:outline-hidden"
+            <span
+              class="bg-acc dark:bg-acc/20 absolute bottom-0 left-0 h-5.5 w-1/2 rounded transition-transform duration-300"
+              :class="itemType === 'style' ? 'translate-x-0' : 'translate-x-full'"
+            ></span>
+            <button
+              @click="itemType = 'style'"
+              :class="
+                itemType === 'style'
+                  ? 'text-fg2 dark:text-acc'
+                  : 'text-fg hover:text-acc cursor-pointer dark:hover:text-white'
+              "
+              class="z-10 w-1/2"
             >
-              <ChevronUpDownIcon class="size-5 text-gray-400" aria-hidden="true" />
-            </ComboboxButton>
-            <ComboboxOptions
-              v-if="filteredItems.length > 0"
-              class="input-dropdown absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md py-1 text-base shadow-md focus:outline-hidden sm:text-sm"
+              style
+            </button>
+            <button
+              @click="itemType = 'sample'"
+              :class="
+                itemType === 'sample'
+                  ? 'text-fg2 dark:text-acc'
+                  : 'text-fg hover:text-acc cursor-pointer dark:hover:text-white'
+              "
+              class="z-10 w-1/2"
             >
-              <ComboboxOption
-                v-for="item in filteredItems"
-                :key="item.id"
-                :value="item"
-                as="template"
-              >
-                <li
-                  class="hover:text-acc dark:hover:text-acc relative py-2 pr-4 pl-3 font-normal select-none"
-                >
-                  <div
-                    class="grid w-full grid-cols-[minmax(0,1fr)_auto_auto_auto] items-center gap-2"
-                  >
-                    <div class="truncate">{{ item.name }}</div>
-                    <div class="truncate">{{ item.price }}</div>
-                  </div>
-                </li>
-              </ComboboxOption>
-            </ComboboxOptions>
+              sample
+            </button>
           </div>
-        </Combobox>
+        </div>
+        <div class="relative col-span-4 block py-1">
+          <ComboboxInput
+            :id="'invo-item-name-combo-1'"
+            class="input text-base sm:text-sm/6"
+            @change="searchQueries[itemType] = $event.target.value"
+            v-model="itemForm.name"
+            :displayValue="
+              (form) => {
+                form === '' ? `Click to search by ${itemType} name` : itemForm.name
+              }
+            "
+          />
+          <div class="absolute top-2 right-0">
+            <ComboboxButton
+              class="relative flex cursor-pointer items-center rounded-r-md px-2 focus:outline-hidden"
+            >
+              <ChevronUpDownIcon class="size-6 text-gray-400" aria-hidden="true" />
+            </ComboboxButton>
+          </div>
+          <ComboboxOptions
+            v-if="filteredItems.length > 0"
+            class="input-dropdown absolute z-10 mt-1 max-h-60 max-w-full min-w-full overflow-auto rounded-md py-1 text-base shadow-md focus:outline-hidden sm:text-sm"
+          >
+            <ComboboxOption
+              v-for="item in filteredItems"
+              :key="item.id"
+              :value="item"
+              as="template"
+            >
+              <li
+                class="hover:text-acc dark:hover:text-acc relative grid w-full grid-cols-[minmax(0,1fr)_auto_auto_auto] items-center gap-2 py-2 pl-3 font-normal"
+                @click="(addItemToForm(item), console.log(item))"
+              >
+                <div class="truncate">{{ item.name }}</div>
+                <div class="truncate">{{ item.price }}</div>
+              </li>
+            </ComboboxOption>
+          </ComboboxOptions>
+        </div>
+
         <!-- Numerics -->
         <LeInput
-          class="col-span-1 pr-5"
+          class="col-span-1"
           placeholder="e.g. x1"
           v-model="itemForm.qty"
           :id="'invo-qty-1'"
           :type="'number'"
         ></LeInput>
         <LeInput
-          class="col-span-1 pr-5"
+          class="col-span-1"
           v-model="itemForm.time"
           :id="'invo-time-1'"
           :type="'number'"
         ></LeInput>
         <LeInput
-          class="col-span-1 pr-5"
+          class="col-span-1"
           v-model="itemForm.price"
           :id="'invo-price-1'"
           :type="'number'"
         ></LeInput>
-        <div class="col-span-1 pr-5" v-html="itemForm.itemTotal"></div>
-        <div>s</div>
-      </div>
+        <div class="col-span-1" v-html="itemForm.itemTotal"></div>
+      </Combobox>
       <!-- Items -->
       <div class="col-span-8 mt-2 grid grid-cols-subgrid items-center text-base font-normal">
         <!-- loop items here -->

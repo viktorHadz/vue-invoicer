@@ -69,7 +69,7 @@
 
   --color-success: var(--color-success);
   --color-danger: var(--color-danger);
-  --color-warn: var(--color-danger);
+  --color-warn: var(--color-warning);
 }
 
 @layer components {
@@ -81,7 +81,7 @@
   }
   .input {
     @apply user-invalid:ring-danger;
-    @apply disabled:hover:ring-warn focus:ring-acc hover:ring-acc focus:ring-2;
+    @apply disabled:hover:ring-warn focus:ring-acc hover:ring-acc focus:ring-2 disabled:cursor-not-allowed;
     @apply block w-full rounded-md bg-neutral-100 px-2 py-1 text-base font-normal text-neutral-900 ring-1 ring-neutral-400 transition-all duration-150 outline-none placeholder:text-neutral-700 hover:bg-neutral-50 focus:bg-neutral-50 sm:text-sm/6;
 
     @variant dark {

@@ -20,5 +20,5 @@ export const useInvoiceStore = defineStore('invoice', () => {
   }
   const totals = calcPrice()
 
-  return { data }
+  return { data, add, remove, update, totals }
 })

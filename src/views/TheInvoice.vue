@@ -4,17 +4,18 @@ import LeInput from '@/components/UI/LeInput.vue'
 import { computed, ref, reactive, watch } from 'vue'
 import { ChevronUpDownIcon, QuestionMarkCircleIcon } from '@heroicons/vue/24/outline'
 import { useItemsStore } from '@/stores/items'
+import { useInvoiceStore } from '@/stores/invoice'
 import LeBtn from '@/components/UI/LeBtn.vue'
 import { useToggle, onClickOutside } from '@vueuse/core'
 
 const itemStore = useItemsStore()
-
+const invoStore = useInvoiceStore()
 const itemType = ref('style')
 const searchQueries = reactive({
   style: '',
   sample: '',
 })
-const selectedItem = reactive({
+const itemForm = reactive({
   id: '',
   name: '',
   type: '',
@@ -23,32 +24,27 @@ const selectedItem = reactive({
   price: null,
   itemTotal: null,
 })
-const stateSelected = ref(false)
 
 const filteredItems = computed(() => {
   return itemStore.items[itemType.value].filter((item) =>
     item.name.toLowerCase().includes(searchQueries[itemType.value].toLowerCase()),
   )
 })
-// Selects and assigns to form
-const selectItem = (item) => {
-  const newItem = { ...item, qty: 1, itemTotal: item.time * item.price }
-  Object.assign(selectedItem, newItem)
-  // aids separating state editing from selected - reset in resets
-  stateSelected.value = true
-  dropDown.value = false
+// Selects assigns to form adds to invoice
+const addItem = (item) => {
+  const total = item.price * item.time * item.qty
+  console.log('tots', total)
+  const newItem = { ...item, itemTotal: total }
+  Object.assign(itemForm, newItem)
+  invoStore.add(itemForm)
 }
 
-// Adds to invoice
-const invoAdd = (item) => {
-  selectItem(item)
-}
 const toggleItemType = () => {
   if (itemType.value === 'style') {
-    resetInputs(selectedItem)
+    resetInputs(itemForm)
     itemType.value = 'sample'
   } else if (itemType.value === 'sample') {
-    resetInputs(selectedItem)
+    resetInputs(itemForm)
     itemType.value = 'style'
   }
 }
@@ -61,7 +57,6 @@ const resetInputs = (formName) => {
   formName.qty = null
   formName.price = null
   formName.itemTotal = null
-  stateSelected.value = false
 }
 const dropDown = ref(false)
 const toggleDropdown = useToggle(dropDown)
@@ -96,7 +91,7 @@ watch(searchQueries, () => {
   <main
     class="px-20 py-18 2xl:mx-auto 2xl:flex 2xl:max-w-[70%] 2xl:flex-col 2xl:items-center 2xl:px-40"
   >
-    <LeBtn @click="console.table('Item: ', itemType, 'selectedItem: ', selectedItem)">log</LeBtn>
+    <LeBtn @click="console.table('Item: ', itemType, 'selectedItem: ', itemForm)">log</LeBtn>
     <!-- Top 3 flex-box cols -->
     <InvoiceTo></InvoiceTo>
     <!-- Invoice Items -->
@@ -123,13 +118,16 @@ watch(searchQueries, () => {
       </div>
       <hr class="text-fg/20 col-span-8" />
       <!-- Items -->
-      <div class="col-span-8 mt-2 grid grid-cols-subgrid items-center text-base font-normal">
-        <!-- loop items here -->
-        <div class="col-span-4 pl-4 text-start">Blue Garfunkel</div>
-        <div class="col-span-1 pr-8 text-end">x10</div>
-        <div class="col-span-1 pr-8 text-end">60m</div>
-        <div class="col-span-1 pr-8 text-end">£99.99</div>
-        <div class="col-span-1 pr-8 text-end">£999.99</div>
+      <div
+        v-for="(item, index) in invoStore.data.items"
+        :key="index"
+        class="col-span-8 mt-2 grid grid-cols-subgrid items-center text-base font-normal"
+      >
+        <div class="col-span-4 pl-4 text-start">{{ item.name }}</div>
+        <div class="col-span-1 pr-8 text-end">{{ item.qty }}</div>
+        <div class="col-span-1 pr-8 text-end">{{ item.time }}</div>
+        <div class="col-span-1 pr-8 text-end">{{ item.price }}</div>
+        <div class="col-span-1 pr-8 text-end">{{ item.itemTotal }}</div>
       </div>
       <!-- Combo Box & Item Inputs -->
       <div class="relative col-span-8 grid grid-cols-subgrid items-center gap-6 py-5">
@@ -178,7 +176,7 @@ watch(searchQueries, () => {
             id="combo-item-add-1"
             type="text"
             class="input input hover:drop-shadow-acc/25 focus:drop-shadow-acc/25 text-base drop-shadow-md transition-shadow duration-75 sm:text-sm/6"
-            v-model="selectedItem.name"
+            v-model="itemForm.name"
             @input="searchQueries[itemType] = $event.target.value"
             :placeholder="`Type to search by ${itemType} name`"
           />
@@ -215,10 +213,10 @@ watch(searchQueries, () => {
                   <LeInput
                     :id="`${item.id}-${index}`"
                     class="placeholder:text-acc text-acc w-12"
-                    v-model="selectedItem.qty"
+                    v-model="itemForm.qty"
                     placeholder="1"
                   ></LeInput>
-                  <LeBtn class="" @click="selectItem(item)">add</LeBtn>
+                  <LeBtn class="" @click="addItem(item)">add</LeBtn>
                 </li>
               </div>
             </div>

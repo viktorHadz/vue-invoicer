@@ -7,10 +7,11 @@ export const useInvoiceStore = defineStore('invoice', () => {
     invoiceNumber: '#S.A.M.-1',
     createdDate: '',
     dueDate: '',
-    items: [{}],
+    items: [],
+    prices: {}
   })
-  const add = () => {
-
+  const add = (item) => {
+    data.items.push(item)
   }
   const remove = () => {
 

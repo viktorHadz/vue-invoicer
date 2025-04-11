@@ -5,7 +5,7 @@ import { computed, ref, reactive, watch } from 'vue'
 import { ChevronUpDownIcon, QuestionMarkCircleIcon } from '@heroicons/vue/24/outline'
 import { useItemsStore } from '@/stores/items'
 import LeBtn from '@/components/UI/LeBtn.vue'
-import { useToggle } from '@vueuse/core'
+import { useToggle, onClickOutside } from '@vueuse/core'
 
 const itemStore = useItemsStore()
 
@@ -40,7 +40,7 @@ const selectItem = (item) => {
   Object.assign(selectedItem, newItem)
   // aids separating state editing from selected - reset in resets
   stateSelected.value = true
-  dropdownValue.value = false
+  dropdown.value = false
 }
 
 const toggleItemType = () => {
@@ -63,18 +63,28 @@ const resetInputs = (formName) => {
   formName.itemTotal = null
   stateSelected.value = false
 }
-const dropdownValue = ref(false)
-const toggleDropdown = useToggle(dropdownValue)
+const dropdown = ref(false)
+const toggleDropdown = useToggle(dropdown)
+const dropdownState = (value) => {
+  if (typeof value === 'boolean') {
+    dropdown.value = value
+  } else {
+    return console.error('Bad parameter.')
+  }
+}
+
+onClickOutside()
+
 watch(stateSelected, (newValue, oldValue) => {
   console.log('Watcher=> state selected', oldValue)
   console.log('Watcher=> state selected', newValue)
 })
 watch(searchQueries, () => {
   if (searchQueries[itemType.value] !== '') {
-    dropdownValue.value = true
+    dropdown.value = true
     console.log(searchQueries)
   } else {
-    dropdownValue.value = false
+    dropdown.value = false
   }
 })
 // Two items one shows one hides
@@ -175,23 +185,20 @@ watch(searchQueries, () => {
           <div class="absolute top-2 right-0">
             <button
               class="relative flex cursor-pointer items-center rounded-r-md px-2 focus:outline-hidden"
-              @click="(toggleDropdown(), console.log('Dropdown', dropdownValue))"
+              @click="(toggleDropdown(), console.log('Dropdown', dropdown))"
             >
               <ChevronUpDownIcon class="hover:text-acc size-6 text-gray-400" aria-hidden="true" />
             </button>
           </div>
           <transition
-            enter-active-class="transition duration-300 "
-            enter-from-class=" opacity-0   "
-            enter-to-class="  opacity-100  "
-            leave-active-class="transition duration-150  "
-            leave-from-class="  opacity-100"
-            leave-to-class="  opacity-0"
+            enter-active-class="transition duration-300"
+            enter-from-class="opacity-0"
+            enter-to-class="opacity-100"
+            leave-active-class="transition duration-150"
+            leave-from-class="opacity-100"
+            leave-to-class="opacity-0"
           >
-            <div
-              v-if="stateSelected && !dropdownValue"
-              class="text-acc absolute -bottom-4.5 left-2.5"
-            >
+            <div v-if="stateSelected && !dropdown" class="text-acc absolute -bottom-4.5 left-2.5">
               <span class="absolute h-3 w-2 rounded-bl-sm border-b border-l mask-t-from-0"></span>
               <span
                 class="absolute right-0 h-3 w-2 rounded-br-sm border-r border-b mask-t-from-0%"
@@ -212,7 +219,8 @@ watch(searchQueries, () => {
             leave-to-class=" scale-y-0 origin-top opacity-0"
           >
             <div
-              v-if="filteredItems.length > 0 && dropdownValue"
+              ref="dropdown"
+              v-if="filteredItems.length > 0 && dropdown"
               class="input-dropdown absolute z-10 mt-2 max-h-60 max-w-full min-w-full overflow-auto rounded-md py-1 text-base shadow-md focus:outline-hidden sm:text-sm"
             >
               <div

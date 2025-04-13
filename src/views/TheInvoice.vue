@@ -1,12 +1,12 @@
 <script setup>
 import InvoiceTo from '@/components/invoice/InvoiceTo.vue'
 import LeInput from '@/components/UI/LeInput.vue'
-import { computed, ref, reactive, watch } from 'vue'
+import { computed, ref, reactive, watch, nextTick, useTemplateRef } from 'vue'
 import { ChevronUpDownIcon, QuestionMarkCircleIcon } from '@heroicons/vue/24/outline'
 import { useItemsStore } from '@/stores/items'
 import { useInvoiceStore } from '@/stores/invoice'
 import LeBtn from '@/components/UI/LeBtn.vue'
-import { useToggle, onClickOutside } from '@vueuse/core'
+import { useToggle } from '@vueuse/core'
 
 const itemStore = useItemsStore()
 const invoStore = useInvoiceStore()
@@ -15,12 +15,12 @@ const searchQueries = reactive({
   style: '',
   sample: '',
 })
+
 const itemForm = reactive({
   id: '',
   name: '',
   type: '',
   time: null,
-  qty: null,
   price: null,
   itemTotal: null,
 })
@@ -30,13 +30,27 @@ const filteredItems = computed(() => {
     item.name.toLowerCase().includes(searchQueries[itemType.value].toLowerCase()),
   )
 })
-// Selects assigns to form adds to invoice
-const addItem = (item) => {
-  const total = item.price * item.time * item.qty
-  console.log('tots', total)
-  const newItem = { ...item, itemTotal: total }
+
+// Gives item expected properties qty & itemTotal
+const selectItem = (item) => {
+  const itemQty = item.qty ?? 1
+  const newItem = { ...item, qty: itemQty }
   Object.assign(itemForm, newItem)
-  invoStore.add(itemForm)
+  sendItem()
+  item.qty = 1
+}
+
+const sendItem = () => {
+  const itemToSend = { ...itemForm }
+  console.log('sending item to store: ', itemToSend)
+  invoStore.add(itemToSend)
+  // Reset search querie, dropdown and focus search
+  nextTick(() => {
+    resetInputs(itemForm)
+    dropDown.value = false
+    searchQueries[itemType.value] = ''
+    comboInput.value.focus()
+  })
 }
 
 const toggleItemType = () => {
@@ -54,21 +68,13 @@ const resetInputs = (formName) => {
   formName.name = ''
   formName.type = itemType.value
   formName.time = null
-  formName.qty = null
   formName.price = null
   formName.itemTotal = null
 }
+
+const comboInput = useTemplateRef('dropdown-reference')
 const dropDown = ref(false)
 const toggleDropdown = useToggle(dropDown)
-// const dropdownState = (value) => {
-//   if (typeof value === 'boolean') {
-//     dropdown.value = value
-//   } else {
-//     return console.error('Bad parameter.')
-//   }
-// }
-
-// onClickOutside()
 
 watch(searchQueries, () => {
   if (searchQueries[itemType.value] === '') {
@@ -77,14 +83,6 @@ watch(searchQueries, () => {
     dropDown.value = true
   }
 })
-// Two items one shows one hides
-// Third item takes the text
-// When typing show the dropdown
-
-// onType --> clear form --> open dropdown --> filter
-// click item button --> add name to input --> close dropdown --> allow Editing and add to invoice
-// click again focus text
-// on button open --> clear form -->  focus --> input
 </script>
 
 <template>
@@ -117,18 +115,6 @@ watch(searchQueries, () => {
         </div>
       </div>
       <hr class="text-fg/20 col-span-8" />
-      <!-- Items -->
-      <div
-        v-for="(item, index) in invoStore.data.items"
-        :key="index"
-        class="col-span-8 mt-2 grid grid-cols-subgrid items-center text-base font-normal"
-      >
-        <div class="col-span-4 pl-4 text-start">{{ item.name }}</div>
-        <div class="col-span-1 pr-8 text-end">{{ item.qty }}</div>
-        <div class="col-span-1 pr-8 text-end">{{ item.time }}</div>
-        <div class="col-span-1 pr-8 text-end">{{ item.price }}</div>
-        <div class="col-span-1 pr-8 text-end">{{ item.itemTotal }}</div>
-      </div>
       <!-- Combo Box & Item Inputs -->
       <div class="relative col-span-8 grid grid-cols-subgrid items-center gap-6 py-5">
         <!-- Toggle Item Type -->
@@ -173,6 +159,7 @@ watch(searchQueries, () => {
         <div class="relative col-span-4 block py-1">
           <!-- Input -->
           <input
+            :ref="'dropdown-reference'"
             id="combo-item-add-1"
             type="text"
             class="input input hover:drop-shadow-acc/25 focus:drop-shadow-acc/25 text-base drop-shadow-md transition-shadow duration-75 sm:text-sm/6"
@@ -213,15 +200,28 @@ watch(searchQueries, () => {
                   <LeInput
                     :id="`${item.id}-${index}`"
                     class="placeholder:text-acc text-acc w-12"
-                    v-model="itemForm.qty"
+                    v-model.number="item.qty"
+                    min="1"
                     placeholder="1"
                   ></LeInput>
-                  <LeBtn class="" @click="addItem(item)">add</LeBtn>
+                  <LeBtn class="" @click="selectItem(item)">add</LeBtn>
                 </li>
               </div>
             </div>
           </transition>
         </div>
+      </div>
+      <!-- Items -->
+      <div
+        v-for="(item, index) in invoStore.data.items"
+        :key="index"
+        class="col-span-8 mt-2 grid grid-cols-subgrid items-center text-base font-normal"
+      >
+        <div class="col-span-4 pl-4 text-start">{{ item.name }}</div>
+        <div class="col-span-1 pr-8 text-end">{{ item.qty }}</div>
+        <div class="col-span-1 pr-8 text-end">{{ item.time }}</div>
+        <div class="col-span-1 pr-8 text-end">{{ item.price }}</div>
+        <div class="col-span-1 pr-8 text-end">{{ item.itemTotal }}</div>
       </div>
 
       <!-- Totals -->
@@ -229,22 +229,49 @@ watch(searchQueries, () => {
         class="pointer-events-none col-span-8 mt-2 grid grid-cols-subgrid items-center text-lg font-normal"
       >
         <div
-          class="border-fg/50 col-span-3 col-start-6 row-start-1 h-full items-end border-b"
+          class="border-fg/20 col-span-3 col-start-6 row-start-1 h-full items-end border-b"
         ></div>
         <!-- vertical line-->
-        <div class="border-fg/50 col-start-6 row-start-1 row-end-6 h-full border-r"></div>
+        <div class="border-fg/20 col-start-6 row-start-1 row-end-6 h-full border-r"></div>
         <!-- Text -->
         <div class="col-span-1 col-start-6 row-start-1 mr-3 text-end">Subtotal</div>
-        <div class="col-span-1 col-start-6 row-start-2 mr-3 text-end">Discount</div>
+        <div
+          v-if="invoStore.data.prices.discValue || invoStore.data.prices.discValuePercent > 0"
+          class="col-span-1 col-start-6 row-start-2 mr-3 text-end"
+        >
+          Discount
+        </div>
         <div class="col-span-1 col-start-6 row-start-3 mr-3 text-end">VAT</div>
         <div class="col-span-1 col-start-6 row-start-4 mr-3 text-end">Total</div>
-        <div class="col-span-1 col-start-6 row-start-5 mr-3 text-end">Deposit</div>
+        <div
+          v-if="invoStore.data.prices.depoValue || invoStore.data.prices.depoValuePercent > 0"
+          class="col-span-1 col-start-6 row-start-5 mr-3 text-end"
+        >
+          Deposit
+        </div>
         <!-- Value -->
-        <div class="col-span-2 col-start-7 row-start-1 mr-2 text-end">£256 000.00</div>
-        <div class="col-span-2 col-start-7 row-start-2 mr-2 text-end">50% (£128 000.00)</div>
-        <div class="col-span-2 col-start-7 row-start-3 mr-2 text-end">£25600</div>
-        <div class="col-span-2 col-start-7 row-start-4 mr-2 text-end">£153 600.00</div>
-        <div class="col-span-2 col-start-7 row-start-5 mr-2 text-end">40% (£61 440)</div>
+
+        <div class="col-span-2 col-start-7 row-start-1 mr-2 text-end">
+          {{ invoStore.data.prices.subtotal }}
+        </div>
+        <div
+          v-if="invoStore.data.prices.discValue || invoStore.data.prices.discValuePercent > 0"
+          class="col-span-2 col-start-7 row-start-2 mr-2 text-end"
+        >
+          {{ invoStore.data.prices.discValue }}
+        </div>
+        <div class="col-span-2 col-start-7 row-start-3 mr-2 text-end">
+          {{ invoStore.data.prices.vat }}
+        </div>
+        <div class="col-span-2 col-start-7 row-start-4 mr-2 text-end">
+          {{ invoStore.data.prices.total }}
+        </div>
+        <div
+          v-if="invoStore.data.prices.depoValue || invoStore.data.prices.depoValuePercent > 0"
+          class="col-span-2 col-start-7 row-start-5 mr-2 text-end"
+        >
+          {{ invoStore.data.prices.depoValue }}
+        </div>
       </div>
     </div>
   </main>

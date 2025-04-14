@@ -25,7 +25,6 @@ const clientStore = useClientStore()
       <RouterView />
       <LeTopBar />
 
-      <!-- Modals -- Add parent component to decluter if needed  -->
       <NoSelectedClientModal></NoSelectedClientModal>
     </main>
   </div>

@@ -50,9 +50,9 @@ export function useCalcTotals(data) {
     data.prices.total = usePrecision(totalAmmount(), 2)
   }
   update()
-  console.log(sub())
-  console.log(vatAmmount())
-  console.log(totalAmmount())
-  console.log(disc())
-  console.log(depo())
+  console.log('subtotal: ', sub())
+  console.log('vat: ', vatAmmount())
+  console.log('total: ', totalAmmount())
+  console.log('discount', disc())
+  console.log('deposit', depo())
 }

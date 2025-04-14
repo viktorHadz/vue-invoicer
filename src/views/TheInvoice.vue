@@ -7,7 +7,7 @@ import { useItemsStore } from '@/stores/items'
 import { useInvoiceStore } from '@/stores/invoice'
 import LeBtn from '@/components/UI/LeBtn.vue'
 import { useToggle } from '@vueuse/core'
-
+import InputToggle from '@/components/UI/InputToggle.vue'
 const itemStore = useItemsStore()
 const invoStore = useInvoiceStore()
 const itemType = ref('style')
@@ -87,9 +87,9 @@ watch(searchQueries, () => {
 
 <template>
   <main
-    class="px-20 py-18 2xl:mx-auto 2xl:flex 2xl:max-w-[70%] 2xl:flex-col 2xl:items-center 2xl:px-40"
+    class="px-20 py-12 2xl:mx-auto 2xl:flex 2xl:max-w-[70%] 2xl:flex-col 2xl:items-center 2xl:px-40"
   >
-    <LeBtn @click="console.table('Item: ', itemType, 'selectedItem: ', itemForm)">log</LeBtn>
+    <LeBtn @click="invoStore.resetInvoiceData()">log</LeBtn>
     <!-- Top 3 flex-box cols -->
     <InvoiceTo></InvoiceTo>
     <!-- Invoice Items -->
@@ -114,7 +114,20 @@ watch(searchQueries, () => {
           </div>
         </div>
       </div>
-      <hr class="text-fg/20 col-span-8" />
+      <hr class="text-acc col-span-8 mask-x-from-80% mask-x-to-95%" />
+
+      <!-- Items -->
+      <div
+        v-for="(item, index) in invoStore.data.items"
+        :key="index"
+        class="col-span-8 mt-2 grid grid-cols-subgrid items-center text-base font-normal"
+      >
+        <div class="col-span-4 pl-4 text-start">{{ item.name }}</div>
+        <div class="col-span-1 pr-8 text-end">{{ item.qty }}</div>
+        <div class="col-span-1 pr-8 text-end">{{ item.time }}</div>
+        <div class="col-span-1 pr-8 text-end">{{ item.price }}</div>
+        <div class="col-span-1 pr-8 text-end">{{ item.itemTotal }}</div>
+      </div>
       <!-- Combo Box & Item Inputs -->
       <div class="relative col-span-8 grid grid-cols-subgrid items-center gap-6 py-5">
         <!-- Toggle Item Type -->
@@ -162,7 +175,7 @@ watch(searchQueries, () => {
             :ref="'dropdown-reference'"
             id="combo-item-add-1"
             type="text"
-            class="input input hover:drop-shadow-acc/25 focus:drop-shadow-acc/25 text-base drop-shadow-md transition-shadow duration-75 sm:text-sm/6"
+            class="input hover:drop-shadow-acc/25 focus:drop-shadow-acc/25 text-base drop-shadow-md transition-shadow duration-75 sm:text-sm/6"
             v-model="itemForm.name"
             @input="searchQueries[itemType] = $event.target.value"
             :placeholder="`Type to search by ${itemType} name`"
@@ -210,29 +223,21 @@ watch(searchQueries, () => {
             </div>
           </transition>
         </div>
+        <div class="relative col-span-1">
+          <InputToggle :id="'invo-discount-id-1'" plcholder="hey"></InputToggle>
+        </div>
       </div>
-      <!-- Items -->
-      <div
-        v-for="(item, index) in invoStore.data.items"
-        :key="index"
-        class="col-span-8 mt-2 grid grid-cols-subgrid items-center text-base font-normal"
-      >
-        <div class="col-span-4 pl-4 text-start">{{ item.name }}</div>
-        <div class="col-span-1 pr-8 text-end">{{ item.qty }}</div>
-        <div class="col-span-1 pr-8 text-end">{{ item.time }}</div>
-        <div class="col-span-1 pr-8 text-end">{{ item.price }}</div>
-        <div class="col-span-1 pr-8 text-end">{{ item.itemTotal }}</div>
-      </div>
-
       <!-- Totals -->
       <div
         class="pointer-events-none col-span-8 mt-2 grid grid-cols-subgrid items-center text-lg font-normal"
       >
         <div
-          class="border-fg/20 col-span-3 col-start-6 row-start-1 h-full items-end border-b"
+          class="border-acc col-span-3 col-start-6 row-start-1 h-full items-end border-b mask-x-from-85% mask-x-to-95%"
         ></div>
         <!-- vertical line-->
-        <div class="border-fg/20 col-start-6 row-start-1 row-end-6 h-full border-r"></div>
+        <div
+          class="border-acc col-start-6 row-start-1 row-end-6 h-full border-r mask-y-from-80% mask-y-to-95%"
+        ></div>
         <!-- Text -->
         <div class="col-span-1 col-start-6 row-start-1 mr-3 text-end">Subtotal</div>
         <div

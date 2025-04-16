@@ -224,7 +224,10 @@ watch(searchQueries, () => {
           </transition>
         </div>
         <div class="relative col-span-1">
-          <InputToggle :id="'invo-discount-id-1'" plcholder="hey"></InputToggle>
+          <InputToggle :id="'invo-discount-id-1'" plcholder="hey">
+            <template v-slot:left>%</template>
+            <template v-slot:right>£</template>
+          </InputToggle>
         </div>
       </div>
       <!-- Totals -->
